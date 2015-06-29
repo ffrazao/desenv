@@ -1,0 +1,5 @@
+git init - iniciar um projeto do zero
+git clone endereco - para iniciar um projeto a partir do clone de um já existente
+git add . - para adicionar arquivos na gestao do git
+git commit -m 'Reinicio no github' - para fazer um commit
+git push origin master - para enviar para o repositorio central
