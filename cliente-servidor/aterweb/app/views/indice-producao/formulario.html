@@ -1,0 +1,43 @@
+<div class="panel-body"><center class="sr-only">Formulário</center>
+	<form name="frm.formulario">
+		<fieldset sr-only="navegador.estadoAtual() !== 'INCLUINDO' && navegador.estadoAtual() !== 'EDITANDO'">
+			<input type="hidden" name="id" data-ng-model="registro.id" />
+			<input type="hidden" name="@class" data-ng-model="registro['@class']" />
+			<div class="row">
+
+				<!-- Select Basic -->
+				<div class="col-md-4" ng-init="cadastro.registro.tipoIpa = 'Animal'">
+					<label class="control-label" for="tipoIpa">Tipo de IPA</label>
+					<div class="form-control">{{cadastro.registro.tipoIpa}}</div>
+				</div>
+
+				<!-- Select Basic -->
+				<div class="col-md-2">
+					<label class="control-label" for="ano">Ano</label>
+					<select id="ano" name="ano" class="form-control">
+						<option value="1">2015</option>
+						<option value="2">2014</option>
+						<option value="3">2013</option>
+						<option value="4">2012</option>
+						<option value="5">2011</option>
+					</select>
+				</div>
+
+				<!-- Select Basic -->
+				<div class="col-md-6">
+					<label class="control-label" for="unidadeOrganizacional">Unidade Organizacional</label>
+					<select id="unidadeOrganizacional" name="unidadeOrganizacional" class="form-control">
+						<option value="1">Ceilandia</option>
+						<option value="2">Paranoa</option>
+						<option value="3">Gama</option>
+					</select>
+				</div>
+
+			</div>
+			<div ng-include src="'views/indice-producao/formulario-agricola.html'" ng-if="cadastro.registro.tipoIpa == 'Agricola'"></div>
+			<div ng-include src="'views/indice-producao/formulario-animal.html'" ng-if="cadastro.registro.tipoIpa == 'Animal'"></div>
+			<div ng-include src="'views/indice-producao/formulario-nao-agricola.html'" ng-if="cadastro.registro.tipoIpa == 'Não Agricola'"></div>
+			<div ng-include src="'views/indice-producao/formulario-floricultura.html'" ng-if="cadastro.registro.tipoIpa == 'Floricultura'"></div>
+		</fieldset>
+	</form>
+</div>

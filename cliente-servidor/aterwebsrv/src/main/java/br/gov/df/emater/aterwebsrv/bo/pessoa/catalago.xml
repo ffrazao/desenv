@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+	<command name="pessoa-filtro-novo" className="br.gov.df.emater.aterwebsrv.bo.pessoa.FiltroNovo" />
+</catalog>
