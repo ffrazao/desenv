@@ -1,0 +1,107 @@
+<div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 90%; margin-top: 70px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Upload de Arquivos</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="container">
+
+                    <div id="div_upload" data-ng-controller="UploadCtrl">                                    
+                        <div id="upload-div" class="upload-div">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><span class="glyphicon glyphicon-exclamation-sign"></span> InformaÃ§Ãµes</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <ul>
+                                        <li>O tamanho máximo para cada arquivo é de <strong>10 MB</strong>.</li>
+                                        <li>São permitidas apenas imagens do tipo (<strong>JPG, GIF, PNG</strong>).</li>
+                                        <li>Você pode <strong>Arrastar &amp; Soltar</strong> arquivos do seu desktop nesta janela.</li>
+                                    </ul>
+                                </div>
+                                <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+                                    <div class="slides"></div>
+                                    <h3 class="title"></h3>
+                                    <a class="prev">â€¹</a>
+                                    <a class="next">â€º</a>
+                                    <a class="close">Ã—</a>
+                                    <a class="play-pause"></a>
+                                    <ol class="indicator"></ol>
+                                </div>
+                            </div>
+
+                            <div data-ng-show="dropSupported" class="drop-box col-md-12" data-ng-file-drop="onFileSelect($files);" data-ng-file-drop-available="dropSupported=true">
+                                <b>Solte os arquivos aqui</b>
+                                <span class="text-center"> 
+                                    <button style="margin-top: -95px;" class="btn btn-success" id="btn_selecionar_arquivo">Ou selecione um arquivo...</button>
+                                    <input id="input_file" type="file" class="hide" data-ng-file-select="onFileSelect($files)" multiple data-ng-click="resetInputFile()"> 
+                                </span>
+                            </div>
+                            <div data-ng-show="!dropSupported">HTML5 Drop File não suportado em seu navegador</div>
+                            <br/>
+                            <input type="checkbox" data-ng-model="uploadRightAway">Fazer upload imediatamente ao selecionar arquivo.
+                            <br/>
+                            <div class="err" data-ng-show="errorMsg != null">{{errorMsg}}</div>
+                            <br/>
+                            <!--Progresso:-->
+                            <br/>
+                            <br/>
+                            <div data-ng-show="selectedFiles != null">
+                                <div class="sel-file" data-ng-repeat="f in selectedFiles">
+                                    {{($index + 1) + '.'}}
+                                    <img style="width: 100px; height: 80px;" data-ng-show="dataUrls[$index]" data-ng-src="{{dataUrls[$index]}}">
+                                    <button class="button" data-ng-click="start($index)" data-ng-show="progress[$index] < 0">Iniciar</button>
+                                    <span class="progress" data-ng-show="progress[$index] >= 0">						
+                                        <div style="width:{{progress[$index]}}%">{{progress[$index]}}%</div>
+                                    </span>				
+                                    <button class="button" data-ng-click="abort($index)" data-ng-show="hasUploader($index) && progress[$index] < 100">Cancelar</button>
+                                    {{f.name}} - size: {{f.size}}B - type: {{f.type}}
+                                </div>
+                            </div>
+                            <br /><br />
+                            <div class="response" data-ng-show="uploadResult.length > 0"><b>Arquivo enviado com sucesso!</b></div>
+                            <!--div class="response" data-ng-show="uploadResult.length > 0">
+                                Server Response:
+                                <ul>
+                                    <li data-ng-repeat="result in uploadResult">
+                                        <ul>
+                                            <li data-ng-repeat="item in result.result">
+                                                <div data-ng-show="item.name">file name: {{item.name}}</div>
+                                                <div data-ng-show="item.fieldName">name: {{item.fieldName}}</div>
+                                                <div data-ng-show="item.size">size on the serve: {{item.size}}</div>
+                                                <div data-ng-show="item.value">value: {{item.value}}</div>
+                                            </li>
+                                        </ul>
+                                        <div data-ng-show="result.requestHeaders" class="reqh">request headers: {{result.requestHeaders}}</div>
+                                    </li>
+                                </ul>
+                            </div-->
+                        </div>
+
+
+                        <br />
+                        
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <!--button type="button" class="btn btn-primary">Save changes</button-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-success btn-sm" id="btn_upload" data-toggle="modal" data-target="#modalUpload">
+    <span class="glyphicon glyphicon-open"></span> Enviar Arquivos
+</button>
+
+<script>
+    $("#btn_selecionar_arquivo").click(function() {
+        $("#input_file").click();
+    });
+</script>

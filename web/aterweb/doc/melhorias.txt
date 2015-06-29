@@ -1,0 +1,43 @@
+Proposta de Melhorias on ATERWeb 
+By Emerson Nascimento
+
+Layout
+   -> tirar referências externas - DONE
+   -> tirar a barra branca e ccolocar o pesquisar e o  bem vindo, na barra de menu - DONE
+   -> cpf não está gravando - DONE
+   -> nos campos compostos, ex: EMAIL, colocar o botaão incluir do lado direito na barra de título - DONE
+   -> diminuir o tamanho dos objetos para termos mais informações na tela sem precisar rolar muito
+      -> botões e campos
+   -> deixar as abas mais visívies
+   -> trocar objetos radio por select
+   -> formatar data e cpf
+   
+Cadastro Rápido PESSOA:
+
+Banco
+   -> ver com Frazão e Fabrício nova distribuição do SCHEMAS - DONE
+      -> reestruturar os bancos
+   -> tirar blob do arquivo
+   -> fazer rotina de carga do SisATER : Emerson
+   
+JAVA
+   -> corrigir bugs de cadastramento
+      -> pessoa
+      -> propriedade
+      
+Concentual
+   -> discutir com Frazão e Fabrício procedimentos de "agrupamento"
+      -> colocar tudo como grupo social / localizacao - EMERSON
+   -> filtros de contexto de visualização por visualisação (escritório, gerência, etc..)
+   -> vinculação entre o produtor e a propriedade
+      -> informar a vinculação do produtor com a propriedade
+      -> autocomplete no endereço - FRAZAO
+      -> na propriedade, usar o mesmo componente de endereço da pessoa
+   -> 
+
+   
+Cadastro geral de produtores rurais 
+   -> Não está no radar agora
+  
+    
+   

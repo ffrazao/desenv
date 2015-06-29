@@ -1,0 +1,61 @@
+@CHARSET "UTF-8";
+
+.selecionado {
+	background-color: #DDD !important;
+}
+
+table {
+	cursor: pointer;
+}
+
+input[type='radio'] {
+	
+}
+
+#map-canvas {
+	height: 200px;
+	margin: 0px;
+	padding: 0px;
+}
+
+input[type='checkbox'],input[type='radio'] {
+	height: 18px;
+	width: 18px;
+}
+
+.ng-cloak {
+	display: none;
+}
+
+#map-canvas {
+	height: 300px;
+	margin: 0px;
+	padding: 0px
+}
+
+.borda_div_mapa {
+	border: 2px solid #DDD;
+}
+
+#div_mapa {
+	padding: 5px;
+	background-color: #444;
+}
+
+.div_mapa_full {
+	position: fixed;
+	top: 1px;
+	bottom: 35px;
+	left: 1px;
+	right: 10px;
+	z-index: 999999;
+}
+
+#galeria div div div div img {
+	cursor: pointer !important;
+}
+
+.form-group-topo{
+	margin-top: -30px;		
+	}
+}

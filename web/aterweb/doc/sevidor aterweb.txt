@@ -1,0 +1,71 @@
+ URL             - http://aterweb.emater.df.gov.br
+servidor         - aterweb
+endereco interno - 10.233.33.3
+usuario          - suporte
+senha            - suporte
+
+este usuario eh o mesmo para o SSH na porta 22 (via putty) quanto para o FTP na porta 21 (via filezila)
+
+
+===========================
+Prepara o arquivo de deploy
+===========================
+1. ir para a visao Java EE, clicar em Window/Open Perspective e escolher a visao Java EE (default)
+2. na pasta do projeto clicar com o botao direito e escolher a opcao export\WAR file
+3. grave o arquivo exportado como ROOT.war
+
+======================
+Copiar para a producao
+======================
+1. Faça a transferencia do arquivo ROOT.war, via FTP, para a pasta /home/suporte
+
+==============================================
+Para fazer o deploy seguir os seguintes passos
+==============================================
+1. ir para a pasta home:
+   cd /home/suporte
+
+2. parar o servidor:
+   /usr/share/tomcat7/bin/shutdown.sh
+
+3. fazer backup da release anterior:
+   mv /usr/share/tomcat7/webapps/ROOT.war release/ROOT.war
+
+4. mover, via FTP, o arquivo ROOT.war para a pasta webapps:
+   mv ROOT.war /usr/share/tomcat7/webapps/ROOT.war
+
+5. remover a instalacao anterior 
+   rm -r /usr/share/tomcat7/webapps/ROOT
+
+6. reiniciar o servidor 
+   /usr/share/tomcat7/bin/startup.sh
+
+
+
+para exportar dados do banco
+mysqldump -uroot -p [database] -r utf8.dump
+ex: mysqldump -uemater -p pessoa -r pessoa.dump
+
+para importar dados do banco
+
+mysql -uemater -p --default-character-set=utf8 [database]
+mysql> SOURCE utf8.dump
+ex: mysql -uemater -p --default-character-set=utf8 cad_geral
+mysql> SOURCE utf8.dump
+
+
+Diretorios de instalacao do tomcat
+/etc/tomcat7 - workdirectory
+/usr/share/tomcat7 - executaveis
+/var/lib/tomcat7/webapps - deploy
+/usr/share/tomcat7/logs - logs
+/var/log/tomcat7
+/var/cache/tomcat7 - cache
+
+telefone do Junqueira (suporte aos servidores de aplicativo) 3344-4349
+
+para saber se o ftp esta ativo
+ps -fe | ftp
+
+para reiniciar o servidor
+reboot

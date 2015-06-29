@@ -1,0 +1,26 @@
+                            
+Perspectiva: Agricola
+Previsão: 10/04/2014 a 10/07/2014 20000 kilos em 100 propriedades
+Local: pais/estado/municipio/cidade/comunidade
+Produto/Servico: Hotifruti/Tomate
+	Produção:
+	Chácara da Luz 10.000 kilos	
+		Produtor(es):
+		José Bonifácio Ferreira
+	Chácara Rodon 13.000 kilos
+Total Previsão: 2 propriedades 23.000 kilos
+
+
+
+
+
+cabecalho:
+
+
+Propriedade Rural:     Produtor: 
+__________________     _________
+
+    # Propriedade Rural    Produtores
+[]  9 Chacara 13           Joaquim Barbosa (Proprietario)
+                           Maria Soares    (Arrendatario)
+						   

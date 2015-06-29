@@ -1,0 +1,230 @@
+<style>
+    .meus-arquivos-grade-miniatura {
+        float: left;
+
+        border: 0;
+        box-shadow: 0;
+
+        height: 140px;
+        margin-bottom: 50px;
+    }
+
+    .meus-arquivos-grade-imagem {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #EEE;
+        box-shadow: 0 0 4px #EEE;
+
+        margin: 2px;
+        padding: 2px;
+
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .meus-arquivos-grade-imagem:hover {
+        box-shadow: 0 0 5px #666;
+    }
+    .meus-arquivos-grade-texto {
+        font-size: 11px; 
+        text-align: center; 
+        text-overflow: ellipsis; 
+        overflow:hidden; 
+        white-space:nowrap;
+        display: block;
+
+        line-height: 20px;
+    }
+
+    .meus-arquivos-lista-miniatura {
+        height: 100px;
+
+        border: 1px solid #EEE;
+        box-shadow: 0 0 4px #EEE;
+        margin: 2px 0 2px 0;
+    }
+
+    .meus-arquivos-lista-miniatura:hover {
+        box-shadow: 0 0 5px #666;
+    }
+
+    .meus-arquivos-lista-imagem {
+        width: 10%;
+        height: 100%;
+        float:left;
+
+        margin: 0 10px 0 0;
+        padding: 2px;
+
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .meus-arquivos-lista-texto {
+        font-size: 11px; 
+        float:left;
+        text-align: center;
+        text-overflow: ellipsis; 
+        overflow:hidden; 
+        white-space:nowrap;
+
+        line-height: 100px;
+    }
+    .arquivo_deletar {
+        margin-top: -140px !important;
+        margin-left: 4px !important;
+        position: fixed !important;    
+        background-color: red !important;
+        
+        float: left;
+    }
+    
+    .arquivo {
+        //background-color: red !important;
+    }
+    
+    #mini_botoes {
+        position: absolute;
+        margin: -40px 0 0 33px;
+    }
+    
+    .perfil {
+        border: 1px solid red;
+        box-shadow: 0 0 6px #3d62e0;
+        background-color: #EEE;
+    }
+</style>
+
+<div class="modal fade" id="modalArquivos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 90%; margin-top: 70px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Meus Arquivos</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div id="listagemArquivos">
+                        <!--div>
+                            <div class="col-md-8">
+                                <button id="visualizacao_lista" class="btn"><span class="glyphicon glyphicon-list"></span></button>
+                                <button id="visualizacao_grade" class="btn"><span class="glyphicon glyphicon-th-large"></span></button>
+                            </div>
+                            <br /><br />
+                        </div-->
+                        <div id="meus-arquivos">
+                            <span data-ng-repeat="arquivo in arquivos">
+                                
+                                <span data-ng-if="arquivos.length <= 0">Sem arquivos</span>
+                                <div data-ng-if="arquivo.arquivo.extensao == '.jpg' || arquivo.arquivo.extensao == '.png' || arquivo.arquivo.extensao == '.bmp' || arquivo.arquivo.extensao == '.gif'">
+                                    <div class="col-md-2 meus-arquivos-grade-miniatura arquivo">
+                                    
+                                        <div id="{{arquivo.arquivo.id}}" class="meus-arquivos-grade-imagem" style="background-image:url('{{baseUrl}}/arquivo/descer?arq={{arquivo.arquivo.md5}}')" data-ng-class="{perfil: arquivo.perfil == 'S'}"></div>
+                                        <input id="arquivo.arquivo.id" type="checkbox" class="arquivo_deletar" />
+                                        <div id="mini_botoes" class="hide"> 
+                                            <button id="visualizar" class="btn btn-primary ttip visualizar-imagem" data-toggle="tooltip" data-placement="bottom" title="Visualizar">
+                                                <span class="glyphicon glyphicon-eye-open" data-md5="{{arquivo.arquivo.md5}}"></span> 
+                                            </button>
+
+                                            <button data-ng-class="{hide: arquivo.perfil == 'S'}" data-ng-click="tornarImagemPerfil(arquivo.id)" id="definir_perfil" class="btn btn-success ttip" data-toggle="tooltip" data-placement="bottom" title="Definir imagem de perfil">
+                                                <span class="glyphicon glyphicon-pushpin" data-md5="{{arquivo.arquivo.md5}}"></span> 
+                                            </button>
+                                        </div>
+                                        <span class="meus-arquivos-grade-texto">
+                                            {{arquivo.arquivo.nome}}
+                                        </span>
+                                        <br />
+                                    </div>
+                                </div>
+
+                                <div data-ng-if="arquivo.arquivo.extensao != '.jpg' && arquivo.arquivo.extensao != '.png' && arquivo.arquivo.extensao != '.bmp' && arquivo.arquivo.extensao != '.gif'">
+                                    <div class="col-md-2 meus-arquivos-grade-miniatura arquivo">
+                                        <div id="{{arquivo.arquivo.id}}" class="meus-arquivos-grade-imagem" style='background-image:url("{{baseUrl}}resources/upload/{{arquivo.arquivo.md5}}.{{split(arquivo.arquivo.extensao, ".", 1)}}")' ></div>
+                                        <input id="arquivo.arquivo.id" type="checkbox" class="arquivo_deletar" />
+                                        <div id="mini_botoes" class="hide">
+                                            <button id="visualizar" class="btn btn-primary ttip" data-toggle="tooltip" data-placement="bottom" title="Visualizar">
+                                                <span class="glyphicon glyphicon-eye-open" data-md5="{{arquivo.arquivo.md5}}"></span> 
+                                            </button>
+                                            
+                                            <button id="baixar" class="btn btn-default ttip" data-toggle="tooltip" data-placement="bottom" title="Baixar">
+                                                <span class="glyphicon glyphicon-save" data-md5="{{arquivo.arquivo.md5}}"></span> 
+                                            </button>
+                                        </div>
+                                        <span class="meus-arquivos-grade-texto">
+                                            {{arquivo.arquivo.nome}} {{arquivo.arquivo.md5}}
+                                        </span>
+                                        <br />
+                                    </div>
+                                </div>
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <!--button type="button" class="btn btn-primary">Save changes</button-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-warning btn-sm" id="btn_arquivos" data-toggle="modal" data-target="#modalArquivos">
+    <span class="glyphicon glyphicon-eye-open"></span> Meus Arquivos
+</button>
+
+<script>
+$(document).on("mouseenter", ".arquivo", function(){
+    id = $(this).children()[0].id;
+    botao = $(this).children()[2];
+    $(botao).removeClass('hide');
+});
+
+$(document).on("mouseleave", ".arquivo", function(){
+    id = $(this).children()[0].id;
+    botao = $(this).children()[2];
+    $(botao).addClass('hide');    
+});
+
+$(document).on("click", "#visualizar", function(){
+    var el = $(this);
+    var md5 = $(el).children().attr('data-md5');
+});
+
+$(document).on("click", "#baixar", function(){
+    var el = $(this);
+    var md5 = $(el).children().attr('data-md5');
+    
+    window.open(baseUrl+'/arquivo/descer?arq='+md5, md5, 'width=100, height=100');
+});
+
+$("#visualizacao_lista").click(function(){
+    $(".meus-arquivos-grade-miniatura").addClass("col-md-12 meus-arquivos-lista-miniatura");
+    $(".meus-arquivos-lista-miniatura").removeClass("col-md-2 meus-arquivos-grade-miniatura");
+    
+    $(".meus-arquivos-grade-imagem").addClass("meus-arquivos-lista-imagem");
+    $(".meus-arquivos-lista-imagem").removeClass("meus-arquivos-grade-imagem");
+    
+    $(".meus-arquivos-grade-texto").addClass("meus-arquivos-lista-texto");
+    $(".meus-arquivos-lista-texto").removeClass("meus-arquivos-grade-texto");
+    
+    $(".visualizacaoArquivos").addClass("col-md-12");
+});
+
+$("#visualizacao_grade").click(function(){
+    $(".meus-arquivos-lista-miniatura").addClass("col-md-2 meus-arquivos-grade-miniatura");
+    $(".meus-arquivos-grade-miniatura").removeClass("col-md-12 meus-arquivos-lista-miniatura");
+    
+    $(".meus-arquivos-lista-imagem").addClass("meus-arquivos-grade-imagem");
+    $(".meus-arquivos-grade-imagem").removeClass("meus-arquivos-lista-imagem");
+    
+    $(".meus-arquivos-lista-texto").addClass("meus-arquivos-grade-texto");
+    $(".meus-arquivos-grade-texto").removeClass("meus-arquivos-lista-texto");
+    
+    $(".visualizacaoArquivos").addClass("col-md-2");
+});
+
+$('.ttip').tooltip();
+</script>

@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+.selecionado {
+	background-color: #DDD !important;
+}
+
+table {
+	cursor: pointer;
+}
+
+.statusInvalido {
+	background-color: #FFC0CB !important;
+}
+
+#map-canvas {
+	height: 100%;
+	height: 500px;
+	margin: 0px;
+	padding: 0px
+}
+
+.statusInvalido {
+	background-color: #FFC0CB !important;
+}
+
+.has-error input:last-child {
+	background-color: rgba(255, 0, 0, 0.2) !important;
+}

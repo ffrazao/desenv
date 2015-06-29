@@ -1,0 +1,249 @@
+25/01/2014 
+- iniciado o projeto com:
+	- Java: jre 7
+	- Tomcat: 7.0.47
+	- Eclipse: Kepler Service Release 1
+		- Spring Tools Suite: 3.4.0.201310051539-RELEASE
+			(Iniciado um projeto Spring/Spring Project)
+		
+- modificado o pom.xml para a versão do spring mvc 4.0.0.RELEASE e adicionado a 
+dependência ao Tiles 3.0.3 (somente o tiles-servlet e o tiles-jsp)
+
+- inserido o datasource do tomcat ver http://www.mkyong.com/tomcat/how-to-configure-mysql-datasource-in-tomcat-6/
+- inserido o jpa/hibernate ver http://www.youtube.com/watch?v=XNJ4eLdfsQs
+
+27/01/2014
+- inserido o spring security versão 3.2.0.RELEASE 
+ver tutorial http://docs.spring.io/spring-security/site/docs/3.2.1.CI-SNAPSHOT/reference/htmlsingle/ e
+	tutorial http://www.mkyong.com/spring-security/spring-security-http-basic-authentication-example/
+
+parei em 3.3. Java Configuration and Form Login
+
+30/01/2014 
+- ajustei o datasource ver http://www.alexecollins.com/content/tutorial-hibernate-jpa-spring-mvc-part-2/
+
+03/02/2014 - coloquei os estagiários Jean e Adler para atuarem no projeto
+
+10/02/2014 - necessário fazer
+- ajustar a classe de autenticação customizada
+
+
+11/02/2013 - construir o módulo de envio de arquivos (imagens/pdf/doc)
+
+Sugestões
+=> Grupos (Divisões Sociais)
+=> Incluir a valoração da ATER
+=> Incluir o menu de relatórios gerenciais
+
+=> incluir no dashboard informações parecidas no site http://www.epagri.sc.gov.br/ menu indicadores Epagri
+
+
+14/02/2014 = avaliação das necessidades do projeto
+	O Adler está até hoje tentando padronizar os formulários construíndo e ajustando o cadastro de usuários.
+		preciso que este trabalho seja concluído o mais rápido possível.
+		=> Posso analisar este código para organizá-lo e otimizá-lo.
+	O Jean está formatando a tela de Propriedades e de Pessoas, ainda não conseguiu avançar para a edição dos dados. Somente a listagem do cadastro de pessoas já tem alguns itens funcionando, é necessário configurar o mapeamento da Pessoa, pois está enviando muita informaçao devido às várias interconexões entre as tabelas. 
+		=> Preciso ajustar o mapa de relacionamentos da entidade PesPessoa para que esta funcionalidade possa evoluir.
+	A configuração do Spring MVC está no formato antigo (via xml). Preciso estudar para padronizar tudo via codificação Java
+	
+	Adicionar o recurso Remember-Me para a gestão da autorização de acesso pela senha do usuário (ver material na net)
+	Adicionar a proteção de ataques CSRF que evita as telas confidenciais navegadas possam ser acessadas depois de um logout.
+	Ajustar a utilização dos recursos estáticos do spring (ver em )
+	
+23/02/104 = Consegui encontrar o site http://keenformatics.blogspot.com.br/2013/08/how-to-solve-json-infinite-recursion.html
+que dá dicas para como tratar o problema do Json com auto relacionamento. Tem que tomar cuidado quando é necessário referenciar mais de uma vez o mesmo 
+objeto dentro da mesma Collection (ver no documento melhores explicações)
+
+04/03/2014 - Detectamos que o JSON não está informando o tipo do objeto corretamente para a classe Pessoa e suas dependentes PessoaFisica e Pessoa Juridica. Ao fazer a análise detectei o método:
+org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.resolveName(String name, MethodParameter parameter, NativeWebRequest webRequest) throws Exception
+
+Este metodo é o responsavel por montar a chamada ao método que vai responder à requisição. Fazer melhor estudo dele depois para a chamada do método salvar da classe Pessoa.
+
+05/03/2014 - Descobri que isso é um comportamento normal do Jackson e não um erro, ou seja, quando o item é listado não aparece o tipo no primeiro nível, só em suas dependências em diante.
+
+05/03/2014 - Estudo para coletar mais informações da tela de login, além do nome do usuário e senha. Inicialmente captar o flag de acesso como administrador e depois verificar se é interessante também incluir o campo com o módulo do sistema que o usuário deseja acessar.
+Encontrei o site: http://mrather.blogspot.com.br/2010/02/extending-usernamepasswordauthenticatio.html que explicou como inserir novos campos na tela de login.
+
+
+INSERIR CUSTO DE PRODUÇAO DENTRO DO CONTEXTO DOS INDICES DE PRODUÇÃO
+
+10/03/2014 - Problemas com o desserializador do JSON. O cadastro de pessoa está enviando e o servidor está ignorando as classes polimórficas, ou seja, sempre tenta transformar na classe mais genérica em ves da mais especializada.
+
+12/03/2014 - Descobri que é necessário anotar o parâmetro de entrada método receptor da chamada no controller com @RequestBody (para envios via POST) e @RequestParam (para envios via GET). Fiz a modificação. No primeiro teste o envio acusou erro http 415. Suspeitamos que os campos enviados não estejam corretos. O Jean vai iniciar os testes/ajustes.
+
+
+
+analisar o método com.fasterxml.jackson.databind.deser.DeserializerCache._createDeserializer(DeserializationContext, DeserializerFactory, JavaType)
+
+com.fasterxml.jackson.databind.deser.BeanDeserializerFactory.createBeanDeserializer(DeserializationContext, JavaType, BeanDescription)
+
+13/03/2014 - Detectado que o nome Login está incoerente. O nome correto é usuario. => modificar no banco e no sistema
+
+14/03/2014 - Identificado possivel defeito na construção dos getters e setters do modelo. Foi necessario refazer todos. Aproveitei um exemplo de metodos add e remove side-by-side para ter como exemplo futuro.
+
+	public PublicoAlvoLocalizacao addPublicoAlvoLocalizacao(
+			PublicoAlvoLocalizacao publicoAlvoLocalizacao) {
+		getPublicoAlvoLocalizacaoList().add(publicoAlvoLocalizacao);
+		publicoAlvoLocalizacao.setPublicoAlvo(this);
+
+		return publicoAlvoLocalizacao;
+	}
+
+	public PublicoAlvoLocalizacao removePublicoAlvoLocalizacao(
+			PublicoAlvoLocalizacao publicoAlvoLocalizacao) {
+		getPublicoAlvoLocalizacaoList().remove(publicoAlvoLocalizacao);
+		publicoAlvoLocalizacao.setPublicoAlvo(null);
+
+		return publicoAlvoLocalizacao;
+	}
+
+19/03/2014 - Fazer:
+- método Pessoa.salvar. 
+- filtro de propriedades. 
+- restaurar propriedades.
+- Continuar a programação da tela de grupo de pessoas.
+
+21/03/2014 - 
+Pedi ao Adler 
+	Terminar o cadastro de propriedades
+	Pensar no gerenciador de upload de arquivos
+	Descobrir como fazer para captar dados da sessão via ajax();
+	
+24/03/2014 - Campos do tipo Float estão com problemas, procurar como o spring mvc trata esses tipos de campos (feito)
+           - A Classe exploração não deve ser extensão de PessoaMeioContato. Transformar em relacionamento OneToOne (feito)
+
+02/04/2014 - Adler trabalhando com o banco de imagens (inicialmente pelo cadastro de propriedades)
+
+04/04/2014 - Jean atuou na modelagen do módulo de relacionamento das pessoas    
+
+06/04/2014 - Comprei e repassei aos meninos um livro de angularjs
+
+06/04/2014 - Consertei a conversao da string para number, bigdecimal, float ou double. Criei a capacidade de gerar thumbnail
+
+08/04/2014 - // TODO Os Json des/serializer Calendar estao mal feitos - Refazer. (feito) 
+             testar 
+             	salvar relacionamento de pessoas (feito, falta testar)
+             	salvar propriedade (feito, falta testar)
+
+09/04/2014 - Reunião na FAPE sobre o cadastro. Incluir o campo CFDF (Cadastro Fiscal do Distrito Federal) no cadastro aLém da Caixa Postal do endereço
+
+
+==== PENDENTE ====
+24/04/2014 - Pesquisa Textual, fazer o seguinte:
+	- Devolver somente o tipo, o id, o nome, a descricao, uma foto e o endereco de acesso.
+	
+	- Produzir fake para testar a paginação no cliente
+	
+	- Grupo Pessoa testar o removercampojsonid
+	
+14/05/2014 - Descobrir um jeito de captar o nome da aplicação a partir do arquivo web.xml propriedade display-name
+
+20/05/2014 - inserido o angular js. refazendo as telas.
+
+- inserido o componente de arvores baseado no angularjs https://github.com/eu81273/angular.treeview
+
+09/06/2014 - No sistema de upload do servidor barrar aquivos que não sejam: 
+	- Acrobat (*.pdf)
+	- pacote office (word(*.doc, *.docx), excel(*.xls, *.xlsx), powerpoint(*.ppt, *.pptx))
+	- imagem (*.jpg, *.png, *.gif)
+	- arquivo compactados (*.zip)
+	- arquivo Texto (*.txt)
+	(procurar no java como validar os tipos dos arquivos.)
+	
+09/06/2014 - retornar os grupos sociais, possiveis de serem associados
+   às pessoas, baseado no login do usuario.
+   
+27/06/2014 - descobri que a única forma de enviar dados de uma classe agregada a outra exemplo (filtro.localizacaoPais) é via
+		post e enviado como @RequestBody. Nao sei como faz com @RequestParam e via get
+		
+28/06/2014 - Padronizei todos os valores reais das classes java. Todos que estavam com tipo java Float agora são BigDecimal. Tambem padronizei o JSON de cada um deles.
+
+01/07/2014 - Adler constatou que todas as imagens foram perdidas. Farei backup no banco de dados de todas as imagens caso uma seja apagada sera restaurada pelo banco.
+
+20/07/2014 - Fazer uso de https://github.com/angular-ui/ui-utils para inserir as máscaras de campo e outras funcionalidades ao projeto
+
+20/07/2014 - Construi o método gov.emater.aterweb.service.impl.UtilServiceImpl.getEnumeracao(String) para retornar valores de enumerações (enum), falta fazer o serviço Angular para uso deste método. É acessado pelo endereco enumeracao.
+
+29/08/2014 - Devido a problemas com o componente atual para exibição de tree view, optou-se por utilizar o componente https://github.com/JimLiu/angular-ui-tree. Foi adaptado a tela pessoa-grupo-cad e futuramente pessoa-cad.
+	=> identificado utilizacao de componente tree view em:
+		indice-producao-cad/filtro.jsp
+		indice-producao-cad/formulario.jsp
+		pessoa-cad/formulario.jsp
+		pessoa-grupo-cad/listagem.jsp 
+
+31/08/2014 - Padronização do uso da palavra instituição no lugar de empresa
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+09/09/2014 - utilizacao do plugin eclipse para angular js - http://marketplace.eclipse.org/content/angularjs-eclipse#.VA7h3_ldVj1
+
+15/09/2014 - Troca da tabela Localizacao e suas afiliadas pelo PessoaGrupo, chegou-se a conclusao que toda a localizacao deve ser vista como um grupo social
+
+17/11/2014 - biblioteca para melhorar a performance do tomcat - http://www.thiagovespa.com.br/blog/2011/11/16/bibliotecas-nativas-do-tomcat/
+
+08/12/2014 - inicio construçao do registro de atividades (ATER)
+
+27/12/2014 - aperfeiçoado o modelo de captaçao de registros vinculados por telas de cadastro.
+Exemplo:
+    Selecionar grupos sociais para o registro da pessoa
+    
+    No script da tela de origem criar as duas funcoes seguintes:
+    
+	// uma que será a funcao para chamar a tela de cadastro
+	$scope.apoio.pessoaGrupoIncluir = function() {
+		window.$rootScope = $rootScope;
+		window.open(baseUrl + 'pessoa-grupo-cad/?modo=P&retorno=pessoaGrupoIncluirRetorno', 99, "width=900px,height=600px,top=100px,left=300px,scrollbars=1");
+	}
+	
+	// e outra uma que será a funcao chamada após algum registro ter sido selecionado na tela de cadastro
+	$rootScope.pessoaGrupoIncluirRetorno = function (valor) {
+		if (isUndefOrNull($scope.registro.pessoaGrupoSocialList)) {
+			$scope.registro.pessoaGrupoSocialList = [];
+		}
+		angular.forEach(valor, function(value, key) {
+			var encontrou = false;
+			for (pesq in $scope.registro.pessoaGrupoSocialList) {
+				if ($scope.registro.pessoaGrupoSocialList[pesq].pessoa.id === value.id) {
+					encontrou = true;
+					break;
+				}
+			}
+			if (!encontrou) {
+				var reg = {"pessoa" : value, "nivelGestao": "T"};
+		 		$scope.registro.pessoaGrupoSocialList.push(reg);
+			}
+		});
+	}
+	
+	No script da tela de cadastro criar a seguinte função:
+	// responsavel por devolver registros selecionados a tela solicitante
+    $rootScope.popupSelecionar2 = function() {
+        if($rootScope.linhasSelecionadas.length === 1){
+            window.opener.$rootScope.$apply(function () {
+            	var retorno = location.search.split('retorno=')[1];
+            	window.opener.$rootScope[retorno]($rootScope.linhasSelecionadas);
+            });
+            window.close();
+        } else {
+            toaster.pop('info', null, "Selecione um registro!");
+        }
+    }
+	
+29/12/2014 - Achei o seguinte artigo interessante sobre como fazer simples upload de arquivos usando o angular http://stackoverflow.com/questions/13963022/angularjs-how-to-implement-a-simple-file-upload-with-multipart-form
+	=> conforme exemplo do artigo utilizamos a biblioteca https://github.com/danialfarid/angular-file-upload para fazer upload de arquivos
+
+01/01/2015 - Verifiquei que os estagiários utilizaram a biblioteca pin (http://webpop.github.io/jquery.pin/)
+	Ela é interessante pois pendura coisas na tela enquanto a tela de rolagem esta ativa
+	
+02/01/2015 - sugestão para ajustar definitivamente as telas modais (https://github.com/jschr/bootstrap-modal/)
+
+16/01/2015 - Procurando uma solução para máscaras de input text encontrei este site (http://angular-ui.github.io/ui-utils/)
+	resolvi testar e implementar.
+	
+17/01/2015 - Inseri o componente splitter cuja origem foi http://blackgate.github.io/bg-splitter/
+
+24/01/2015 - Inserido biblioteca para marcar poligonos em mapas do google. http://www.startutorial.com/articles/view/google-map-api-v3-polygon-shape-creator#sec3
+
+componente para fazer organograma da empresa
+http://www.basicprimitives.com/index.php?option=com_content&view=article&id=71&Itemid=116&lang=en

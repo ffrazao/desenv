@@ -1,0 +1,55 @@
+<h3 style="color: #BBB; text-align: center;">Galeria de imagens</h3>
+
+<div class="col-md-12" data-ng-if="!arquivos.length" style="color: #BBB; text-align: center; margin-bottom: 10px;">
+    <img data-ng-src="resources/img/sem-imagem.jpg" alt="Nenhuma Imagem" style="max-height: 290px; width: 100%;" /> 
+</div>  
+
+<div class="owl-carousel">
+    <div class="item visualizar-imagem" style="height: 250px;" data-ng-repeat="dado in arquivos" data-ng-if="dado.arquivo.extensao == '.jpg' || dado.arquivo.extensao == '.png' || dado.arquivo.extensao == '.bmp' || dado.arquivo.extensao == '.gif'">
+        <img data-ng-src="{{baseUrl}}arquivo/descer?arq={{dado.arquivo.md5}}" data-md5="{{dado.arquivo.md5}}" alt="Imagem {{$key}}" style="max-height: 260px; width: 100%;" /> 
+    </div>
+</div>
+
+<div class="modal fade" id="modalGaleria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="z-index:9999 !important; width: 90%; margin-top: 10px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><span id="galeria_imagem_nome"></span></h4>
+            </div>
+            <div class="modal-body" style="height: 600px;">
+                <div id="galeria_bg" style="width: 100%; height: 100%; background-size: contain; background-repeat: no-repeat; background-position:center;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button type="button" id="btn_galeria" class="hide" data-toggle="modal" data-target="#modalGaleria"></button>
+                
+<script>
+    setTimeout(function(){
+        $(".owl-carousel").owlCarousel({
+            navigation: true, // Show next and prev buttons
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            singleItem: true,
+            autoPlay: true,
+            navigationText: ["Anterior", "Próximo"],
+            stopOnHover: true,
+            autoHeight: true
+        });
+    }, 50);
+    
+    $(document).on('click', '.visualizar-imagem', function(event) {
+        var src = $(this).children().attr('data-md5');
+        src = baseUrl + "arquivo/descer?arq=" + src;
+        console.log(src);
+        var link = "url('" + src + "')";
+
+        $("#galeria_bg").css('background-image', link);
+
+        $("#btn_galeria").click();
+    });
+</script>

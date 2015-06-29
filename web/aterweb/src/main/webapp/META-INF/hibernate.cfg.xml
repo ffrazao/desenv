@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.use_sql_comments">true</property>
+		<property name="hibernate.search.default.directory_provider">org.hibernate.search.store.impl.FSDirectoryProvider</property>
+		<property name="hibernate.search.default.indexBase">/aterweb/lucene-indices</property>
+		<property name="hibernate.search.analyzer">org.apache.lucene.analysis.br.BrazilianAnalyzer</property>
+		<property name="hibernate.search.lucene_version">LUCENE_36</property>
+		<mapping class="gov.emater.aterweb.model.Arquivo" />
+		<mapping class="gov.emater.aterweb.model.Benfeitoria" />
+		<mapping class="gov.emater.aterweb.model.EntidadeBase" />
+		<mapping class="gov.emater.aterweb.model.Exploracao" />
+		<mapping class="gov.emater.aterweb.model.PessoaGrupoBaciaHidrograficaVi" />
+		<mapping class="gov.emater.aterweb.model.PessoaGrupoComunidadeVi" />
+		<mapping class="gov.emater.aterweb.model.PessoaGrupoAssentamentoVi" />
+		<mapping class="gov.emater.aterweb.model.PessoaGrupoPaisVi" />
+		<mapping class="gov.emater.aterweb.model.PessoaGrupoEstadoVi" />
+		<mapping class="gov.emater.aterweb.model.PessoaGrupoMunicipioVi" />
+		<mapping class="gov.emater.aterweb.model.PessoaGrupoCidadeVi" />
+		<mapping class="gov.emater.aterweb.model.Usuario" />
+		<mapping class="gov.emater.aterweb.model.UsuarioModulo" />
+		<mapping class="gov.emater.aterweb.model.UsuarioPerfil" />
+		<mapping class="gov.emater.aterweb.model.MeioContato" />
+		<mapping class="gov.emater.aterweb.model.MeioContatoEmail" />
+		<mapping class="gov.emater.aterweb.model.MeioContatoEndereco" />
+		<mapping class="gov.emater.aterweb.model.MeioContatoTelefonico" />
+		<mapping class="gov.emater.aterweb.model.Modulo" />
+		<mapping class="gov.emater.aterweb.model.ModuloPerfil" />
+		<mapping class="gov.emater.aterweb.model.OrganizacaoTipo" />
+		<mapping class="gov.emater.aterweb.model.Perfil" />
+		<mapping class="gov.emater.aterweb.model.Pessoa" />
+		<mapping class="gov.emater.aterweb.model.PessoaArquivo" />
+		<mapping class="gov.emater.aterweb.model.PessoaFisica" />
+		<mapping class="gov.emater.aterweb.model.PessoaGrupo" />
+		<mapping class="gov.emater.aterweb.model.PessoaGrupoTipo" />
+		<mapping class="gov.emater.aterweb.model.PessoaJuridica" />
+		<mapping class="gov.emater.aterweb.model.PessoaMeioContato" />
+		<mapping class="gov.emater.aterweb.model.PessoaRelacionamento" />
+		<mapping class="gov.emater.aterweb.model.PessoaRelacionamentoCidadeBaciaHidrograficaVi" />
+		<mapping class="gov.emater.aterweb.model.PessoaRelacionamentoCidadeComunidadeVi" />
+		<mapping class="gov.emater.aterweb.model.Profissao" />
+		<mapping class="gov.emater.aterweb.model.PropriedadeRural" />
+		<mapping class="gov.emater.aterweb.model.PropriedadeRuralArquivo" />
+		<mapping class="gov.emater.aterweb.model.PublicoAlvo" />
+		<mapping class="gov.emater.aterweb.model.PublicoAlvoSetor" />
+		<mapping class="gov.emater.aterweb.model.Relacionamento" />
+		<mapping class="gov.emater.aterweb.model.RelacionamentoConfiguracao" />
+		<mapping class="gov.emater.aterweb.model.RelacionamentoConfiguracaoVi" />
+		<mapping class="gov.emater.aterweb.model.RelacionamentoFuncao" />
+		<mapping class="gov.emater.aterweb.model.RelacionamentoTipo" />
+		<mapping class="gov.emater.aterweb.model.Setor" />
+		<mapping class="gov.emater.aterweb.model.SistemaProducao" />
+		<mapping class="gov.emater.aterweb.model.CadOrigem" />
+		<mapping class="gov.emater.aterweb.model.CadPessoa" />
+		<mapping class="gov.emater.aterweb.model.CadPessoaErro" />
+		<mapping class="gov.emater.aterweb.model.CadPessoaPropriedade" />
+		<mapping class="gov.emater.aterweb.model.CadPropriedade" />
+		<mapping class="gov.emater.aterweb.model.Cargo" />
+		<mapping class="gov.emater.aterweb.model.Empregador" />
+		<mapping class="gov.emater.aterweb.model.Emprego" />
+		<mapping class="gov.emater.aterweb.model.EmpregoVi" />
+		<mapping class="gov.emater.aterweb.model.Lotacao" />
+		<mapping class="gov.emater.aterweb.model.LotacaoVi" />
+		<mapping class="gov.emater.aterweb.model.UnidadeMedida" />
+		<mapping class="gov.emater.aterweb.model.ProdutoServico" />
+		<mapping class="gov.emater.aterweb.model.PrevisaoProducao" />
+		<mapping class="gov.emater.aterweb.model.Producao" />
+		<mapping class="gov.emater.aterweb.model.Responsavel" />
+		<mapping class="gov.emater.aterweb.model.PerspectivaProducaoAgricola" />
+		<mapping class="gov.emater.aterweb.model.PerspectivaProducaoAgricolaFlores" />
+		<mapping class="gov.emater.aterweb.model.PerspectivaProducaoAnimal" />
+		<mapping class="gov.emater.aterweb.model.PerspectivaProducaoAnimalCorte" />
+		<mapping class="gov.emater.aterweb.model.PerspectivaProducaoAnimalLeite" />
+		<mapping class="gov.emater.aterweb.model.PerspectivaProducaoAnimalPostura" />
+		<mapping class="gov.emater.aterweb.model.PerspectivaProducaoServico" />
+		<mapping class="gov.emater.aterweb.model.PerspectivaProducaoServicoAgroIndustria" />
+		<mapping class="gov.emater.aterweb.model.PerspectivaProducaoServicoTurismo" />
+		<mapping class="gov.emater.aterweb.model.Formulario" />
+		<mapping class="gov.emater.aterweb.model.FormularioDirecionamento" />
+		<mapping class="gov.emater.aterweb.model.OpcaoResposta" />
+		<mapping class="gov.emater.aterweb.model.OpcaoValor" />
+		<mapping class="gov.emater.aterweb.model.Pergunta" />
+		<mapping class="gov.emater.aterweb.model.Resposta" />
+		<mapping class="gov.emater.aterweb.model.RespostaVersao" />
+		<mapping class="gov.emater.aterweb.model.Acao" />
+		<mapping class="gov.emater.aterweb.model.Assunto" />
+		<mapping class="gov.emater.aterweb.model.AssuntoAcao" />
+		<mapping class="gov.emater.aterweb.model.AssuntoAcaoTransversal" />
+		<mapping class="gov.emater.aterweb.model.Atividade" />
+		<mapping class="gov.emater.aterweb.model.AtividadeAtualVi" />
+		<mapping class="gov.emater.aterweb.model.AtividadeArquivo" />
+		<mapping class="gov.emater.aterweb.model.AtividadeAssunto" />
+		<mapping class="gov.emater.aterweb.model.AtividadeObjeto" />
+		<mapping class="gov.emater.aterweb.model.AtividadePessoa" />
+		<mapping class="gov.emater.aterweb.model.AtividadeRelacionamento" />
+		<mapping class="gov.emater.aterweb.model.AtividadeRestricao" />
+		<mapping class="gov.emater.aterweb.model.Metodo" />
+		<mapping class="gov.emater.aterweb.model.Ocorrencia" />
+	</session-factory>
+</hibernate-configuration>

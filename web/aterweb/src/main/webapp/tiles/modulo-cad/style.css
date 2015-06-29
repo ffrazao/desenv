@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+input[type='checkbox'],input[type='radio'] {
+	height: 18px;
+	width: 18px;
+}
+
+.tags {
+	margin: 5px;
+	padding: 5px;
+	background-color: #FFF;
+}
+
+.tags:hover {
+	background-color: #DFDFDF;
+}
+
+.scroll {
+	height: 500px;
+	overflow-y: auto;
+}

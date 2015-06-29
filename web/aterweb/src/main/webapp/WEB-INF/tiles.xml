@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="base" template="/tiles/_modelo/_base.jsp">
+		<put-attribute name="cabecalho" value="/tiles/_modelo/cabecalho.jsp" />
+		<put-attribute name="menu" value="/tiles/_modelo/menu.jsp" />
+		<put-attribute name="barra-ferramenta" value="/tiles/_modelo/barra-ferramenta.jsp" cascade="true" />
+		<put-attribute name="rodape" value="/tiles/_modelo/rodape.jsp" />
+	</definition>
+
+	<definition name="subatividade" template="/tiles/_modelo/_generico.jsp">
+		<put-attribute name="nome" value="Cadastro de Subatividades" cascade="true" />
+		<put-attribute name="corpo" value="/tiles/atividade-cad/formulario.jsp" />
+		<put-attribute name="angular" value="data-ng-controller='cadastroCtrl'" />
+		<put-attribute name="modulo" value="atividade-cad" cascade="true" />
+		<put-attribute name="javascript" value="src='tiles/atividade-cad/script.js'" cascade="true" />
+		<put-attribute name="css" value="href='tiles/atividade-cad/style.css'" cascade="true" />
+	</definition>
+
+	<definition name="*-cad/*" extends="base">
+		<put-attribute name="titulo" value="{2}" cascade="true" />
+		<put-attribute name="corpo" value="/tiles/_modelo/_cadastro.jsp" />
+		<put-attribute name="filtro" value="/tiles/{1}-cad/filtro.jsp" cascade="true" />
+		<put-attribute name="listagem" value="/tiles/{1}-cad/listagem.jsp" cascade="true" />
+		<put-attribute name="formulario" value="/tiles/{1}-cad/formulario.jsp" cascade="true" />
+		<put-attribute name="modulo" value="{1}-cad" cascade="true" />
+	</definition>
+
+	<definition name="*-pop/*" template="/tiles/_modelo/_base-pop.jsp">
+		<put-attribute name="titulo" value="{2}" cascade="true" />
+		<put-attribute name="corpo" value="/tiles/_modelo/_cadastro.jsp" cascade="true" />
+		<put-attribute name="filtro" value="/tiles/{1}/filtro.jsp" cascade="true" />
+		<put-attribute name="listagem" value="/tiles/{1}/listagem.jsp" cascade="true" />
+		<put-attribute name="formulario" value="/tiles/{1}/formulario.jsp" cascade="true" />
+		<put-attribute name="modulo" value="{1}" cascade="true" />
+		<put-attribute name="barra-ferramenta" value="/tiles/_modelo/barra-ferramenta.jsp" cascade="true" />
+	</definition>
+
+	<definition name="*/*" extends="base">
+		<put-attribute name="titulo" value="{2}" cascade="true" />
+		<put-attribute name="corpo" value="/tiles/{1}/corpo.jsp" cascade="true" />
+	</definition>
+
+	<definition name="*|*" template="/tiles/_modelo/_generico.jsp">
+		<put-attribute name="nome" value="{2}" cascade="true" />
+		<put-attribute name="corpo" value="/tiles/{1}/corpo.jsp" cascade="true" />
+		<put-attribute name="angular" value="" />
+		<put-attribute name="modulo" value="" />
+		<put-attribute name="javascript" value="" />
+		<put-attribute name="css" value="" />
+	</definition>
+
+</tiles-definitions>

@@ -1,0 +1,205 @@
+<div class="row" data-ng-if="relacionamentos === 'pessoa'">
+    <div class="col-md-12">
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Relacionamento(s)</h3>
+                    <div class="bt-topo text-right">
+                    <button class="btn btn-success novo btn-xs ttip"  data-original-title="Incluir" data-toggle="modal" data-target="#modalRelacionamento" data-ng-click="acoes.relacionamento.incluir()" type="button">
+                    <span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive text-center">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Fun&ccedil;&atilde;o</th>
+                                    <th>Nome</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr data-ng-repeat="dados in registro.pessoaRelacionamentos">
+                                    <td>
+                                        {{dados.relacionamento.relacionamentoTipo.nome}}
+                                    </td>
+                                    
+                                    <td>
+                                        {{dados.relacionamentoFuncao.relacionadoNome}}{{dados.relacionamentoFuncao.nomeSeMasculino}} {{dados.relacionamentoFuncao.nomeSeFeminino}}
+                                    </td>
+                                    
+                                    <td>
+                                        {{dados.pessoa.nome}}
+                                    </td>
+                                    
+                                    <td>
+                                    	
+                                        <button type="button" data-placement="top" data-original-title="Editar" data-toggle="modal" data-target="#modalRelacionamento"  data-ng-click="acoes.relacionamento.editar(dados)" class="btn btn-warning btn-xs ttip"><span class="glyphicon glyphicon-pencil "></span></button>&nbsp;
+                                       	
+                                        <button type="button" data-placement="top"  data-original-title="Remover" data-ng-click="acoes.relacionamento.remover(dados)" class="btn btn-danger btn-xs ttip"><span class="glyphicon glyphicon-trash ttip"></span></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div>
+            <div class="modal fade formulario" id="modalRelacionamento" tabindex="-1" role="dialog" aria-labelledby="Relacionamento" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Relacionamento</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="classePessoaRelacionamento" nomeCampo=".@class" tag="pessoa" />
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label for="tipoRelacionamento" class="control-label">Tipo</label><br>
+                                    <select class="form-control relacionamento_tipos" data-ng-model="acoes.relacionamento.registro.relacionamento.relacionamentoTipo.id" data-ng-options="relTipo.id as relTipo.nome for relTipo in relacionamentoTipo" data-ng-change="retornaRelacionamentoFuncao(acoes.relacionamento.registro.relacionamento.relacionamentoTipo.id)">
+                                        <!--GERADO POR JSON-->
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="funcaoRelacionamento" class="control-label">Função</label><br>
+                                    <select class="form-control relacionamento_funcoes" data-ng-model="acoes.relacionamento.registro.relacionamentoFuncao.id" data-ng-options="relFuncoes.id as relFuncoes.relacionadoNome for relFuncoes in relacionamentoFuncao">
+                                        <!--GERADO POR JSON-->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clearfix "></div>
+                            <hr>
+                            <div class="form-group col-md-12">
+                                <label for="nomeRelacionamento" class="control-label">Pessoa</label><br>
+                                <div class="col-md-2">
+                                    <img max-height="256" max-width="256" style="background-color:#CCC" data-ng-src="{{baseUrl}}/resources/upload/{{acoes.relacionamento.registro.pessoa.arquivoList.arquivo.md5}}{{acoes.relacionamento.registro.pessoa.arquivoList.arquivo.extensao}}" class="col-md-12" />
+                                </div>
+                                
+                                <div class="col-md-9">
+                                    {{acoes.relacionamento.registro.pessoa.nome}}<br>
+                                    {{acoes.relacionamento.registro.pessoa.cpf}}{{acoes.relacionamento.registro.pessoa.cnpj}}
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-default btn-lg" type="button" data-ng-click="buscarPessoaRelacionamento()" id="buscarRelacionamento"><span class="glyphicon glyphicon-search"></span>&nbsp;</button>
+                                </div>
+                            </div>
+                            <div class="clearfix "></div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default cancelar" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary salvar" data-dismiss="modal" data-ng-click="acoes.relacionamento.salvar()">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" data-ng-if="relacionamentos === 'propriedadeRural'">
+    <div class="col-md-12">
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Relacionamento(s)</h3>
+                    <div class="text-right bt-topo">
+                    <button class="btn btn-success novo btn-xs ttip" data-original-title="Incluir" data-toggle="modal" data-target="#modalRelacionamento" data-ng-click="acoes.relacionamento.incluir()" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive text-left">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Exploração</th>
+                                    <th>Hectares</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="dados in registro.meioContatoEndereco.pessoaMeioContatoList">
+                                    <td>
+                                        {{dados.pessoa.nome}}
+                                    </td>
+                                    <td>
+                                        <span data-ng-if="dados.exploracao.regime === 'PR'">Própria</span>
+                                        <span data-ng-if="dados.exploracao.regime === 'PA'">Parceria</span>
+                                    </td>
+                                    <td>
+                                        {{dados.exploracao.area}}
+                                    </td>
+                                    <td>
+                                        <button type="button"  data-toggle="modal" data-target="#modalRelacionamento" data-ng-click="acoes.relacionamento.editar(dados)" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>&nbsp;
+                                        <button type="button" data-ng-click="acoes.relacionamento.remover(dados)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div>
+            <div class="modal fade formulario" id="modalRelacionamento" tabindex="-1" role="dialog" aria-labelledby="Relacionamento" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Relacionamento</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="classePessoaRelacionamento" nomeCampo=".@class" tag="pessoa" />
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label for="tipoRelacionamento" class="control-label">Exploração</label><br>
+                                    <select class="form-control relacionamento_tipos" data-ng-model="acoes.relacionamento.registro.exploracao.regime">
+                                        <option value="PR">Próprio</option>
+                                        <option value="PA">Parceria</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="funcaoRelacionamento" class="control-label">Hectares</label><br>
+                                    <input type="text" class="form-control relacionamento_funcoes" data-ng-model="acoes.relacionamento.registro.exploracao.area" />
+                                </div>
+                            </div>
+                            <div class="clearfix "></div>
+                            <hr>
+                            <div class="form-group col-md-12">
+                                <label for="nomeRelacionamento" class="control-label">Pessoa</label><br>
+                                <div class="col-md-2">
+                                    <img max-height="256" max-width="256" style="background-color:#CCC" data-ng-src="{{baseUrl}}/resources/upload/{{acoes.relacionamento.registro.pessoa.arquivoList.arquivo.md5}}{{acoes.relacionamento.registro.pessoa.arquivoList.arquivo.extensao}}" class="col-md-12" />
+                                </div>
+                                
+                                <div class="col-md-9">
+                                    {{acoes.relacionamento.registro.pessoa.nome}}<br>
+                                    {{acoes.relacionamento.registro.pessoa.cpf}}{{acoes.relacionamento.registro.pessoa.cnpj}}
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-default btn-lg" type="button" data-ng-click="buscarPessoaRelacionamento()" id="buscarRelacionamento"><span class="glyphicon glyphicon-search"></span>&nbsp;</button>
+                                </div>
+                            </div>
+                            <div class="clearfix "></div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default cancelar" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary salvar" data-dismiss="modal" data-ng-click="acoes.relacionamento.salvar()">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
