@@ -1,9 +1,16 @@
-<!-- Frazão Inicio Grupo Social -->
+<div class="row">
+	<div class="form-group col-md-12">
+		<label class="control-label">Arquivos</label>
+		<ng-include src="'views/pessoa/sub-arquivo.html'" />
+	</div>
+</div>
+
+<!-- 
 <div class="container">
 								<div class="tab-pane fade" id="arquivos">
 								<div class="container col-md-12">
 									<div class="visible-md visible-lg">
-											<!--  	<galeria fonte="pessoa"></galeria> -->
+											< !--  	<galeria fonte="pessoa"></galeria> -- >
 											<br> <br>
 											<div class="table-responsive col-md-12">
 												<div class="panel panel-default">
@@ -18,7 +25,7 @@
 														
 														<tr data-ng-repeat="arquivo in arquivos">
 														
-														<!-- td><a target="_blank"	id="{{arquivo.arquivo.id}}" href="./descer?arq={arquivo.arquivo.md5}}{{arquivo.arquivo.extensao}}">{{arquivo.arquivo.nome}}</a></td-->
+														< !-- td><a target="_blank"	id="{{arquivo.arquivo.id}}" href="./descer?arq={arquivo.arquivo.md5}}{{arquivo.arquivo.extensao}}">{{arquivo.arquivo.nome}}</a></td-- >
 														<td><a target="_blank"	id="{{arquivo.arquivo.id}}" href="./resources/upload/{{arquivo.arquivo.md5}}{{arquivo.arquivo.extensao}}">{{arquivo.arquivo.nome}}</a></td>
 														<td><button type="button" data-placement="top"  data-original-title="Remover" data-ng-click="removerArquivo(arquivo)" class="btn btn-danger btn-xs ttip"><span class="glyphicon glyphicon-trash ttip"></span></button></td>
 															</tr>		
@@ -66,7 +73,7 @@
 							
 							                            </span>
 													</div>
-												</div-->
+												</div-- >
 											
 										</div>
 									</div>
@@ -75,4 +82,4 @@
 							</div>
 
 </div>
-<!-- Frazão Fim Grupo Social -->
+ -->

@@ -3,35 +3,17 @@ var PAGINA = 'pessoa-cad';
 function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoService) {
 	
 
-	$scope.tabs = [ {
+	$scope.tabs = [ 
+	{
 		'nome' : 'Principal',
 		'include' : 'tiles/pessoa-cad/tab-principal.jsp',
 		'visivel' : true,
+		'ativa'	: true,
 	}, {
-		'nome' : 'Público alvo',
-		'include' : 'tiles/pessoa-cad/tab-publico-alvo.jsp',
-		'visivel' : true,
+		'nome' : 'Beneficiário',
+		'include' : 'tiles/pessoa-cad/tab-beneficiario.jsp',
+		'visivel' : false,
 	}, {
-		'nome' : 'Grupos Sociais',
-		'include' : 'tiles/pessoa-cad/tab-grupo-social.jsp',
-		'visivel' : true,
-	}, {
-		'nome' : 'Relacionamentos',
-		'include' : 'tiles/pessoa-cad/tab-relacionamento.jsp',
-		'visivel' : true,
-	}, {
-		'nome' : 'Arquivos',
-		'include' : 'tiles/pessoa-cad/tab-arquivo.jsp',
-		'visivel' : true,
-	}, {
-		'nome' : 'Documentos',
-		'include' : 'tiles/pessoa-cad/tab-documento.jsp',
-		'visivel' : true,
-	}, {
-		'nome' : 'Meios de Contato',
-		'include' : 'tiles/pessoa-cad/tab-meio-contato.jsp',
-		'visivel' : true,
-	/*}, {
 		'nome' : 'Colaborador',
 		'include' : 'tiles/pessoa-cad/tab-colaborador.jsp',
 		'visivel' : false,
@@ -40,15 +22,48 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
 		'include' : 'tiles/pessoa-cad/tab-diagnostico.jsp',
 		'visivel' : false,
 	}, {
+		'nome' : 'Grupos Sociais',
+		'include' : 'tiles/pessoa-cad/tab-grupo-social.jsp',
+		'visivel' : true,
+	}, {
 		'nome' : 'Atividades',
 		'include' : 'tiles/pessoa-cad/tab-atividade.jsp',
 		'visivel' : true,
 	}, {
+		'nome' : 'Arquivos',
+		'include' : 'tiles/pessoa-cad/tab-arquivo.jsp',
+		'visivel' : true,
+	}, {
 		'nome' : 'Pendências',
 		'include' : 'tiles/pessoa-cad/tab-pendencia.jsp',
-		'visivel' : true,*/
+		'visivel' : true,
 	}, ];
-	$scope.tabs.activeTab = 'Home';
+
+	$scope.tabVisivelBeneficiario = function(visivel) {
+		$scope.tabVisivel('Beneficiário', visivel);
+		var outro = $scope.tabVisivel('Colaborador');
+		$scope.tabVisivel('Diagnósticos', visivel || outro);
+	};
+
+	$scope.tabVisivelColaborador = function(visivel) {
+		$scope.tabVisivel('Colaborador', visivel);
+		var outro = $scope.tabVisivel('Beneficiário');
+		$scope.tabVisivel('Diagnósticos', visivel || outro);
+	};
+
+	$scope.tabVisivel = function(tabNome, visivel) {
+		for (var t in $scope.tabs) {
+			if ($scope.tabs[t].nome === tabNome) {
+				if (angular.isDefined(visivel)) {
+					$scope.tabs[t].visivel = visivel;
+					return;
+				} else {
+					return $scope.tabs[t].visivel;
+				}
+			}
+		}
+	};
+
 
 	
 	$rootScope.enderecoK = {"@class" : "gov.emater.aterweb.model.MeioContatoEndereco"};

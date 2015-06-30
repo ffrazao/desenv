@@ -1,4 +1,95 @@
-<!-- Frazão Inicio Principal -->
+<div class="row">
+	<div class="form-group col-md-12">
+		<label class="control-label">Unidade Organizacional</label>
+		<select class="form-control" type="text" /> 
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-4">
+		<label class="control-label">Categoria</label>
+		<select class="form-control" type="text" /> 
+	</div>
+	<div class="form-group col-md-4">
+		<label class="control-label">Geração</label>
+		<select class="form-control" type="text" /> 
+	</div>
+	<div class="form-group col-md-4">
+		<label class="control-label">Tradição</label>
+		<select class="form-control" type="text" /> 
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-2">
+		<label class="control-label">Qtd. ATER no ano</label>
+		<input class="form-control" type="text" readonly="true" /> 
+	</div>
+	<div class="form-group col-md-2">
+		<label class="control-label">IPA AG</label>
+		<input class="form-control" type="text" readonly="true" /> 
+	</div>
+	<div class="form-group col-md-2">
+		<label class="control-label">IPA AN</label>
+		<input class="form-control" type="text" readonly="true" /> 
+	</div>
+	<div class="form-group col-md-2">
+		<label class="control-label">IPA NA</label>
+		<input class="form-control" type="text" readonly="true" /> 
+	</div>
+	<div class="form-group col-md-2">
+		<label class="control-label">IPA FL</label>
+		<input class="form-control" type="text" readonly="true" /> 
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-12">
+		<label class="control-label">Propriedades Vinculadas</label>
+		<ng-include src="'views/pessoa/sub-beneficiario-propriedade.html'"/>
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-6">
+		<label class="control-label">Carteira do Produtor</label>
+		<div class="row">
+			<div class="col-md-4">
+				<label class="control-label">Número</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-4">
+				<label class="control-label">Primeira Habilitação</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-4">
+				<label class="control-label">Validade</label>
+				<input class="form-control" type="text"/>
+			</div>
+		</div>
+	</div>
+	<div class="form-group col-md-6">
+		<label class="control-label">DAP - Declaração de Aptidão ao PRONAF</label>
+		<div class="row">
+			<div class="col-md-3">
+				<label class="control-label">Situação</label>
+				<select class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Registro</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Dt. Validade</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Observação</label>
+				<input class="form-control" type="text"/>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- 
 <div class="container">
 
 	<div class="col-md-12" style="margin-left: -14px">
@@ -26,7 +117,7 @@
 					id="organizacao"
 					data-ng-model="registro.publicoAlvo.organizacaoTipo.id"
 					data-ng-options="orgTipo.id as orgTipo.nome for orgTipo in organizacaoTipo">
-					<!--GERADO POR JSON-->
+					< !--GERADO POR JSON-- >
 				</select>
 			</div>
 		</div>
@@ -44,7 +135,7 @@
 				name=".tradicao"
 				data-ng-model="registro.publicoAlvo.tradicao"
 				data-ng-options="trad for trad in tradicao">
-				<!--GERADO POR JSON-->
+				< !--GERADO POR JSON-- >
 			</select>
 		</div>
 
@@ -138,8 +229,8 @@
 						<td><label class="control-label">
 								Aposentadoria Pensão</label></td>
 
-						<!-- input type="radio" value="S" id="benefSocAposentadoriaPensao" data-ng-model="registro.publicoAlvo.benefSocAposentadoriaPensao" /> Sim |
-                                    <input type="radio" value="N" id="benefSocAposentadoriaPensao" data-ng-model="registro.publicoAlvo.benefSocAposentadoriaPensao" /-->
+						< !-- input type="radio" value="S" id="benefSocAposentadoriaPensao" data-ng-model="registro.publicoAlvo.benefSocAposentadoriaPensao" /> Sim |
+                                    <input type="radio" value="N" id="benefSocAposentadoriaPensao" data-ng-model="registro.publicoAlvo.benefSocAposentadoriaPensao" /-- >
 
 
 
@@ -151,8 +242,8 @@
 						<td><label class="control-label">
 								CTPS Assinada</label></td>
 
-						<!--  input type="radio" value="S" id="benefSocCtpsAssinada" data-ng-model="registro.publicoAlvo.benefSocCtpsAssinada" /> Sim |
-                                    <input type="radio" value="N" id="benefSocCtpsAssinada" data-ng-model="registro.publicoAlvo.benefSocCtpsAssinada" /> Não   -->
+						< !--  input type="radio" value="S" id="benefSocCtpsAssinada" data-ng-model="registro.publicoAlvo.benefSocCtpsAssinada" /> Sim |
+                                    <input type="radio" value="N" id="benefSocCtpsAssinada" data-ng-model="registro.publicoAlvo.benefSocCtpsAssinada" /> Não   -- >
 
 
 
@@ -164,8 +255,8 @@
 						<td><label class="control-label">Necessidade
 								Especiais</label></td>
 
-						<!--  input type="radio" value="S" id="benefSocNecessidEspec" data-ng-model="registro.publicoAlvo.benefSocNecessidEspec" /> Sim |
-                                    <input type="radio" value="N" id="benefSocNecessidEspec" data-ng-model="registro.publicoAlvo.benefSocNecessidEspec" /> Não-->
+						< !--  input type="radio" value="S" id="benefSocNecessidEspec" data-ng-model="registro.publicoAlvo.benefSocNecessidEspec" /> Sim |
+                                    <input type="radio" value="N" id="benefSocNecessidEspec" data-ng-model="registro.publicoAlvo.benefSocNecessidEspec" /> Não-- >
 
 
 
@@ -177,8 +268,8 @@
 								Sociais</label></td>
 
 					</tr>
-					<!-- input type="radio" value="S" id="benefSocProgSociais" data-ng-model="registro.publicoAlvo.benefSocProgSociais" /> Sim |
-                                    <input type="radio" value="N" id="benefSocProgSociais" data-ng-model="registro.publicoAlvo.benefSocProgSociais" /> Não -->
+					< !-- input type="radio" value="S" id="benefSocProgSociais" data-ng-model="registro.publicoAlvo.benefSocProgSociais" /> Sim |
+                                    <input type="radio" value="N" id="benefSocProgSociais" data-ng-model="registro.publicoAlvo.benefSocProgSociais" /> Não -- >
 
 				</table>
 			</div>
@@ -227,7 +318,7 @@
 
 				</table>
 
-				<!--  <div class="row">
+				< ! --  <div class="row">
 					<div class="form-group col-md-3">
 						<label for="projetoEspecAtepa" class="control-label">ATEPA</label>
 							 <input type="radio" value="S"
@@ -267,7 +358,7 @@
 						Não
 					</div>
 
-				</div> -->
+				</div> -- >
 			</div>
 		</div>
 	</div>
@@ -426,4 +517,4 @@
 		</div>
 	</div>
 </div>
-<!-- Frazão Fim Público Alvo -->
+ -->

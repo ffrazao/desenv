@@ -1,4 +1,212 @@
-<!-- Frazão Inicio Principal -->
+<div class="row">
+	<div class="form-group col-md-6">
+		<label class="control-label">Cadastro Especial</label>
+		<div class="form-control">
+			<label class="checkbox-inline" for="beneficiario">
+				<input type="checkbox" name="beneficiario" id="beneficiario" ng-model="beneficiarioVisivel" ng-click="tabVisivelBeneficiario(!beneficiarioVisivel);">
+				Beneficiário
+			</label> 
+			<label class="checkbox-inline" for="colaborador">
+				<input type="checkbox" name="colaborador" id="colaborador" ng-model="colaboradorVisivel" ng-click="tabVisivelColaborador(!colaboradorVisivel);">
+				Colaborador
+			</label>
+		</div>
+	</div>
+	<div class="form-group col-md-6">
+		<label class="control-label">Gênero</label>
+		<div class="form-control">
+			<label class="radio-inline" for="genero-0">
+				<input type="radio" name="genero" id="genero-0" value="M" checked="checked">
+				Masculino
+			</label> 
+			<label class="radio-inline" for="genero-1">
+				<input type="radio" name="genero" id="genero-1" value="F">
+				Feminino
+			</label>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-12">
+		<label class="control-label">Nascimento</label>
+		<div class="row">
+			<div class="form-group col-md-2">
+				<label class="control-label">Data</label>
+				<input class="form-control" type="text" /> 
+			</div>
+			<div class="form-group col-md-1">
+				<label class="control-label">Idade</label>
+				<input class="form-control" type="text" readonly="true" /> 
+			</div>
+			<div class="form-group col-md-3">
+				<label class="control-label">País</label>
+				<select class="form-control" ng-model="registro.nascimentoPais.id">
+					<option value="B">Brasil</option>
+					<option value="A">Argentina</option>
+				</select>
+			</div>
+			<div class="form-group col-md-3" ng-show="registro.nascimentoPais.id === 'B'">
+				<label class="control-label">Estado</label>
+				<select class="form-control"></select>
+			</div>
+			<div class="form-group col-md-3" ng-show="registro.nascimentoPais.id === 'B'">
+				<label class="control-label">Município</label>
+				<select class="form-control"></select>
+			</div>
+			<div class="form-group col-md-3" ng-show="registro.nascimentoPais.id && registro.nascimentoPais.id !== 'B'">
+				<label class="radio-inline" for="genero-1">
+					<input type="checkbox" name="genero" id="genero-1" value="F">
+					Naturalizado?
+				</label>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-12">
+		<label class="control-label">Endereço</label>
+        <ng-include src="'views/pessoa/sub-endereco.html'" />
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-6">
+		<label class="control-label">Telefone</label>
+        <ng-include src="'views/pessoa/sub-telefone.html'" />
+	</div>
+	<div class="form-group col-md-6">
+		<label class="control-label">E-mail</label>
+        <ng-include src="'views/pessoa/sub-email.html'" />
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-12">
+		<label class="control-label">Relacionamentos</label>
+        <ng-include src="'views/pessoa/sub-relacionamento.html'" />
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-4">
+		<label class="control-label">Escolaridade</label>
+		<select class="form-control"></select>
+	</div>
+	<div class="form-group col-md-4">
+		<label class="control-label">Profissão</label>
+		<select class="form-control"></select>
+	</div>
+	<div class="form-group col-md-4">
+		<label class="control-label">Estado Civil</label>
+		<select class="form-control"></select>
+	</div>
+</div>
+<div class="row">
+	<fieldset class="form-group col-md-5">
+		<label class="control-label">RG - Registro Geral</label>
+		<div class="row">
+			<div class="col-md-4">
+				<label class="control-label">Número</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-4">
+				<label class="control-label">Órg. Emis.</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-4">
+				<label class="control-label">Data</label>
+				<input class="form-control" type="text"/>
+			</div>
+		</div>
+	</fieldset>
+	<div class="form-group col-md-5">
+		<label class="control-label">Título de Eleitor</label>
+		<div class="row">
+			<div class="col-md-4">
+				<label class="control-label">Número</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-4">
+				<label class="control-label">Seção</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-4">
+				<label class="control-label">Zona</label>
+				<input class="form-control" type="text"/>
+			</div>
+		</div>
+	</div>
+	<div class="form-group col-md-2">
+		<label class="control-label">NIS - Número de Identificação Social</label>
+		<input class="form-control" type="text"/>
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-6">
+		<label class="control-label">Certidão de Casamento</label>
+		<div class="row">
+			<div class="col-md-3">
+				<label class="control-label">Cartório</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Folha</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Livro</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Regime</label>
+				<select class="form-control" type="text"/>
+			</div>
+		</div>
+	</div>
+	<div class="form-group col-md-6" ng-show="colaboradorVisivel">
+		<label class="control-label">CNH - Carteira Nacional de Habilitação</label>
+		<div class="row">
+			<div class="col-md-3">
+				<label class="control-label">Categoria</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Número</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">1º Habil.</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Validade</label>
+				<select class="form-control" type="text"/>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-6" ng-show="colaboradorVisivel">
+		<label class="control-label">CAM - Certificado de Alistamento Militar</label>
+		<div class="row">
+			<div class="col-md-3">
+				<label class="control-label">Número</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Órgão</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Série</label>
+				<input class="form-control" type="text"/>
+			</div>
+			<div class="col-md-3">
+				<label class="control-label">Unid. Militar</label>
+				<select class="form-control" type="text"/>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 
 
 <div class="row">
 	<div class="col-md-10">
@@ -141,4 +349,4 @@
 	</div>
 </div>
 
-<!-- Frazão Fim Principal -->
+ -->
