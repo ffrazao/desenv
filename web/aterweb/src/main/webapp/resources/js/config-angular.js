@@ -22,6 +22,7 @@ var aterweb = angular.module("aterweb",
 		, "ui.bootstrap"
 		, "ui.utils"
 		, "bgDirectives"
+        , "frz.navegador"
 		]);
 
 aterweb.config(function($routeProvider, uiGmapGoogleMapApiProvider) {

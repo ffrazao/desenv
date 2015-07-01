@@ -84,7 +84,7 @@
 				</tr>
 				<tr ng-repeat="item in navegador.selecao.item.telefone | pagina: subNavegador.paginaAtual : subNavegador.tamanhoPagina | limitTo: subNavegador.tamanhoPagina">
 					<td>
-						<input type="radio" ng-model="subNavegador.selecao.item" ng-value="item" ng-show="subNavegador.selecao.tipo === 'U'"/>
+						<input type="radio" ng-show="subNavegador.selecao.tipo === 'U'" ng-model="subNavegador.selecao.item" ng-value="item" />
 						<input type="checkbox" ng-show="subNavegador.selecao.tipo === 'M'" checklist-model="subNavegador.selecao.items" checklist-value="item"/>
 					</td>
 					<td>

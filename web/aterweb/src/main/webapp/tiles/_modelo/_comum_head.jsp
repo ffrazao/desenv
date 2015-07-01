@@ -169,5 +169,6 @@ var nomeModulo = "";
 <script type="text/javascript" src="resources/js/comps/galeria/galeria.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/comps/relacionamentos/relacionamentos.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/comps/upload/upload.js" charset="UTF-8"></script>
+<script type="text/javascript" src="resources/js/frz-navegador.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/services/meio-contato/meio-contato.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/services/requisicao/requisicao.js" charset="UTF-8"></script>

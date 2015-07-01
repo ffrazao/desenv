@@ -27,6 +27,7 @@ var aterwebApp = angular.module('aterwebApp', [
 	'checklist-model',
 	'endereco',
 	'ui.tree',
+	'frz.navegador',
 	]);
 
 // codigo requerido para permitir que o mesmo controller de tela seja também utilizado em modal

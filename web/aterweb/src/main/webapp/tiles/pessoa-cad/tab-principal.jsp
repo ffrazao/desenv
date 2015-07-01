@@ -65,6 +65,36 @@
 <div class="row">
 	<div class="form-group col-md-12">
 		<label class="control-label">Endereço</label>
+<frz-navegador
+			ng-model="navegador" exibe-texto-botao="false" 
+			dados="cadastro.lista"
+			acoes-especiais="acoesEspeciais"
+			on-abrir = "abrir()"
+			on-agir = "agir()"
+			on-cancelar-editar = "cancelarEditar()"
+			on-cancelar-excluir = "cancelarExcluir()"
+			on-cancelar-incluir = "cancelarIncluir()"
+			on-cancelar-filtrar = "cancelarListar()"
+			on-confirmar-editar = "confirmarEditar()"
+			on-confirmar-excluir = "confirmarExcluir()"
+			on-confirmar-incluir = "confirmarIncluir()"
+			on-confirmar-filtrar = "confirmarFiltrar()"
+			on-editar = "editar()"
+			on-excluir = "excluir()"
+			on-filtrar = "filtrar()"
+			on-incluir = "incluir()"
+			on-limpar = "limpar()"
+			on-listar = "listar()"
+			on-navegar-primeiro = "navegarPrimeiro()"
+			on-navegar-anterior = "navegarAnterior()"
+			on-navegar-proximo = "navegarPosterior()"
+			on-navegar-ultimo = "navegarUltimo()"
+			on-restaurar = "restaurar()"
+			on-visualizar = "visualizar()"
+			on-voltar = "voltar()"
+			on-proxima-pagina="proximaPagina()"
+			on-ultima-pagina="ultimaPagina()"
+			></frz-navegador>
         <ng-include src="'views/pessoa/sub-endereco.html'" />
 	</div>
 </div>
