@@ -1,7 +1,10 @@
 {
   "name": "aterweb",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "grunt-lodash": "^0.4.0",
+    "lodash-cli": "^3.9.3"
+  },
   "repository": {},
   "devDependencies": {
     "grunt": "^0.4.5",
