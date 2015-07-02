@@ -455,7 +455,7 @@
 	        link: function(scope, element, attributes) {
 	            scope.exibeTextoBotao = angular.isUndefined(attributes.exibeTextoBotao) || (attributes.exibeTextoBotao.toLowerCase() === 'true');
 	            // executar o estado inicial do navegador
-	            scope.ngModel.mudarEstado('ABRINDO');
+	            (scope.ngModel && scope.ngModel.mudarEstado('ABRINDO'));
 	        },
 	        template: 
 	        '<div class="btn-toolbar pull-right" role="toolbar" aria-label="Barra de Ferramentas" style=".ng-valid {border: 0px;} ">' +
