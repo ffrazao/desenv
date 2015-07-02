@@ -925,3 +925,121 @@ $scope.removerArquivo = function(arquivo){
 		});
 	}
 }
+
+function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b) {
+
+	$scope.enderecoNvg = new FrzNavegadorParams();
+	
+	$scope.enderecoNvg.scope = $scope;
+
+	$scope.cadastro = {registro: {endereco:[]}};
+	
+	$scope.abrir = function() {
+		$scope.enderecoNvg.mudarEstado('ESPECIAL');
+	};
+
+	$scope.especial = function() {
+		$scope.enderecoNvg.especialBotoesVisiveis([ 'agir', 'editar',
+				'excluir', 'incluir', 'navegar', 'tamanhoPagina', ]);
+	};
+
+	$scope.editar = function(id) {
+
+	};
+
+	$scope.excluir = function() {
+
+	};
+
+	$scope.incluir = function(size) {
+		var modalInstance = $modal_b.open({
+			animation : $scope.animationsEnabled,
+			templateUrl : 'pessoaEnderecoFrm.html',
+			controller : 'SubEnderecoCtrl',
+			size : size,
+			resolve : {
+				registro : function() {
+					return $scope.cadastro.registro;
+				}
+			}
+		});
+
+		modalInstance.result.then(function(registro) {
+			if (!registro) {
+				return;
+			}
+			if (!$scope.cadastro.registro) {
+				$scope.cadastro.registro = {};
+			}
+			if (!$scope.cadastro.registro.arquivo) {
+				$scope.cadastro.registro.arquivo = [];
+			}
+			if (angular.isArray(registro)) {
+				for ( var r in registro) {
+					$scope.cadastro.registro.arquivo.push(r);
+				}
+			} else {
+				$scope.cadastro.registro.arquivo.push(registro);
+			}
+		}, function() {
+			console.log('Modal dismissed at: ' + new Date());
+		});
+	};
+
+	$scope.pesquisaPessoa = function(size) {
+
+		var modalInstance = $modal_b.open({
+			animation : $scope.animationsEnabled,
+			templateUrl : 'views/pessoa/_modal.html',
+			controller : 'PessoaCtrl',
+			size : size,
+			resolve : {
+				registro : function() {
+					//return $scope.cadastro.registro;
+				}
+			}
+		});
+
+		modalInstance.result.then(function(registro) {
+			if (!registro) {
+				return;
+			}
+			if (!$scope.arquivo) {
+				$scope.arquivo = {};
+			}
+			if (angular.isArray(registro)) {
+				$scope.arquivo.pessoa = angular.copy(registro[0]);
+			} else {
+				$scope.arquivo.pessoa = angular.copy(registro);
+			}
+		}, function() {
+			console.log('Modal dismissed at: ' + new Date());
+		});
+	}
+
+	$scope.items = [];
+	$scope.selected = {
+		item : $scope.items[0]
+	};
+
+	$scope.ok = function() {
+		$modalInstance.close($scope.arquivo);
+	};
+
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
+
+	$scope.navegarPrimeiro = function() {
+	};
+
+	$scope.navegarAnterior = function() {
+	};
+
+	$scope.navegarPosterior = function() {
+	};
+
+	$scope.navegarUltimo = function() {
+	};
+
+};

@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="form-group col-md-12">
 		<label class="control-label">Arquivos</label>
-		<ng-include src="'views/pessoa/sub-arquivo.html'" />
+		<!-- <ng-include src="'views/pessoa/sub-arquivo.html'" /> -->
 	</div>
 </div>
 

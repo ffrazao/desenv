@@ -65,53 +65,23 @@
 <div class="row">
 	<div class="form-group col-md-12">
 		<label class="control-label">Endereço</label>
-<frz-navegador
-			ng-model="navegador" exibe-texto-botao="false" 
-			dados="cadastro.lista"
-			acoes-especiais="acoesEspeciais"
-			on-abrir = "abrir()"
-			on-agir = "agir()"
-			on-cancelar-editar = "cancelarEditar()"
-			on-cancelar-excluir = "cancelarExcluir()"
-			on-cancelar-incluir = "cancelarIncluir()"
-			on-cancelar-filtrar = "cancelarListar()"
-			on-confirmar-editar = "confirmarEditar()"
-			on-confirmar-excluir = "confirmarExcluir()"
-			on-confirmar-incluir = "confirmarIncluir()"
-			on-confirmar-filtrar = "confirmarFiltrar()"
-			on-editar = "editar()"
-			on-excluir = "excluir()"
-			on-filtrar = "filtrar()"
-			on-incluir = "incluir()"
-			on-limpar = "limpar()"
-			on-listar = "listar()"
-			on-navegar-primeiro = "navegarPrimeiro()"
-			on-navegar-anterior = "navegarAnterior()"
-			on-navegar-proximo = "navegarPosterior()"
-			on-navegar-ultimo = "navegarUltimo()"
-			on-restaurar = "restaurar()"
-			on-visualizar = "visualizar()"
-			on-voltar = "voltar()"
-			on-proxima-pagina="proximaPagina()"
-			on-ultima-pagina="ultimaPagina()"
-			></frz-navegador>
-        <ng-include src="'views/pessoa/sub-endereco.html'" />
+        <ng-include src="'tiles/pessoa-cad/sub-endereco.jsp'" ng-controller="SubEnderecoCtrl"/>
 	</div>
 </div>
 <div class="row">
 	<div class="form-group col-md-6">
 		<label class="control-label">Telefone</label>
-        <ng-include src="'views/pessoa/sub-telefone.html'" />
+        <!-- <ng-include src="'tiles/pessoa-cad/sub-telefone.jsp'" /> -->
 	</div>
 	<div class="form-group col-md-6">
 		<label class="control-label">E-mail</label>
-        <ng-include src="'views/pessoa/sub-email.html'" />
+        <!-- <ng-include src="'tiles/pessoa-cad/sub-email.jsp'" /> -->
 	</div>
 </div>
 <div class="row">
 	<div class="form-group col-md-12">
 		<label class="control-label">Relacionamentos</label>
-        <ng-include src="'views/pessoa/sub-relacionamento.html'" />
+        <!-- <ng-include src="'tiles/pessoa-cad/sub-relacionamento.jsp'" /> -->
 	</div>
 </div>
 <div class="row">

@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="form-group col-md-12">
 				<label class="control-label">Captação</label>
-				<ng-include src="'views/pessoa/sub-diagnostico-captacao.html'" />
+				<!-- <ng-include src="'views/pessoa/sub-diagnostico-captacao.html'" /> -->
 			</div>
 		</div>
 	</tab>
@@ -17,7 +17,7 @@
 		<div class="row">
 			<div class="form-group col-md-12">
 				<label class="control-label">Resultado</label>
-				<ng-include src="'views/pessoa/sub-diagnostico-resultado.html'" />
+				<!-- <ng-include src="'views/pessoa/sub-diagnostico-resultado.html'" /> -->
 			</div>
 		</div>
 	</tab>

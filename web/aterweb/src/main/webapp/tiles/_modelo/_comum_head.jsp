@@ -159,7 +159,8 @@ var nomeModulo = "";
 <script type="text/javascript" src="resources/js/angular-ui-tree.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/libs/jquery.fileupload-angular.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/libs/calendar.js" charset="UTF-8"></script>
-<script type="text/javascript" src="resources/js/ui-bootstrap-tpls-0.12.0.js" charset="UTF-8"></script>
+<script type="text/javascript" src="resources/js/ui-bootstrap.js" charset="UTF-8"></script>
+<script type="text/javascript" src="resources/js/ui-bootstrap-tpls.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/ui-utils.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/splitter.js" charset="UTF-8"></script>
 

@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	angular.module('frz.navegador', []).factory('FrzNavegadorParams', function() {
+	angular.module('frz.navegador', ['toaster']).factory('FrzNavegadorParams', function() {
 	    var FrzNavegadorParams = function () {
 	        this.selecao = { tipo: 'U', checked: false, items: [], item: null, selecionado: false };
 	        this.scope = null;
@@ -270,7 +270,7 @@
 	                }
 	            }
 	        } catch (erro) {
-	        	toaster.error('Erro ao executar a operação!', erro);
+	        	toaster.pop('error', 'Erro ao executar a operação!', erro);
 	            console.error('Erro ao executar a operação!', erro);
 	        }
 	    };
@@ -298,12 +298,13 @@
 	            $scope.onAgir();
 	            item.acao();
 	        } catch (erro) {
-	        	toaster.error('Erro ao executar a operação!', erro);
+	        	toaster.pop('error', 'Erro ao executar a operação!', erro);
 	            console.error('Erro ao executar a operação!', erro);
 	        }
 	    };
 
 	    $scope.botaoNavegarVisivel = function () {
+	    	if (!$scope.ngModel) return;
 	        var e = $scope.ngModel.estadoAtual();
 	        return $scope.botoes.navegar.visivel && (e !== 'VISUALIZANDO' || (e === 'VISUALIZANDO' && $scope.ngModel.selecao.tipo === 'M')) 
 	            && $scope.dados && $scope.dados.length > 0;
@@ -455,7 +456,7 @@
 	        link: function(scope, element, attributes) {
 	            scope.exibeTextoBotao = angular.isUndefined(attributes.exibeTextoBotao) || (attributes.exibeTextoBotao.toLowerCase() === 'true');
 	            // executar o estado inicial do navegador
-	            scope.ngModel.mudarEstado('ABRINDO');
+	            (scope.ngModel && scope.ngModel.mudarEstado('ABRINDO'));
 	        },
 	        template: 
 	        '<div class="btn-toolbar pull-right" role="toolbar" aria-label="Barra de Ferramentas" style=".ng-valid {border: 0px;} ">' +
@@ -537,6 +538,7 @@
 				};
 			},
 			link: function (scope, element/*, attributes*/) {
+				if (!scope.ngModel.selecao) return;
 				scope.$watch('ngModel.selecao.tipo', function() {
 					if (scope.ngModel.selecao.tipo === 'U') {
 						scope.ngModel.selecao.selecionado = scope.ngModel.selecao.item && angular.isDefined(scope.ngModel.selecao.item) && scope.ngModel.selecao.item;
@@ -552,7 +554,7 @@
 				}, true);
 
 				scope.$watch('ngModel.selecao.items', function() {
-					if (!scope.ngModel.selecao.items) {
+					if (!scope.ngModel || !scope.ngModel.selecao && !scope.ngModel.selecao.items) {
 						return;
 					}
 					var marcado = 0, desmarcado = 0, total = scope.dados ? scope.dados.length : 0;
@@ -581,4 +583,6 @@
 			},
 		};
 	});
+	
+	
 }());
