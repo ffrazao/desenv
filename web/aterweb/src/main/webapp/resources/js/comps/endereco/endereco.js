@@ -17,11 +17,14 @@ endereco.directive('endereco', function($http, toaster, $rootScope, $q, uiGmapGo
 		},
 		replace : true,
 		transclude : true,
+		controller : function($scope) {
+			console.log($scope);
+		},
 		link : function(scope, element, attrs) {
 			
 			var dominio = "/aterweb/dominio";
 			
-			scope.iniciar = function () {
+			var iniciar = function () {
 				// iniciar estrutura
 				if (isUndefOrNull(scope.dados)) {
 					scope.dados = {};

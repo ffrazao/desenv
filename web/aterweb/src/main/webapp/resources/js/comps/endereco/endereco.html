@@ -1,6 +1,6 @@
 <fieldset >
-	<input type="hidden" data-ng-model="dados.id" ng-init="dados.id = 33">
-	<!-- [{{$parent.frmEndereco}}] -->
+	<input type="hidden" data-ng-model="dados.id">
+	[{{dados}}]
 	<div class="form-group" data-ng-hide="dados.id">
 		<label class="col-md-4 control-label"><button class="btn btn-primary" data-ng-model="procurarPorPessoa" btn-checkbox data-ng-click="procurarPorPessoaFn()">Procurar Endereço Por Pessoa</button></label>
 		<div class="col-md-7">
@@ -272,45 +272,47 @@
 		</div>
 	</div>
 	
-	<accordion data-ng-hide="!dados.propriedadeRuralConfirmacao">
-		<accordion-group is-open="aberto" ng-init="aberto = false">
+	<accordion data-ng-hide="!dados.propriedadeRuralConfirmacao" close-others="fechaOutros">
+		<accordion-group is-open="aberto">
 			<accordion-heading>
-				<div class="form-group" data-ng-hide="!dados.propriedadeRuralConfirmacao || procurarPorPessoa">
-					<label class="col-md-4 control-label" for="latitude">Coordenadas</label>
-					<div class="col-md-7">
-						<div class="row">
-							<div class="col-md-6">
-								<label class="control-label" for="latitude">Latitude</label>
-								<input id="latitude" name="latitude" type="text" placeholder="Latitude" class="form-control input-md" data-ng-model="dados.latitude">
-							</div>
-							<div class="col-md-6">
-								<label class="control-label" for="longitude">Longitude</label>
-								<input id="longitude" name="longitude" type="text" placeholder="Longitude" class="form-control input-md" data-ng-model="dados.longitude">
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="form-group" data-ng-hide="!dados.propriedadeRuralConfirmacao || procurarPorPessoa">
-					<label class="col-md-4 control-label" for="pesquisaGoogle">Pesquisa Google</label>
-					<div class="col-md-7">
-						<div class="input-group">
-							<input id="pesquisaGoogle" name="pesquisaGoogle" class="form-control" placeholder="Pesquisa" type="text" data-ng-model="pesquisaGoogle">
-							<span class="input-group-addon glyphicon glyphicon-search"></span>
-						</div>
-					</div>
-				</div>
-				
-				<div class="form-group" data-ng-hide="!dados.propriedadeRuralConfirmacao || procurarPorPessoa">
-					<label class="col-md-4 control-label" for="mapa">Mapa</label>
-					<div class="col-md-7">
-						<style>.angular-google-map-container { height: 400px; }</style>
-						<div>
-							<ui-gmap-google-map id="mapa" name="mapa" center='map.center' zoom='map.zoom'></ui-gmap-google-map>
-						</div>
-					</div>
-				</div>
+				Mapa e Georreferenciamento
 			</accordion-heading>		
+			
+			<div class="form-group" data-ng-hide="!dados.propriedadeRuralConfirmacao || procurarPorPessoa">
+				<label class="col-md-4 control-label" for="latitude">Coordenadas</label>
+				<div class="col-md-7">
+					<div class="row">
+						<div class="col-md-6">
+							<label class="control-label" for="latitude">Latitude</label>
+							<input id="latitude" name="latitude" type="text" placeholder="Latitude" class="form-control input-md" data-ng-model="dados.latitude">
+						</div>
+						<div class="col-md-6">
+							<label class="control-label" for="longitude">Longitude</label>
+							<input id="longitude" name="longitude" type="text" placeholder="Longitude" class="form-control input-md" data-ng-model="dados.longitude">
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" data-ng-hide="!dados.propriedadeRuralConfirmacao || procurarPorPessoa">
+				<label class="col-md-4 control-label" for="pesquisaGoogle">Pesquisa Google</label>
+				<div class="col-md-7">
+					<div class="input-group">
+						<input id="pesquisaGoogle" name="pesquisaGoogle" class="form-control" placeholder="Pesquisa" type="text" data-ng-model="pesquisaGoogle">
+						<span class="input-group-addon glyphicon glyphicon-search"></span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" data-ng-hide="!dados.propriedadeRuralConfirmacao || procurarPorPessoa">
+				<label class="col-md-4 control-label" for="mapa">Mapa</label>
+				<div class="col-md-7">
+					<style>.angular-google-map-container { height: 400px; }</style>
+					<div>
+						<ui-gmap-google-map id="mapa" name="mapa" center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+					</div>
+				</div>
+			</div>
 		</accordion-group>
 	</accordion>
 	

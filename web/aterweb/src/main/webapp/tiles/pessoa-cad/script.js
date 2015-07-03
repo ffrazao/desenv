@@ -63,52 +63,6 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
 		}
 	};
 
-
-	
-	$rootScope.enderecoK = {"@class" : "gov.emater.aterweb.model.MeioContatoEndereco"};
-	$scope.novoEndereco = function() {
-		$scope.enderecoK = {};
-		$scope.enderecoK["@class"] = "gov.emater.aterweb.model.MeioContatoEndereco";
-		// iniciar estrutura
-		if (isUndefOrNull($scope.enderecoK)) {
-			$scope.enderecoK = {};
-		}
-		if (isUndefOrNull($scope.enderecoK.propriedadeRuralConfirmacao)) {
-			$scope.enderecoK.propriedadeRuralConfirmacao = "N";
-		}
-		if (isUndefOrNull($scope.enderecoK.pessoaGrupoCidadeVi)) {
-			$scope.enderecoK.pessoaGrupoCidadeVi = {};
-		}
-		if (isUndefOrNull($scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi)) {
-			$scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi = {};
-		}
-		if (isUndefOrNull($scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi)) {
-			$scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi = {};
-		}
-		if (isUndefOrNull($scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi)) {
-			$scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi = {};
-		}
-		if (isUndefOrNull($scope.enderecoK.propriedadeRural)) {
-			$scope.enderecoK.propriedadeRural = {};
-		}
-		if (isUndefOrNull($scope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi)) {
-			$scope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi = {};
-		}
-		if (isUndefOrNull($scope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi)) {
-			$scope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi = {};
-		}
-	}
-	$scope.salvarEndereco = function() {
-		if (isUndefOrNull($rootScope.registro.pessoaMeioContatos)) {
-			$rootScope.registro.pessoaMeioContatos = [];
-		}
-		$scope.enderecoK["@class"] = "gov.emater.aterweb.model.MeioContatoEndereco";
-		$rootScope.registro.pessoaMeioContatos.push({meioContato: $scope.enderecoK});
-		$('#endereco').modal('hide');
-	}
-	$scope.salvarEnderecoCancelar = function() {
-		alert('cancel');
-	}
     $scope.acoes = {};
     $scope.acoes.meioContato =  {}; //funções para meiocontato
     $scope.acoes.relacionamento = {};//funções para relacionamentos    
@@ -930,39 +884,34 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 	$scope.enderecoNvg = new FrzNavegadorParams();
 	
 	$scope.enderecoNvg.scope = $scope;
-
-	$scope.cadastro = {registro: {endereco:[]}};
 	
+	if (registro != null) {
+		$scope.dados = angular.copy(registro);
+	}
+
 	$scope.abrir = function() {
 		$scope.enderecoNvg.mudarEstado('ESPECIAL');
 	};
 
 	$scope.especial = function() {
-		$scope.enderecoNvg.especialBotoesVisiveis([ 'agir', 'editar',
-				'excluir', 'incluir', 'navegar', 'tamanhoPagina', ]);
-	};
-
-	$scope.editar = function(id) {
-
+		$scope.enderecoNvg.especialBotoesVisiveis([ 'agir', 'editar', 'excluir', 'incluir', 'navegar', 'tamanhoPagina', ]);
 	};
 
 	$scope.excluir = function() {
 
 	};
 	
-	$rootScope.submitted = false;
-	
-	$scope.incluir = function(size) {
-		$scope.novoEndereco();
-		
+	function enderecoModal(acao) {
 		var modalInstance = $modal_b.open({
 			animation : $scope.animationsEnabled,
-			templateUrl : 'pessoaEnderecoFrm.html',
+//			templateUrl : 'pessoaEnderecoFrm.html',
+			templateUrl : 'tiles/pessoa-cad/form-endereco.jsp',
 			controller : 'SubEnderecoCtrl',
-			size : size,
+			size : 'lg',
 			resolve : {
 				registro : function() {
-					return $scope.enderecoK;
+					$rootScope.enderecoK.acao = acao;
+					return $rootScope.enderecoK;
 				}
 			}
 		});
@@ -979,47 +928,40 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 					$scope.registro.pessoaMeioContatos.push({id: i, nome: 'Teste ' + i});
 				}
 			}
-			$scope.registro.pessoaMeioContatos.push(angular.copy(registro));
+			if (registro.acao === 'I') {
+				$scope.registro.pessoaMeioContatos.push(angular.copy(registro));
+			} else {
+				$scope.enderecoNvg.selecao.item = angular.copy(registro);
+			}
 		}, function() {
 			//console.log('Modal dismissed at: ' + new Date());
 		});
-	};
-
-	$scope.pesquisaPessoa = function(size) {
-
-		var modalInstance = $modal_b.open({
-			animation : $scope.animationsEnabled,
-			templateUrl : 'views/pessoa/_modal.html',
-			controller : 'PessoaCtrl',
-			size : size,
-			resolve : {
-				registro : function() {
-					//return $scope.cadastro.registro;
-				}
-			}
-		});
-
-		modalInstance.result.then(function(registro) {
-			if (!registro) {
-				return;
-			}
-			if (!$scope.arquivo) {
-				$scope.arquivo = {};
-			}
-			if (angular.isArray(registro)) {
-				$scope.arquivo.pessoa = angular.copy(registro[0]);
-			} else {
-				$scope.arquivo.pessoa = angular.copy(registro);
-			}
-		}, function() {
-			console.log('Modal dismissed at: ' + new Date());
-		});
 	}
-
-	$scope.items = [];
-	$scope.selected = {
-		item : $scope.items[0]
+	
+	$rootScope.submitted = false;
+	
+	$scope.incluir = function() {
+		$scope.novoEndereco();
+		
+		enderecoModal('I');
 	};
+	
+	$scope.editar = function(id) {
+		if ($scope.enderecoNvg.selecao.tipo === 'U') {
+			$rootScope.enderecoK = angular.copy($scope.enderecoNvg.selecao.item);
+			enderecoModal('E');
+		} else if ($scope.enderecoNvg.selecao.tipo === 'M') {
+			for (var i in $scope.enderecoNvg.selecao.items) {
+				$rootScope.enderecoK = angular.copy($scope.enderecoNvg.selecao.items[i]);
+				enderecoModal('E');
+			}
+		}
+	};
+
+//	$scope.items = [];
+//	$scope.selected = {
+//		item : $scope.items[0]
+//	};
 
     $scope.processado = false;
     
@@ -1033,23 +975,43 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
     	}
         $scope.emProcessamento(false);
 
-		$modalInstance.close($scope.enderecoK);
+		$modalInstance.close($rootScope.enderecoK);
 	};
 
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};
 
-	$scope.navegarPrimeiro = function() {
-	};
-
-	$scope.navegarAnterior = function() {
-	};
-
-	$scope.navegarPosterior = function() {
-	};
-
-	$scope.navegarUltimo = function() {
-	};
-
+	$scope.novoEndereco = function() {
+		$rootScope.enderecoK = {};
+		$rootScope.enderecoK["@class"] = "gov.emater.aterweb.model.MeioContatoEndereco";
+		// iniciar estrutura
+		if (isUndefOrNull($rootScope.enderecoK)) {
+			$rootScope.enderecoK = {};
+		}
+		if (isUndefOrNull($rootScope.enderecoK.propriedadeRuralConfirmacao)) {
+			$rootScope.enderecoK.propriedadeRuralConfirmacao = "N";
+		}
+		if (isUndefOrNull($rootScope.enderecoK.pessoaGrupoCidadeVi)) {
+			$rootScope.enderecoK.pessoaGrupoCidadeVi = {};
+		}
+		if (isUndefOrNull($rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi)) {
+			$rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi = {};
+		}
+		if (isUndefOrNull($rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi)) {
+			$rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi = {};
+		}
+		if (isUndefOrNull($rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi)) {
+			$rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi = {};
+		}
+		if (isUndefOrNull($rootScope.enderecoK.propriedadeRural)) {
+			$rootScope.enderecoK.propriedadeRural = {};
+		}
+		if (isUndefOrNull($rootScope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi)) {
+			$rootScope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi = {};
+		}
+		if (isUndefOrNull($rootScope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi)) {
+			$rootScope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi = {};
+		}
+	}
 };

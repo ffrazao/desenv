@@ -1,5 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading container-fluid">
+    	[{{enderecoK}}]
       <frz-navegador
         ng-model="enderecoNvg" exibe-texto-botao="false" 
         dados="registro.pessoaMeioContatos"
@@ -10,7 +11,7 @@
         on-especial = "especial()"
         on-excluir = "excluir()"
         on-filtrar = "filtrar()"
-        on-incluir = "incluir('lg')"
+        on-incluir = "incluir()"
         on-listar = "listar()"
         on-navegar-primeiro = "navegarPrimeiro()"
         on-navegar-anterior = "navegarAnterior()"
@@ -27,6 +28,7 @@
       </div>
     </div>
     <div class="table-responsible" ng-show="registro.pessoaMeioContatos.length > 0">
+      
       <table class="table table-striped">
         <thead>
           <tr>
