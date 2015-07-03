@@ -23,7 +23,16 @@ var aterweb = angular.module("aterweb",
 		, "ui.utils"
 		, "bgDirectives"
         , "frz.navegador"
+        , "ui.utils.masks"
 		]);
+
+aterweb.factory('$modalInstance', function () {
+	return null;
+});
+
+aterweb.factory('registro', function () {
+	return null;
+});
 
 aterweb.config(function($routeProvider, uiGmapGoogleMapApiProvider) {
 	var filtroUrl = "/";

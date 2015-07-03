@@ -12,7 +12,8 @@ endereco.directive('endereco', function($http, toaster, $rootScope, $q, uiGmapGo
 		restrict : 'E',
 		templateUrl : 'resources/js/comps/endereco/endereco.html',
 		scope : {
-			dados : "="
+			dados : "=",
+			submitted : '=',
 		},
 		replace : true,
 		transclude : true,
@@ -100,6 +101,10 @@ endereco.directive('endereco', function($http, toaster, $rootScope, $q, uiGmapGo
 							}
 						}
 					}
+					if (!scope.dados.pessoaGrupoCidadeVi) {
+						scope.dados.pessoaGrupoCidadeVi = {pessoaGrupoMunicipioVi : {pessoaGrupoEstadoVi : {pessoaGrupoPaisVi : {} } } };
+					}
+					
 					if (isUndefOrNull(scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi.id)) {
 						scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi.id = scope.brasil.id;
 					}
@@ -195,6 +200,16 @@ endereco.directive('endereco', function($http, toaster, $rootScope, $q, uiGmapGo
 
 			scope.$watch("dados.logradouro + dados.pessoaGrupoCidadeVi.id + dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.id + dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.id + dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi.id + dados.cep", function(newValue, oldValue, scope) {
 //				console.log("pesquisa");
+				scope.pesquisaGoogle = "";
+				if (	!scope.dados ||
+						!scope.dados.pessoaGrupoCidadeVi || 
+						!scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi || 
+						!scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi || 
+						!scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi || 
+						!scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi.id ||
+						!scope.dados.cep) {
+					return;
+				}
 				scope.pesquisaGoogle = nn(scope.dados.logradouro) + " " + 
 					nn(pessoaGrupo(scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.id, scope.lista.municipioList)) + " " + 
 					nn(pessoaGrupo(scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.id, scope.lista.estadoList)) + " " + 
@@ -219,7 +234,10 @@ endereco.directive('endereco', function($http, toaster, $rootScope, $q, uiGmapGo
 			}
 			
 			scope.buscaCep = function() {
-				scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi.id = scope.brasil;
+				if (!scope.dados.pessoaGrupoCidadeVi) {
+					scope.dados.pessoaGrupoCidadeVi = { pessoaGrupoMunicipioVi : { pessoaGrupoEstadoVi : { pessoaGrupoPaisVi : {} } } };
+				}  
+				scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi.id = scope.brasil.id;
 				$rootScope.emProcessamento(true);
 				if (!isUndefOrNull(scope.dados)
 						&& !isUndefOrNull(scope.dados.cep)
@@ -235,6 +253,9 @@ endereco.directive('endereco', function($http, toaster, $rootScope, $q, uiGmapGo
 							scope.dados.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.id = data.resultado.localidade;
 							scope.dados.pessoaGrupoCidadeVi.id = null;
 							scope.dados.bairro = data.resultado.bairro;
+							if (!scope.dados.propriedadeRural) {
+								scope.dados.propriedadeRural = {pessoaGrupoComunidadeVi: {}, pessoaGrupoBaciaHidrograficaVi: {}};
+							};
 							scope.dados.propriedadeRural.pessoaGrupoComunidadeVi.id = null;
 							scope.dados.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.id = null;
 							scope.dados.logradouro = data.resultado.logradouro;

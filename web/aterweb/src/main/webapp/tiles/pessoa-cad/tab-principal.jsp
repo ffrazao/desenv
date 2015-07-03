@@ -32,7 +32,7 @@
 		<div class="row">
 			<div class="form-group col-md-2">
 				<label class="control-label">Data</label>
-				<input class="form-control" type="text" /> 
+				<input class="form-control" type="text" data-ng-model="registro.nascimento" ui-date-mask /> 
 			</div>
 			<div class="form-group col-md-1">
 				<label class="control-label">Idade</label>
@@ -112,7 +112,7 @@
 			</div>
 			<div class="col-md-4">
 				<label class="control-label">Data</label>
-				<input class="form-control" type="text"/>
+				<input class="form-control" type="text" data-ng-model="registro.rg.emissao"  ui-date-mask />
 			</div>
 		</div>
 	</fieldset>

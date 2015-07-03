@@ -47,7 +47,7 @@
 								</div>
 								<div class="form-group col-md-4">
 									<label class="control-label">CPF</label>
-									<input class="form-control" type="text" ng-model="registro.cpf"/> 
+									<input id="cpf" name="cpf" type="text" placeholder="999.999.999-99" class="form-control input-md" ng-model="registro.cpf" ui-cpf-mask model-view-value="true">
 								</div>
 							</div>
 						</div>
@@ -94,6 +94,24 @@
 		</div>
 	</div>
 </div>
+<script type="text/ng-template" id="pessoaEnderecoFrm.html">
+<div class="modal-header">
+	<h3 class="modal-title">Endereço</h3>
+</div>
+<div class="modal-body">
+	<div class="container-fluid">
+		<div class="row">
+			<form class="form-horizontal" name="$parent.frmEndereco">
+				<endereco data-dados="enderecoK" data-submitted="submitted"/>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">OK</button>
+	<button class="btn btn-warning" ng-click="cancel()">Cancelar</button>
+</div>
+</script>
 
 <!--
 

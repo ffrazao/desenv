@@ -1,7 +1,6 @@
 var PAGINA = 'pessoa-cad';
 
 function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoService) {
-	
 
 	$scope.tabs = [ 
 	{
@@ -926,7 +925,7 @@ $scope.removerArquivo = function(arquivo){
 	}
 }
 
-function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b) {
+function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, $rootScope) {
 
 	$scope.enderecoNvg = new FrzNavegadorParams();
 	
@@ -950,7 +949,9 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b) {
 	$scope.excluir = function() {
 
 	};
-
+	
+	$rootScope.submitted = false;
+	
 	$scope.incluir = function(size) {
 		var modalInstance = $modal_b.open({
 			animation : $scope.animationsEnabled,
@@ -1022,7 +1023,18 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b) {
 		item : $scope.items[0]
 	};
 
+    $scope.processado = false;
+    
 	$scope.ok = function() {
+        $scope.emProcessamento(true);
+        if (!$scope.$parent.frmEndereco.$valid) {
+            $scope.emProcessamento(false);
+            $rootScope.submitted = true;
+            toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
+            return;
+    	}
+        $scope.emProcessamento(false);
+
 		$modalInstance.close($scope.arquivo);
 	};
 

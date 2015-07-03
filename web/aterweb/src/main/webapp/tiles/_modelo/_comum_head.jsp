@@ -163,6 +163,8 @@ var nomeModulo = "";
 <script type="text/javascript" src="resources/js/ui-bootstrap-tpls.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/ui-utils.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/splitter.js" charset="UTF-8"></script>
+<script type="text/javascript" src="resources/js/br-validations.js" charset="UTF-8"></script>
+<script type="text/javascript" src="resources/js/angular-input-masks.js" charset="UTF-8"></script>
 
 <!-- Componentes Desenvolvidos -->
 <script type="text/javascript" src="resources/js/comps/modal-dialog/modal-dialog.js" charset="UTF-8"></script>

@@ -13,7 +13,7 @@
 	        this.especialBotoesVisiveis = function (botoes) {
 	            for (var e in this.scope.estados) {
 	                if (e === 'ESPECIAL') {
-	                    console.log(this.scope.estados[e]);
+	                    //console.log(this.scope.estados[e]);
 	                    this.scope.estados[e].visivel = botoes;
 	                }
 	            }
