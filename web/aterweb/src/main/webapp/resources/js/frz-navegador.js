@@ -392,7 +392,7 @@
 
 	    var vaiPara = function(sentido) {
 	        var e = $scope.ngModel.estadoAtual();
-	        if (e === 'LISTANDO') {
+	        if (e === 'LISTANDO' || e === 'ESPECIAL') {
 	            navegar(sentido);
 	        } else if (e === 'VISUALIZANDO') {
 	            folhear(sentido);

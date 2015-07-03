@@ -953,6 +953,8 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 	$rootScope.submitted = false;
 	
 	$scope.incluir = function(size) {
+		$scope.novoEndereco();
+		
 		var modalInstance = $modal_b.open({
 			animation : $scope.animationsEnabled,
 			templateUrl : 'pessoaEnderecoFrm.html',
@@ -960,7 +962,7 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 			size : size,
 			resolve : {
 				registro : function() {
-					return $scope.cadastro.registro;
+					return $scope.enderecoK;
 				}
 			}
 		});
@@ -969,21 +971,17 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 			if (!registro) {
 				return;
 			}
-			if (!$scope.cadastro.registro) {
-				$scope.cadastro.registro = {};
+			if (!$scope.registro.pessoaMeioContatos) {
+				$scope.registro.pessoaMeioContatos = [];
 			}
-			if (!$scope.cadastro.registro.arquivo) {
-				$scope.cadastro.registro.arquivo = [];
-			}
-			if (angular.isArray(registro)) {
-				for ( var r in registro) {
-					$scope.cadastro.registro.arquivo.push(r);
+			if ($scope.registro.pessoaMeioContatos.length === 0) {
+				for (var i = 0; i < 100; i++) {
+					$scope.registro.pessoaMeioContatos.push({id: i, nome: 'Teste ' + i});
 				}
-			} else {
-				$scope.cadastro.registro.arquivo.push(registro);
 			}
+			$scope.registro.pessoaMeioContatos.push(angular.copy(registro));
 		}, function() {
-			console.log('Modal dismissed at: ' + new Date());
+			//console.log('Modal dismissed at: ' + new Date());
 		});
 	};
 
@@ -1035,7 +1033,7 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
     	}
         $scope.emProcessamento(false);
 
-		$modalInstance.close($scope.arquivo);
+		$modalInstance.close($scope.enderecoK);
 	};
 
 	$scope.cancel = function() {
