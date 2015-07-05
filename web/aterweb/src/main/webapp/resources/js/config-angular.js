@@ -24,6 +24,7 @@ var aterweb = angular.module("aterweb",
 		, "bgDirectives"
         , "frz.navegador"
         , "ui.utils.masks"
+        , "checklist-model"
 		]);
 
 aterweb.factory('$modalInstance', function () {
@@ -79,6 +80,21 @@ aterweb.run(function(toaster, $rootScope, $http, $location, meioContatoService, 
 	
 	$rootScope.emProcessamento = function(processando) {
     	$rootScope.processando = processando;
+    };
+   
+	$rootScope.preparar = function(lista, contador) {
+		// acao = {'I',  // inalterado 
+		//         'N',  // novo
+		//         'A',  // alterado
+		//         'E',} // excluido
+
+		var desloc = contador ? contador : 0;
+		for (var i = 0; i < lista.length; i ++) {
+			lista[i]['_s'] = desloc + i;
+			if (!lista[i]['_a']) {
+				lista[i]['_a'] = 'I';
+			}
+		}
     };
    
     $rootScope.barraFerramentasBotoes = ['btn_ferramenta_executar', 'btn_ferramenta_filtrar', 

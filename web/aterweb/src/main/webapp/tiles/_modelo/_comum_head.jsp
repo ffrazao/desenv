@@ -145,6 +145,8 @@ var nomeModulo = "";
 <script type="text/javascript" src="resources/js/angular-resource.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/angular-animate.js" charset="UTF-8"></script>
 <script type="text/javascript" src="resources/js/angular-sanitize.js" charset="UTF-8"></script>
+<script type="text/javascript" src="resources/js/checklist-model.js" charset="UTF-8"></script>
+
 
 <!-- Componentes Customizados do Angular JS -->
 <script type="text/javascript" src="resources/js/lodash.js" charset="UTF-8"></script>

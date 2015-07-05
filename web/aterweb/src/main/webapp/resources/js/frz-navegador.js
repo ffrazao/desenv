@@ -541,7 +541,7 @@
 				if (!scope.ngModel.selecao) return;
 				scope.$watch('ngModel.selecao.tipo', function() {
 					if (scope.ngModel.selecao.tipo === 'U') {
-						scope.ngModel.selecao.selecionado = scope.ngModel.selecao.item && angular.isDefined(scope.ngModel.selecao.item) && scope.ngModel.selecao.item;
+						scope.ngModel.selecao.selecionado = angular.isDefined(scope.ngModel.selecao.item);
 					} else if (scope.ngModel.selecao.tipo === 'M') {
 						scope.ngModel.selecao.selecionado = scope.ngModel.selecao.marcado > 0;				
 					}
@@ -549,7 +549,7 @@
 
 				scope.$watch('ngModel.selecao.item', function() {
 					if (scope.ngModel.selecao.tipo === 'U') {
-						scope.ngModel.selecao.selecionado = scope.ngModel.selecao.item && angular.isDefined(scope.ngModel.selecao.item) && scope.ngModel.selecao.item;
+						scope.ngModel.selecao.selecionado = angular.isDefined(scope.ngModel.selecao.item);
 					}
 				}, true);
 
@@ -559,6 +559,9 @@
 					}
 					var marcado = 0, desmarcado = 0, total = scope.dados ? scope.dados.length : 0;
 					out: for (var item in scope.dados) {
+						if (scope.dados['_a'] === 'E') {
+							continue;
+						}
 						for (var sel in scope.ngModel.selecao.items) {
 							if (angular.equals(scope.dados[item], scope.ngModel.selecao.items[sel])) {
 								marcado ++;

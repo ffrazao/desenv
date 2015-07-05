@@ -247,3 +247,8 @@ Exemplo:
 
 componente para fazer organograma da empresa
 http://www.basicprimitives.com/index.php?option=com_content&view=article&id=71&Itemid=116&lang=en
+
+03/07/2015 - para facilitar o uso das grades, inserir a seguinte estrutura nas listas de ediçao
+	=> s - sequencial = que sera um numero sequencial que servira para identificar um registro para edicao
+	=> a - acao = que indica se o registro esta inalterado I, se é novo N, se foi alterado A ou se foi excluido E.
+	com essas estruturas vai ser facil montar esquemas para inclusao, alteracao e exclusao de registros.

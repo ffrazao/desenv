@@ -71,7 +71,7 @@
 <div class="row">
 	<div class="form-group col-md-6">
 		<label class="control-label">Telefone</label>
-        <!-- <ng-include src="'tiles/pessoa-cad/sub-telefone.jsp'" /> -->
+        <ng-include src="'tiles/pessoa-cad/sub-telefone.jsp'" ng-controller="SubTelefoneCtrl"/>
 	</div>
 	<div class="form-group col-md-6">
 		<label class="control-label">E-mail</label>
