@@ -4,5 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface Filtro<E, D extends Serializable> {
+
 	List<E> filtrar(D dto);
+
 }
