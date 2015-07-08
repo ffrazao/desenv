@@ -20,7 +20,6 @@ public class SpringDataApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		Teste teste = testeDao.findOne(401L);
 		Page<Teste> pagina = testeDao.findAll(new PageRequest(3, 4));
 		System.out.println(pagina.getContent());
 	}
