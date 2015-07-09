@@ -1,6 +1,5 @@
 package br.gov.df.emater.entidade.teste;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +28,6 @@ public class Teste {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "nome")
 	private String nome;
 
 	@Version
