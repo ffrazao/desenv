@@ -1,0 +1,3 @@
+
+para a geracao dos QClasses: http://stackoverflow.com/questions/24482259/eclipse-issue-with-maven-build-and-jdk-when-generating-qclasses-in-querydsl
+mvn generate-sources 

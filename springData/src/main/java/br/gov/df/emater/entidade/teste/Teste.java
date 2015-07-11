@@ -11,6 +11,15 @@ import javax.persistence.Version;
 @Table(name = "teste", schema = "teste")
 public class Teste {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	private String nome;
+
+	@Version
+	private Long version;
+
 	public Teste() {
 
 	}
@@ -23,15 +32,6 @@ public class Teste {
 		this(id);
 		setNome(nome);
 	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
-	private String nome;
-
-	@Version
-	private Long version;
 
 	public Long getId() {
 		return id;
@@ -55,6 +55,11 @@ public class Teste {
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	@Override
+	public String toString() {
+		return "Teste [id=" + id + ", nome=" + nome + ", version=" + version + "]";
 	}
 
 }
