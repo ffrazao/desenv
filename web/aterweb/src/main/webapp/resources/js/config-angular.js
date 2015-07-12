@@ -385,3 +385,34 @@ aterweb.filter('offset', function() {
 		return input.slice(offset - size, offset);
 	};
 });
+
+aterweb.filter('tel', function () {
+    return function (tel) {
+        if (!tel) { return ''; }
+
+        var value = tel.toString().trim().replace(/^\+/, '');
+
+        if (value.match(/[^0-9]/)) {
+            return tel;
+        }
+
+        var cidade = value.slice(0, 2);
+        var numero = value.slice(2);
+
+        if (numero.length === 8) {
+            numero = numero.slice(0, 4) + '-' + numero.slice(4);
+        } else {
+            numero = numero.slice(0, 5) + '-' + numero.slice(5);
+        }
+
+        return ("(" + cidade + ") " + numero).trim();
+    };
+});
+
+
+
+
+
+
+
+

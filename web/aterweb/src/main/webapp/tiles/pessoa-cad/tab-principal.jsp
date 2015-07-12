@@ -75,7 +75,7 @@
 	</div>
 	<div class="form-group col-md-6">
 		<label class="control-label">E-mail</label>
-        <!-- <ng-include src="'tiles/pessoa-cad/sub-email.jsp'" /> -->
+        <ng-include src="'tiles/pessoa-cad/sub-email.jsp'" ng-controller="SubEmailCtrl"/>
 	</div>
 </div>
 <div class="row">

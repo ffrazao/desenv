@@ -1,5 +1,5 @@
 <div class="modal-header">
-	<h3 class="modal-title">Endereço</h3>
+	<h3 class="modal-title">Telefone</h3>
 </div>
 <div class="modal-body">
 	<div class="container-fluid">
@@ -10,7 +10,7 @@
 	<div class="form-group">
 		<label class="col-md-4 control-label" for="numero">Número</label>
 		<div class="col-md-6" data-ng-class="{ 'has-error' : $parent.frmTelefone.numero.$invalid && (!$parent.frmTelefone.numero.$pristine || submitted) }">
-			<input id="numero" name="numero" type="text" placeholder="numero" class="form-control input-md" data-ng-model="dados.numero" required="true">
+			<input id="numero" name="numero" type="text" placeholder="numero" class="form-control input-md" data-ng-model="dados.numero" required="true" ui-br-phone-number>
 			<p data-ng-show="$parent.frmTelefone.numero.$invalid && (!$parent.frmTelefone.numero.$pristine || submitted)" class="help-block">Campo Obrigatório!</p>
 		</div>
 	</div>

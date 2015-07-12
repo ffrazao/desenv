@@ -40,7 +40,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in registro.pessoaMeioContatos | orderBy: 'nome' | pagina: enderecoNvg.paginaAtual : enderecoNvg.tamanhoPagina | limitTo: enderecoNvg.tamanhoPagina | filter: {'_a': '!E'}">
+          <tr ng-repeat="item in registro.pessoaMeioContatos | orderBy: 'logradouro' | pagina: enderecoNvg.paginaAtual : enderecoNvg.tamanhoPagina | limitTo: enderecoNvg.tamanhoPagina | filter: {'@class': 'gov.emater.aterweb.model.MeioContatoEndereco'}">
             <td>
               <input type="radio" ng-show="enderecoNvg.selecao.tipo === 'U'" ng-model="enderecoNvg.selecao.item" ng-value="item"/>
               <input type="checkbox" ng-show="enderecoNvg.selecao.tipo === 'M'" checklist-model="enderecoNvg.selecao.items" checklist-value="item"/>
