@@ -1,0 +1,5 @@
+
+QueryDsls
+
+para gerar os qfiles: 
+mvn generate-sources
