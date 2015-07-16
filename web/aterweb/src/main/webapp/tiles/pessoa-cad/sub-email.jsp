@@ -39,7 +39,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in registro.pessoaMeioContatos | orderBy: 'nome' | pagina: emailNvg.paginaAtual : emailNvg.tamanhoPagina | limitTo: emailNvg.tamanhoPagina | filter: {'@class': 'gov.emater.aterweb.model.MeioContatoEmail'}">
+          <tr ng-repeat="item in registro.pessoaMeioContatos | orderBy: 'nome' | pagina: emailNvg.paginaAtual : emailNvg.tamanhoPagina | limitTo: emailNvg.tamanhoPagina | filter: {'@class': 'gov.emater.aterweb.model.MeioContatoEmail', '_a': '!E'}">
             <td>
               <input type="radio" ng-show="emailNvg.selecao.tipo === 'U'" ng-model="emailNvg.selecao.item" ng-value="item"/>
               <input type="checkbox" ng-show="emailNvg.selecao.tipo === 'M'" checklist-model="emailNvg.selecao.items" checklist-value="item"/>

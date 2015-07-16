@@ -3,8 +3,8 @@
 		<label class="control-label">Cadastro Especial</label>
 		<div class="form-control">
 			<label class="checkbox-inline" for="beneficiario">
-				<input type="checkbox" name="beneficiario" id="beneficiario" ng-model="beneficiarioVisivel" ng-click="tabVisivelBeneficiario(!beneficiarioVisivel);">
-				Beneficiário
+				<input type="checkbox" name="beneficiario" id="beneficiario" ng-model="registro.publicoAlvoConfirmacao" ng-click="tabVisivelBeneficiario(registro.publicoAlvoConfirmacao === 'N');" ng-true-value="S" ng-false-value="N">
+				Beneficiário[{{registro.publicoAlvoConfirmacao}}]
 			</label> 
 			<label class="checkbox-inline" for="colaborador">
 				<input type="checkbox" name="colaborador" id="colaborador" ng-model="colaboradorVisivel" ng-click="tabVisivelColaborador(!colaboradorVisivel);">
@@ -16,11 +16,11 @@
 		<label class="control-label">Gênero</label>
 		<div class="form-control">
 			<label class="radio-inline" for="genero-0">
-				<input type="radio" name="genero" id="genero-0" value="M" checked="checked">
+				<input type="radio" name="genero" id="genero-0" value="M" data-ng-model="registro.sexo">
 				Masculino
 			</label> 
 			<label class="radio-inline" for="genero-1">
-				<input type="radio" name="genero" id="genero-1" value="F">
+				<input type="radio" name="genero" id="genero-1" value="F" data-ng-model="registro.sexo">
 				Feminino
 			</label>
 		</div>
@@ -81,7 +81,7 @@
 <div class="row">
 	<div class="form-group col-md-12">
 		<label class="control-label">Relacionamentos</label>
-        <!-- <ng-include src="'tiles/pessoa-cad/sub-relacionamento.jsp'" /> -->
+        <ng-include src="'tiles/pessoa-cad/sub-relacionamento.jsp'" ng-controller="SubRelacionamentoCtrl"/>
 	</div>
 </div>
 <div class="row">

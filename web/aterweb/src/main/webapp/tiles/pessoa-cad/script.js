@@ -1,6 +1,6 @@
 var PAGINA = 'pessoa-cad';
 
-function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoService) {
+function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoService, FrzNavegadorParams, $modal_b, $modalInstance, registro) {
 
 	$scope.tabs = [ 
 	{
@@ -877,6 +877,171 @@ $scope.removerArquivo = function(arquivo){
 			}
 		});
 	}
+	
+	$scope.relacionadoNvg = new FrzNavegadorParams();
+	
+	$scope.relacionadoNvg.scope = $scope;
+	
+	$scope.modalAbrir = function() {
+		$scope.exibirModal = 'FI';
+		$scope.relacionadoNvg.mudarEstado('FILTRANDO');
+	};
+	
+	$scope.modalFiltrar = function() {
+		$scope.exibirModal = 'FI';
+		//$scope.relacionadoNvg.mudarEstado('FILTRANDO');
+	}
+
+	$scope.modalConfirmarFiltrar = function() {
+		$rootScope.emProcessamento(true);
+		$http.get(baseUrl + PAGINA + ACAO_FILTRAR, {
+			params : $scope.filtro
+		}).success(
+		function(data) {
+			$rootScope.emProcessamento(false);
+			if (data.executou) {
+				$rootScope.lista = data.resultado;
+				$scope.relacionadoNvg.mudarEstado('LISTANDO');
+				$scope.exibirModal = 'LI';
+			} else {
+				toaster.pop('alert', 'Atenção', "Não foi encontrado nenhum registro!");
+			}
+		}).error(function(data) {
+			$rootScope.emProcessamento(false);
+			toaster.pop('error', 'Erro', "Não foi possível executar a operação!" + data);
+		});
+	};
+	
+	$scope.modalVoltar = function () {
+		$scope.relacionadoNvg.voltar();
+		if ($scope.relacionadoNvg.estadoAtual() === 'FILTRANDO') {
+			$scope.exibirModal = 'FI';
+		} else {
+			$scope.exibirModal = 'LI';
+		}		
+	}
+	
+	$scope.modalVisualizar = function () {
+        if(!$scope.relacionadoNvg.selecao.item) {
+            toaster.pop('info', null, "Nenhum registro selecionado!");
+        } else {
+            id = $scope.relacionadoNvg.selecao.item.id;
+            $scope.emProcessamento(true);
+            $http.get(baseUrl + "pessoa-cad/restaurar",{params: {id: id}})
+            .success(function(data){
+                $scope.emProcessamento(false);
+                if(!data.executou){
+                    toaster.pop('error', "ERRO", data.resultado.message);
+                    return;
+                }
+                
+                //console.log(data);
+                $rootScope.registro = data.resultado;
+
+                if($rootScope.registro.pessoaTipo === 'PF'){
+                    $rootScope.registro['@class'] = 'gov.emater.aterweb.model.PessoaFisica';
+                }else if($rootScope.registro.pessoaTipo === 'PJ'){
+                    $rootScope.registro['@class'] = 'gov.emater.aterweb.model.PessoaJuridica';
+                }else{
+                    $rootScope.registro['@class'] = null;
+                }
+
+                angular.forEach($rootScope.registro.pessoaMeioContatos, function(value, key){
+                    if(value.meioContato.meioContatoTipo === 'END'){
+                        var cidade = valorCampoJson($rootScope.registro,value.meioContato.pessoaGrupoCidadeVi);
+                        var municipio = valorCampoJson($rootScope.registro,cidade.pessoaGrupoMunicipioVi);
+                        var estado = valorCampoJson($rootScope.registro,municipio.pessoaGrupoEstadoVi);
+                        var pais = valorCampoJson($rootScope.registro,estado.pessoaGrupoPaisVi);
+
+                        value.meioContato.pessoaGrupoCidadeVi = angular.copy(cidade);
+                        value.meioContato.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi = angular.copy(municipio);
+                        value.meioContato.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi = angular.copy(estado);
+                        value.meioContato.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi = angular.copy(pais);
+    //                    value['@class'] = 'gov.emater.aterweb.model.MeioContatoEndereco';
+                    }else if(value.meioContato.meioContatoTipo === 'EMA'){
+    //                    value['@class'] = 'gov.emater.aterweb.model.MeioContatoEmail';
+
+                    }else if(value.meioContato.meioContatoTipo === 'TEL'){
+    //                    value['@class'] = 'gov.emater.aterweb.model.MeioContatoTelefonico';
+
+                    }else{
+
+                    }
+                });
+                
+                angular.forEach($rootScope.registro.pessoaRelacionamentos, function(value, key){
+                        var relacionamentoTipo = valorCampoJson($rootScope.registro,value.relacionamento.relacionamentoTipo);
+                        var relacionamentoFuncao = valorCampoJson($rootScope.registro,value.relacionamentoFuncao);
+                        var pessoa = valorCampoJson($rootScope.registro,value.pessoa);
+
+                        value.relacionamento.relacionamentoTipo = angular.copy(relacionamentoTipo);
+                        value.relacionamentoFuncao = angular.copy(relacionamentoFuncao);
+                        value.pessoa = angular.copy(pessoa);
+
+                });
+                
+        		$scope.exibirModal = 'FO';
+        		//$scope.relacionadoNvg.mudarEstado('VISUALIZANDO');
+            })
+            .error(function(data){
+                toaster.pop('error', "ERRO", data);
+                console.log('ERROR',data);
+            });
+        }
+    }
+	$scope.modalIncluir = function () {
+        $scope.emProcessamento(true);
+        try {
+        	
+        	$rootScope.registro = {};
+        	$rootScope.registro.pessoaMeioContatos = [];
+        	$rootScope.registro.pessoaRelacionamentos = [];
+        	
+    		$scope.exibirModal = 'FO';
+    		$scope.relacionadoNvg.mudarEstado('INCLUINDO');
+        } finally {
+            $scope.emProcessamento(false);
+        }
+	}
+	
+	$scope.modalSalvar = function () {
+        $scope.emProcessamento(true);
+        if (!$scope.formularioPessoa.$valid) {
+            $scope.emProcessamento(false);
+            $rootScope.submitted = true;
+            //angular.forEach($scope.formularioPessoa.$error);
+            toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
+            return;
+    	}
+  
+        var novo = angular.copy($rootScope.registro);
+        remodelarCampoJson(novo, $rootScope.registro);
+        //removerJsonId($scope.registro);
+        removerReferenciasJsonId($rootScope.registro);
+		removerArquivoList($rootScope.registro);
+        console.log($rootScope.registro);
+
+        $rootScope.emProcessamento(true);
+        $http.post(baseUrl + PAGINA + ACAO_SALVAR, $rootScope.registro)
+        .success(function(data){
+            $rootScope.emProcessamento(false);
+            if(data.executou) {
+                toaster.pop('success', "Salvo", "Registro salvo com sucesso!");
+                $scope.relacionadoNvg.mudarEstado('VISUALIZANDO');
+            } else {
+                toaster.pop('error', "Erro", "Erro ao salvar!");
+                console.log(data);
+                if(!angular.isObject(data)){
+                    $rootScope.erroSessao(data);
+                }
+            }
+        }).error(function(data){
+            $rootScope.emProcessamento(false);
+            console.log("SALVAR => Ocorreu algum erro!");
+            toaster.pop('error', "Erro no servidor", data,0);
+            console.log(data);
+        });
+    }
 }
 
 function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, $rootScope, requisicaoService) {
@@ -1339,6 +1504,136 @@ function SubEmailCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, regi
 		$rootScope.emailK["@class"] = "gov.emater.aterweb.model.MeioContatoEmail";
 		$rootScope.emailK['_s'] = $scope.registro.pessoaMeioContatos ? $scope.registro.pessoaMeioContatos.length : 0; 
 		$rootScope.emailK['_a'] = 'N'; 
+		// iniciar estrutura
+	}
+};
+
+function SubRelacionamentoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, $rootScope, requisicaoService) {
+
+	$scope.relacionamentoNvg = new FrzNavegadorParams();
+	
+	$scope.relacionamentoNvg.scope = $scope;
+	
+	if (registro != null) {
+		$scope.dados = angular.copy(registro);
+	}
+
+	$scope.abrir = function() {
+		$scope.relacionamentoNvg.mudarEstado('ESPECIAL');
+		$scope.registro.pessoaRelacionamentos = [];
+//		for (var i = 0; i < 5; i++) {
+//			$scope.novoRelacionamento();
+//			$rootScope.relacionamentoK['_a'] = 'I';
+//			$scope.registro.pessoaRelacionamentos.push($rootScope.relacionamentoK);
+//		}
+		$rootScope.preparar($scope.registro.pessoaRelacionamentos);
+	};
+
+	$scope.especial = function() {
+		$scope.relacionamentoNvg.especialBotoesVisiveis([ 'agir', 'editar', 'excluir', 'incluir', 'navegar', 'tamanhoPagina', ]);
+	};
+
+	function relacionamentoModal() {
+		var modalInstance = $modal_b.open({
+			animation : $scope.animationsEnabled,
+			templateUrl : 'tiles/pessoa-cad/modal.jsp',
+			controller : 'cadastroCtrl',
+			size : 'lg',
+			resolve : {
+				registro : function() {
+					return $rootScope.relacionamentoK;
+				}
+			}
+		});
+
+		modalInstance.result.then(function(registro) {
+			if (!registro) {
+				return;
+			}
+			if (!$scope.registro.pessoaRelacionamentos) {
+				$scope.registro.pessoaRelacionamentos = [];
+			}
+			var encontrou = false;
+			for (var i in $scope.registro.pessoaRelacionamentos) {
+				if ($scope.registro.pessoaRelacionamentos[i]['_s'] === registro['_s']) {
+					if (registro['_a'] !== 'N') {
+						registro['_a'] = 'A';
+					}
+					$scope.registro.pessoaRelacionamentos[i] = registro;
+					encontrou = true;
+					break;
+				}
+			}
+			if (!encontrou) {
+				$scope.registro.pessoaRelacionamentos.push(registro);
+			}
+		}, function() {
+			//console.log('Modal dismissed at: ' + new Date());
+		});
+	}
+	
+	$rootScope.submitted = false;
+	
+	$scope.excluir = function() {
+		if ($scope.relacionamentoNvg.selecao.tipo === 'U') {
+			$scope.relacionamentoNvg.selecao.item['_a'] = 'E';
+		} else if ($scope.relacionamentoNvg.selecao.tipo === 'M') {
+			for (var i in $scope.relacionamentoNvg.selecao.items) {
+				$scope.relacionamentoNvg.selecao.items[i]['_a'] = 'E';
+			}
+			$scope.relacionamentoNvg.selecao.items = [];
+		}
+		toaster.pop('info', null, "Registro(s) Excluido(s)!");
+	};
+	
+	$scope.incluir = function() {
+		$scope.novoRelacionamento();
+		
+		relacionamentoModal();
+	};
+	
+	$scope.editar = function(id) {
+		if ($scope.relacionamentoNvg.selecao.tipo === 'U') {
+			$rootScope.relacionamentoK = angular.copy($scope.relacionamentoNvg.selecao.item);
+			relacionamentoModal();
+		} else if ($scope.relacionamentoNvg.selecao.tipo === 'M') {
+			for (var i in $scope.relacionamentoNvg.selecao.items) {
+				$rootScope.relacionamentoK = angular.copy($scope.relacionamentoNvg.selecao.items[i]);
+				relacionamentoModal();
+			}
+			$scope.relacionamentoNvg.selecao.items = [];
+		}
+	};
+
+//	$scope.items = [];
+//	$scope.selected = {
+//		item : $scope.items[0]
+//	};
+
+    $scope.processado = false;
+    
+	$scope.ok = function() {
+        $scope.emProcessamento(true);
+        if (!$scope.$parent.frmRelacionamento.$valid) {
+            $scope.emProcessamento(false);
+            $rootScope.submitted = true;
+            toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
+            return;
+    	}
+        $scope.emProcessamento(false);
+        
+		$modalInstance.close($scope.dados);
+	};
+
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
+
+	$scope.novoRelacionamento = function() {
+		$rootScope.relacionamentoK = {};
+		$rootScope.relacionamentoK["@class"] = "gov.emater.aterweb.model.MeioContatoRelacionamento";
+		$rootScope.relacionamentoK['_s'] = $scope.registro.pessoaRelacionamentos ? $scope.registro.pessoaRelacionamentos.length : 0; 
+		$rootScope.relacionamentoK['_a'] = 'N'; 
 		// iniciar estrutura
 	}
 };
