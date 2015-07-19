@@ -1,6 +1,6 @@
 var PAGINA = 'pessoa-cad';
 
-function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoService, FrzNavegadorParams, $modal_b, $modalInstance, registro) {
+function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNavegadorParams, $modal_b, $modalInstance, registro) {
 
 	$scope.tabs = [ 
 	{
@@ -76,44 +76,7 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     $scope.selected = [];
 	
     $scope.carregarParametros = function(){
-    //CARREGAR LISTAS E OPÇÕES
-		/*$http.get(baseUrl + "dominio",{params: {ent: 'PessoaGrupo',fetchs: 'filhos'}})
-            .success(function(data){
-                if(data.executou){
-                    for(var i=0; i<data.resultado.length; i++){
-                        //console.log(data.resultado[i], /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i.test(data.resultado[i]));
-                        if (/^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i.test(data.resultado[i])) {
-                            data.resultado.splice(i, 1);
-                        } else {
-                            removerReferenciasJsonId(data.resultado[i]);
-                        }
-                    };
-		
-                    $scope.defined = data.resultado;
-
-                    //console.log(data.resultado);
-                }else{
-                    toaster.pop('error', "", 'Erro ao tentar carregar parâmetros: RelacionamentoTipo');
-                }
-            })
-            .error(function(data){
-                toaster.pop('error', "Erro no servidor!", data);
-                console.log('ERROR',data);
-            });
-	
-        $http.get(baseUrl + "dominio",{params: {ent: 'PessoaGrupo', grupoSocial:'N'}})
-            .success(function(data){
-                if(data.executou){
-                    $scope.relacionamentoTipo = data.resultado;
-                }else{
-                    toaster.pop('error', "", 'Erro ao tentar carregar parâmetros: RelacionamentoTipo');
-                }
-            })
-            .error(function(data){
-                toaster.pop('error', "Erro no servidor!", data);
-                console.log('ERROR',data);
-            });*/
-
+    	//CARREGAR LISTAS E OPÇÕES
         $http.get(baseUrl + "dominio",{params: {ent: 'OrganizacaoTipo'}})
             .success(function(data){
                 if(data.executou){
@@ -149,7 +112,7 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     };
     $scope.carregarParametros();
     
-    $scope.retornaRelacionamentoFuncao = function(id){
+    $scope.retornaRelacionamentoFuncao = function(id) {
         console.log(id);
         $http.get(baseUrl + "dominio",{params: {ent: 'RelacionamentoConfiguracaoVi',npk:'tipo_id',vpk:id}})
             .success(function(data){
@@ -176,10 +139,10 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     //
 
     $scope.atualizaLocalizacoes = function(){
-        var cidade = $scope.copiarObjeto($rootScope.selectCidades,'id',$scope.acoes.meioContato.registro.meioContato.pessoaGrupoCidadeVi.id);
-        var municipio = $scope.copiarObjeto($rootScope.selectMunicipios,'id',$scope.municipioSelecionado.id);
-        var estado = $scope.copiarObjeto($rootScope.selectEstados,'id',$scope.estadoSelecionado.id);
-        var pais = $scope.copiarObjeto($rootScope.selectPaises,'id',$scope.paisSelecionado.id);
+        var cidade = $scope.copiarObjeto($scope.selectCidades,'id',$scope.acoes.meioContato.registro.meioContato.pessoaGrupoCidadeVi.id);
+        var municipio = $scope.copiarObjeto($scope.selectMunicipios,'id',$scope.municipioSelecionado.id);
+        var estado = $scope.copiarObjeto($scope.selectEstados,'id',$scope.estadoSelecionado.id);
+        var pais = $scope.copiarObjeto($scope.selectPaises,'id',$scope.paisSelecionado.id);
 
         estado.pessoaGrupoPaisVi = pais;
         municipio.pessoaGrupoEstadoVi = estado;
@@ -194,31 +157,31 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
         $scope.acoes.meioContato.registro = angular.copy($scope.acoes.meioContato.original);
         
         if($scope.acoes.meioContato.original.meioContato.meioContatoTipo === 'END'){
-            var cidade = valorCampoJson($rootScope.registro,contato.meioContato.pessoaGrupoCidadeVi);
-            var municipio = valorCampoJson($rootScope.registro,cidade.pessoaGrupoMunicipioVi);
-            var estado = valorCampoJson($rootScope.registro,municipio.pessoaGrupoEstadoVi);
-            var pais = valorCampoJson($rootScope.registro,estado.pessoaGrupoPaisVi);
+            var cidade = valorCampoJson($scope.registro,contato.meioContato.pessoaGrupoCidadeVi);
+            var municipio = valorCampoJson($scope.registro,cidade.pessoaGrupoMunicipioVi);
+            var estado = valorCampoJson($scope.registro,municipio.pessoaGrupoEstadoVi);
+            var pais = valorCampoJson($scope.registro,estado.pessoaGrupoPaisVi);
 
-            //$scope.copiarObjeto($rootScope.selectPaises,$scope.paisSelecionado,'id',pais.id);
+            //$scope.copiarObjeto($scope.selectPaises,$scope.paisSelecionado,'id',pais.id);
             $scope.paisSelecionado.id = pais.id;
             
             $scope.retornaEstados(pais.id);
-            //$scope.copiarObjeto($rootScope.selectEstados,$scope.estadoSelecionado,'id',estado.id);
+            //$scope.copiarObjeto($scope.selectEstados,$scope.estadoSelecionado,'id',estado.id);
             $scope.estadoSelecionado.id = estado.id;
             
             $scope.retornaMunicipios(estado.id);
-            //$scope.copiarObjeto($rootScope.selectMunicipios,$scope.municipioSelecionado,'id',municipio.id);
+            //$scope.copiarObjeto($scope.selectMunicipios,$scope.municipioSelecionado,'id',municipio.id);
             $scope.municipioSelecionado.id = municipio.id;
 
             $scope.retornaCidades(municipio.id);
-            //$scope.copiarObjeto($rootScope.selectCidades,$scope.acoes.meioContato.registro.meioContato.pessoaGrupoCidadeVi,'id',cidade.id);
+            //$scope.copiarObjeto($scope.selectCidades,$scope.acoes.meioContato.registro.meioContato.pessoaGrupoCidadeVi,'id',cidade.id);
             $scope.acoes.meioContato.registro.meioContato.pessoaGrupoCidadeVi = angular.copy(cidade);
         }
     };
     
     $scope.acoes.meioContato.salvar = function(){
         if($scope.acoes.meioContato.original === null){
-            $rootScope.registro.pessoaMeioContatos.push($scope.acoes.meioContato.registro);
+            $scope.registro.pessoaMeioContatos.push($scope.acoes.meioContato.registro);
         }else{
             angular.copy($scope.acoes.meioContato.registro,$scope.acoes.meioContato.original);
             //$scope.registro.$apply();
@@ -229,8 +192,8 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     };
     
     $scope.acoes.meioContato.remover = function(contato){
-        var index = $rootScope.registro.pessoaMeioContatos.indexOf(contato);
-        $rootScope.registro.pessoaMeioContatos.splice(index,1);
+        var index = $scope.registro.pessoaMeioContatos.indexOf(contato);
+        $scope.registro.pessoaMeioContatos.splice(index,1);
     };
 
     $scope.acoes.meioContato.incluir = function(tipo){
@@ -254,14 +217,14 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
         $scope.acoes.relacionamento.original = relacionamento;
         $scope.acoes.relacionamento.registro = angular.copy($scope.acoes.relacionamento.original);
         
-        var relTipo = valorCampoJson($rootScope.registro,$scope.acoes.relacionamento.registro.relacionamento.relacionamentoTipo);
-        var relFuncao = valorCampoJson($rootScope.registro,$scope.acoes.relacionamento.registro.relacionamentoFuncao);
+        var relTipo = valorCampoJson($scope.registro,$scope.acoes.relacionamento.registro.relacionamento.relacionamentoTipo);
+        var relFuncao = valorCampoJson($scope.registro,$scope.acoes.relacionamento.registro.relacionamentoFuncao);
 
-        //$scope.copiarObjeto($rootScope.selectPaises,$scope.paisSelecionado,'id',pais.id);
+        //$scope.copiarObjeto($scope.selectPaises,$scope.paisSelecionado,'id',pais.id);
         $scope.acoes.relacionamento.registro.relacionamento.relacionamentoTipo.id = relTipo.id;
 
         $scope.retornaRelacionamentoFuncao(relTipo.id);
-        //$scope.copiarObjeto($rootScope.selectEstados,$scope.estadoSelecionado,'id',estado.id);
+        //$scope.copiarObjeto($scope.selectEstados,$scope.estadoSelecionado,'id',estado.id);
         $scope.acoes.relacionamento.registro.relacionamentoFuncao.id = relFuncao.id;
     };
     
@@ -292,7 +255,7 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
 		$scope.acoes.relacionamento.registro.proprietario = 'N';
 		
         if($scope.acoes.relacionamento.original === null){
-            $rootScope.registro.pessoaRelacionamentos.push($scope.acoes.relacionamento.registro);
+            $scope.registro.pessoaRelacionamentos.push($scope.acoes.relacionamento.registro);
         }else{
             angular.copy($scope.acoes.relacionamento.registro,$scope.acoes.relacionamento.original);
             //$scope.registro.$apply();
@@ -303,8 +266,8 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     };
     
    $scope.acoes.relacionamento.remover = function(relacionamento){
-        var index = $rootScope.registro.pessoaRelacionamentos.indexOf(relacionamento);
-        $rootScope.registro.pessoaRelacionamentos.splice(index,1);
+        var index = $scope.registro.pessoaRelacionamentos.indexOf(relacionamento);
+        $scope.registro.pessoaRelacionamentos.splice(index,1);
     };
     
     $scope.acoes.relacionamento.incluir = function(){
@@ -318,10 +281,10 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     };
     
     $scope.editar = function(){
-        if($rootScope.linhasSelecionadas.length === 0) {
+        if($scope.linhasSelecionadas.length === 0) {
             toaster.pop('info', null, "Nenhum registro selecionado!");
         } else {
-            id = $rootScope.linhasSelecionadas[$rootScope.linhaAtual].id;
+            id = $scope.linhasSelecionadas[$scope.linhaAtual].id;
             $scope.emProcessamento(true);
             $http.get(baseUrl + "pessoa-cad/restaurar",{params: {id: id}})
             .success(function(data){
@@ -332,22 +295,22 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
                 }
                 
                 //console.log(data);
-                $rootScope.registro = data.resultado;
+                $scope.registro = data.resultado;
 
-                if($rootScope.registro.pessoaTipo === 'PF'){
-                    $rootScope.registro['@class'] = 'gov.emater.aterweb.model.PessoaFisica';
-                }else if($rootScope.registro.pessoaTipo === 'PJ'){
-                    $rootScope.registro['@class'] = 'gov.emater.aterweb.model.PessoaJuridica';
+                if($scope.registro.pessoaTipo === 'PF'){
+                    $scope.registro['@class'] = 'gov.emater.aterweb.model.PessoaFisica';
+                }else if($scope.registro.pessoaTipo === 'PJ'){
+                    $scope.registro['@class'] = 'gov.emater.aterweb.model.PessoaJuridica';
                 }else{
-                    $rootScope.registro['@class'] = null;
+                    $scope.registro['@class'] = null;
                 }
 
-                angular.forEach($rootScope.registro.pessoaMeioContatos, function(value, key){
+                angular.forEach($scope.registro.pessoaMeioContatos, function(value, key){
                     if(value.meioContato.meioContatoTipo === 'END'){
-                        var cidade = valorCampoJson($rootScope.registro,value.meioContato.pessoaGrupoCidadeVi);
-                        var municipio = valorCampoJson($rootScope.registro,cidade.pessoaGrupoMunicipioVi);
-                        var estado = valorCampoJson($rootScope.registro,municipio.pessoaGrupoEstadoVi);
-                        var pais = valorCampoJson($rootScope.registro,estado.pessoaGrupoPaisVi);
+                        var cidade = valorCampoJson($scope.registro,value.meioContato.pessoaGrupoCidadeVi);
+                        var municipio = valorCampoJson($scope.registro,cidade.pessoaGrupoMunicipioVi);
+                        var estado = valorCampoJson($scope.registro,municipio.pessoaGrupoEstadoVi);
+                        var pais = valorCampoJson($scope.registro,estado.pessoaGrupoPaisVi);
 
                         value.meioContato.pessoaGrupoCidadeVi = angular.copy(cidade);
                         value.meioContato.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi = angular.copy(municipio);
@@ -365,10 +328,10 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
                     }
                 });
                 
-                angular.forEach($rootScope.registro.pessoaRelacionamentos, function(value, key){
-                        var relacionamentoTipo = valorCampoJson($rootScope.registro,value.relacionamento.relacionamentoTipo);
-                        var relacionamentoFuncao = valorCampoJson($rootScope.registro,value.relacionamentoFuncao);
-                        var pessoa = valorCampoJson($rootScope.registro,value.pessoa);
+                angular.forEach($scope.registro.pessoaRelacionamentos, function(value, key){
+                        var relacionamentoTipo = valorCampoJson($scope.registro,value.relacionamento.relacionamentoTipo);
+                        var relacionamentoFuncao = valorCampoJson($scope.registro,value.relacionamentoFuncao);
+                        var pessoa = valorCampoJson($scope.registro,value.pessoa);
 
                         value.relacionamento.relacionamentoTipo = angular.copy(relacionamentoTipo);
                         value.relacionamentoFuncao = angular.copy(relacionamentoFuncao);
@@ -376,7 +339,7 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
 
                 });
                 
-                $rootScope.botoesAcao('editar');
+                $scope.botoesAcao('editar');
                 $location.path('/formulario');
                 $scope.emProcessamento(false);
             })
@@ -390,11 +353,11 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     $scope.incluir = function(){
         $scope.emProcessamento(true);
         try {
-        	$rootScope.botoesAcao('incluir');
+        	$scope.botoesAcao('incluir');
         	
-        	$rootScope.registro = {};
-        	$rootScope.registro.pessoaMeioContatos = [];
-        	$rootScope.registro.pessoaRelacionamentos = [];
+        	$scope.registro = {};
+        	$scope.registro.pessoaMeioContatos = [];
+        	$scope.registro.pessoaRelacionamentos = [];
         	
         	$location.path('/formulario');
         } finally {
@@ -403,36 +366,36 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     };
     
     $scope.incluirPessoa = function(tipo){
-            $rootScope.registro.pessoaTipo = tipo;
+            $scope.registro.pessoaTipo = tipo;
             
-            if($rootScope.registro.pessoaTipo === 'PF'){
-                $rootScope.registro['@class'] = 'gov.emater.aterweb.model.PessoaFisica';
-            }else if($rootScope.registro.pessoaTipo === 'PJ'){
-                $rootScope.registro['@class'] = 'gov.emater.aterweb.model.PessoaJuridica';
+            if($scope.registro.pessoaTipo === 'PF'){
+                $scope.registro['@class'] = 'gov.emater.aterweb.model.PessoaFisica';
+            }else if($scope.registro.pessoaTipo === 'PJ'){
+                $scope.registro['@class'] = 'gov.emater.aterweb.model.PessoaJuridica';
             }else{
-                $rootScope.registro['@class'] = null;
+                $scope.registro['@class'] = null;
             }
 
-            $rootScope.registro.publicoAlvoConfirmacao = 'S';
-            $rootScope.registro.situacao = 'A';
+            $scope.registro.publicoAlvoConfirmacao = 'S';
+            $scope.registro.situacao = 'A';
     };
     
     $scope.salvar = function() {
         $scope.emProcessamento(true);
         if (!$scope.formularioPessoa.$valid) {
             $scope.emProcessamento(false);
-            $rootScope.submitted = true;
+            $scope.submitted = true;
             //angular.forEach($scope.formularioPessoa.$error);
             toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
             return;
     	}
         
   
-        var novo = angular.copy($rootScope.registro);
-        remodelarCampoJson(novo,$rootScope.registro);
+        var novo = angular.copy($scope.registro);
+        remodelarCampoJson(novo,$scope.registro);
         //removerJsonId($scope.registro);
-        removerReferenciasJsonId($rootScope.registro);
-		removerArquivoList($rootScope.registro);
+        removerReferenciasJsonId($scope.registro);
+		removerArquivoList($scope.registro);
 
 //				for (reg in $scope.registro["pessoaMeioContatos"]) {
 //					
@@ -441,8 +404,8 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
 
         
         
-        console.log($rootScope.registro);
-        requisicaoService.salvar($rootScope.registro);
+        console.log($scope.registro);
+        requisicaoService.salvar($scope.registro);
         
     };
 
@@ -452,11 +415,11 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
         window.open(baseUrl+'pessoa-cad/?modo=P', 99, "width=900px,height=600px,top=100px,left=300px,scrollbars=1");
     };
     
-    $rootScope.popupSelecionar2 = function() {
-        if($rootScope.linhasSelecionadas.length === 1){
-            window.opener.$rootScope.$apply(function () {
+    $scope.popupSelecionar2 = function() {
+        if($scope.linhasSelecionadas.length === 1){
+            window.opener.$scope.$apply(function () {
             	var retorno = location.search.split('retorno=')[1];
-            	window.opener.$rootScope[retorno]($rootScope.linhasSelecionadas);
+            	window.opener.$scope[retorno]($scope.linhasSelecionadas);
             });
             // window.close();
         }else{
@@ -464,10 +427,10 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
         }
     }
     
-    $rootScope.popupSelecionar = function(){
-        if($rootScope.linhasSelecionadas.length === 1){
+    $scope.popupSelecionar = function(){
+        if($scope.linhasSelecionadas.length === 1){
             window.opener.$scope.$apply(function () {
-                 angular.copy($rootScope.linhasSelecionadas[0],window.opener.$scope.acoes.relacionamento.registro.pessoa);
+                 angular.copy($scope.linhasSelecionadas[0],window.opener.$scope.acoes.relacionamento.registro.pessoa);
             });
             window.close();
         }else{
@@ -477,10 +440,10 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     
     $scope.validarCPF = function(cpf){
         if(cpf === null || cpf === undefined || cpf.length < 14){
-            $rootScope.registro.cpf = '';
+            $scope.registro.cpf = '';
         }else{
             if(!$scope.funcaoValidarCPF(cpf)){
-                $rootScope.registro.cpf = '';
+                $scope.registro.cpf = '';
                 toaster.pop('error', "CPF", "O CPF informado é inválido!");
             }
         }
@@ -488,10 +451,10 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     
     $scope.validarCNPJ = function(cnpj){
         if(cnpj === null || cnpj === undefined || cnpj.length < 18){
-            $rootScope.registro.cnpj = '';
+            $scope.registro.cnpj = '';
         }else{
             if(!$scope.funcaoValidarCNPJ(cnpj)){
-                $rootScope.registro.cnpj = '';
+                $scope.registro.cnpj = '';
                 toaster.pop('error', "CNPJ", "O CNPJ informado é inválido!");
             }
         }
@@ -599,16 +562,16 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
     // codigo comum para verificar se algum id foi informado
     // caso positivo abre a tela em modo edicao de formulario
 	if (cadId !== null) {
-		$rootScope.linhasSelecionadas = [];
+		$scope.linhasSelecionadas = [];
 		angular.forEach(cadId,function(value, key) {
-			$rootScope.linhasSelecionadas.push({id: value});	
+			$scope.linhasSelecionadas.push({id: value});	
 		})
 		cadId = null;
 		$scope.editar();
 	}
     
     if (cadRegistro !== null) {
-    	$rootScope.registro = cadRegistro;
+    	$scope.registro = cadRegistro;
     	cadRegistro = null;
     }
     
@@ -646,14 +609,14 @@ function cadastroCtrl($scope,$rootScope,$http,$location,toaster,requisicaoServic
 	};
 	
 $scope.removerArquivo = function(arquivo){
-        var index = $rootScope.registro.arquivoList.indexOf(arquivo);
-        $rootScope.registro.arquivoList.splice(index,1);
+        var index = $scope.registro.arquivoList.indexOf(arquivo);
+        $scope.registro.arquivoList.splice(index,1);
     };
     
     if (isUndefOrNull($scope.apoio)) {
     	$scope.apoio = {};
     	$scope.apoio.filtroEnderecoListInit = function () {
-    		$rootScope.registro.pessoaMeioContatos = [];
+    		$scope.registro.pessoaMeioContatos = [];
     	};
     }
 
@@ -854,12 +817,12 @@ $scope.removerArquivo = function(arquivo){
     
 	// funciona assim, definir uma funcao para chamar a tela
 	$scope.apoio.pessoaGrupoIncluir = function() {
-		window.$rootScope = $rootScope;
+		window.$scope = $scope;
 		window.open(baseUrl + 'pessoa-grupo-cad/?modo=P&retorno=pessoaGrupoIncluirRetorno', 99, "width=900px,height=600px,top=100px,left=300px,scrollbars=1");
 	}
 	
 	// e outra para tratar o retorno
-	$rootScope.pessoaGrupoIncluirRetorno = function (valor) {
+	$scope.pessoaGrupoIncluirRetorno = function (valor) {
 		if (isUndefOrNull($scope.registro.pessoaGrupoSocialList)) {
 			$scope.registro.pessoaGrupoSocialList = [];
 		}
@@ -893,21 +856,21 @@ $scope.removerArquivo = function(arquivo){
 	}
 
 	$scope.modalConfirmarFiltrar = function() {
-		$rootScope.emProcessamento(true);
+		$scope.emProcessamento(true);
 		$http.get(baseUrl + PAGINA + ACAO_FILTRAR, {
 			params : $scope.filtro
 		}).success(
 		function(data) {
-			$rootScope.emProcessamento(false);
+			$scope.emProcessamento(false);
 			if (data.executou) {
-				$rootScope.lista = data.resultado;
+				$scope.lista = data.resultado;
 				$scope.relacionadoNvg.mudarEstado('LISTANDO');
 				$scope.exibirModal = 'LI';
 			} else {
 				toaster.pop('alert', 'Atenção', "Não foi encontrado nenhum registro!");
 			}
 		}).error(function(data) {
-			$rootScope.emProcessamento(false);
+			$scope.emProcessamento(false);
 			toaster.pop('error', 'Erro', "Não foi possível executar a operação!" + data);
 		});
 	};
@@ -936,22 +899,22 @@ $scope.removerArquivo = function(arquivo){
                 }
                 
                 //console.log(data);
-                $rootScope.registro = data.resultado;
+                $scope.registro = data.resultado;
 
-                if($rootScope.registro.pessoaTipo === 'PF'){
-                    $rootScope.registro['@class'] = 'gov.emater.aterweb.model.PessoaFisica';
-                }else if($rootScope.registro.pessoaTipo === 'PJ'){
-                    $rootScope.registro['@class'] = 'gov.emater.aterweb.model.PessoaJuridica';
+                if($scope.registro.pessoaTipo === 'PF'){
+                    $scope.registro['@class'] = 'gov.emater.aterweb.model.PessoaFisica';
+                }else if($scope.registro.pessoaTipo === 'PJ'){
+                    $scope.registro['@class'] = 'gov.emater.aterweb.model.PessoaJuridica';
                 }else{
-                    $rootScope.registro['@class'] = null;
+                    $scope.registro['@class'] = null;
                 }
 
-                angular.forEach($rootScope.registro.pessoaMeioContatos, function(value, key){
+                angular.forEach($scope.registro.pessoaMeioContatos, function(value, key){
                     if(value.meioContato.meioContatoTipo === 'END'){
-                        var cidade = valorCampoJson($rootScope.registro,value.meioContato.pessoaGrupoCidadeVi);
-                        var municipio = valorCampoJson($rootScope.registro,cidade.pessoaGrupoMunicipioVi);
-                        var estado = valorCampoJson($rootScope.registro,municipio.pessoaGrupoEstadoVi);
-                        var pais = valorCampoJson($rootScope.registro,estado.pessoaGrupoPaisVi);
+                        var cidade = valorCampoJson($scope.registro,value.meioContato.pessoaGrupoCidadeVi);
+                        var municipio = valorCampoJson($scope.registro,cidade.pessoaGrupoMunicipioVi);
+                        var estado = valorCampoJson($scope.registro,municipio.pessoaGrupoEstadoVi);
+                        var pais = valorCampoJson($scope.registro,estado.pessoaGrupoPaisVi);
 
                         value.meioContato.pessoaGrupoCidadeVi = angular.copy(cidade);
                         value.meioContato.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi = angular.copy(municipio);
@@ -969,10 +932,10 @@ $scope.removerArquivo = function(arquivo){
                     }
                 });
                 
-                angular.forEach($rootScope.registro.pessoaRelacionamentos, function(value, key){
-                        var relacionamentoTipo = valorCampoJson($rootScope.registro,value.relacionamento.relacionamentoTipo);
-                        var relacionamentoFuncao = valorCampoJson($rootScope.registro,value.relacionamentoFuncao);
-                        var pessoa = valorCampoJson($rootScope.registro,value.pessoa);
+                angular.forEach($scope.registro.pessoaRelacionamentos, function(value, key){
+                        var relacionamentoTipo = valorCampoJson($scope.registro,value.relacionamento.relacionamentoTipo);
+                        var relacionamentoFuncao = valorCampoJson($scope.registro,value.relacionamentoFuncao);
+                        var pessoa = valorCampoJson($scope.registro,value.pessoa);
 
                         value.relacionamento.relacionamentoTipo = angular.copy(relacionamentoTipo);
                         value.relacionamentoFuncao = angular.copy(relacionamentoFuncao);
@@ -993,9 +956,9 @@ $scope.removerArquivo = function(arquivo){
         $scope.emProcessamento(true);
         try {
         	
-        	$rootScope.registro = {};
-        	$rootScope.registro.pessoaMeioContatos = [];
-        	$rootScope.registro.pessoaRelacionamentos = [];
+        	$scope.registro = {};
+        	$scope.registro.pessoaMeioContatos = [];
+        	$scope.registro.pessoaRelacionamentos = [];
         	
     		$scope.exibirModal = 'FO';
     		$scope.relacionadoNvg.mudarEstado('INCLUINDO');
@@ -1008,23 +971,23 @@ $scope.removerArquivo = function(arquivo){
         $scope.emProcessamento(true);
         if (!$scope.formularioPessoa.$valid) {
             $scope.emProcessamento(false);
-            $rootScope.submitted = true;
+            $scope.submitted = true;
             //angular.forEach($scope.formularioPessoa.$error);
             toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
             return;
     	}
   
-        var novo = angular.copy($rootScope.registro);
-        remodelarCampoJson(novo, $rootScope.registro);
+        var novo = angular.copy($scope.registro);
+        remodelarCampoJson(novo, $scope.registro);
         //removerJsonId($scope.registro);
-        removerReferenciasJsonId($rootScope.registro);
-		removerArquivoList($rootScope.registro);
-        console.log($rootScope.registro);
+        removerReferenciasJsonId($scope.registro);
+		removerArquivoList($scope.registro);
+        console.log($scope.registro);
 
-        $rootScope.emProcessamento(true);
-        $http.post(baseUrl + PAGINA + ACAO_SALVAR, $rootScope.registro)
+        $scope.emProcessamento(true);
+        $http.post(baseUrl + PAGINA + ACAO_SALVAR, $scope.registro)
         .success(function(data){
-            $rootScope.emProcessamento(false);
+            $scope.emProcessamento(false);
             if(data.executou) {
                 toaster.pop('success', "Salvo", "Registro salvo com sucesso!");
                 $scope.relacionadoNvg.mudarEstado('VISUALIZANDO');
@@ -1032,11 +995,11 @@ $scope.removerArquivo = function(arquivo){
                 toaster.pop('error', "Erro", "Erro ao salvar!");
                 console.log(data);
                 if(!angular.isObject(data)){
-                    $rootScope.erroSessao(data);
+                    $scope.erroSessao(data);
                 }
             }
         }).error(function(data){
-            $rootScope.emProcessamento(false);
+            $scope.emProcessamento(false);
             console.log("SALVAR => Ocorreu algum erro!");
             toaster.pop('error', "Erro no servidor", data,0);
             console.log(data);
@@ -1044,7 +1007,7 @@ $scope.removerArquivo = function(arquivo){
     }
 }
 
-function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, $rootScope, requisicaoService) {
+function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, requisicaoService) {
 
 	$scope.enderecoNvg = new FrzNavegadorParams();
 	
@@ -1059,10 +1022,10 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 		$scope.registro.pessoaMeioContatos = [];
 //		for (var i = 0; i < 0; i++) {
 //			$scope.novoEndereco();
-//			$rootScope.enderecoK['_a'] = 'I';
-//			$scope.registro.pessoaMeioContatos.push($rootScope.enderecoK);
+//			$scope.enderecoK['_a'] = 'I';
+//			$scope.registro.pessoaMeioContatos.push($scope.enderecoK);
 //		}
-		$rootScope.preparar($scope.registro.pessoaMeioContatos);
+		$scope.preparar($scope.registro.pessoaMeioContatos);
 	};
 
 	$scope.especial = function() {
@@ -1078,7 +1041,7 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 			size : 'lg',
 			resolve : {
 				registro : function() {
-					return $rootScope.enderecoK;
+					return $scope.enderecoK;
 				}
 			}
 		});
@@ -1109,7 +1072,7 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 		});
 	}
 	
-	$rootScope.submitted = false;
+	$scope.submitted = false;
 	
 	$scope.excluir = function() {
 		if ($scope.enderecoNvg.selecao.tipo === 'U') {
@@ -1131,11 +1094,11 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 	
 	$scope.editar = function(id) {
 		if ($scope.enderecoNvg.selecao.tipo === 'U') {
-			$rootScope.enderecoK = angular.copy($scope.enderecoNvg.selecao.item);
+			$scope.enderecoK = angular.copy($scope.enderecoNvg.selecao.item);
 			enderecoModal();
 		} else if ($scope.enderecoNvg.selecao.tipo === 'M') {
 			for (var i in $scope.enderecoNvg.selecao.items) {
-				$rootScope.enderecoK = angular.copy($scope.enderecoNvg.selecao.items[i]);
+				$scope.enderecoK = angular.copy($scope.enderecoNvg.selecao.items[i]);
 				enderecoModal();
 			}
 			$scope.enderecoNvg.selecao.items = [];
@@ -1153,7 +1116,7 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
         $scope.emProcessamento(true);
         if (!$scope.$parent.frmEndereco.$valid) {
             $scope.emProcessamento(false);
-            $rootScope.submitted = true;
+            $scope.submitted = true;
             toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
             return;
     	}
@@ -1163,45 +1126,45 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
     		params : {
     			ent : 'PessoaGrupo',
     			npk : 'id',
-    			vpk : $rootScope.enderecoK.pessoaGrupoCidadeVi.id,
+    			vpk : $scope.enderecoK.pessoaGrupoCidadeVi.id,
     		}
     	}).success(function(data) {
     		if (data.executou) {
-        		$rootScope.enderecoK.pessoaGrupoCidadeVi.nome = data.resultado[0].nome;
-        		$rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.nome = data.resultado[0].pai.nome;
-        		$rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.nome = data.resultado[0].pai.pai.nome;
-        		$rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi.nome = data.resultado[0].pai.pai.pai.nome;
+        		$scope.enderecoK.pessoaGrupoCidadeVi.nome = data.resultado[0].nome;
+        		$scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.nome = data.resultado[0].pai.nome;
+        		$scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.nome = data.resultado[0].pai.pai.nome;
+        		$scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi.nome = data.resultado[0].pai.pai.pai.nome;
     		}
     	});
         
-    	if ($rootScope.enderecoK.propriedadeRural && $rootScope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi && $rootScope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi.id) {
+    	if ($scope.enderecoK.propriedadeRural && $scope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi && $scope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi.id) {
         	requisicaoService.dominio({
         		params : {
         			ent : 'PessoaGrupo',
         			npk : 'id',
-        			vpk : $rootScope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi.id,
+        			vpk : $scope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi.id,
         		}
         	}).success(function(data) {
         		if (data.executou) {
-        			$rootScope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi.nome = data.resultado[0].nome;
+        			$scope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi.nome = data.resultado[0].nome;
         		}
         	});
     	}
         
-    	if ($rootScope.enderecoK.propriedadeRural && $rootScope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi && $rootScope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.id) {
+    	if ($scope.enderecoK.propriedadeRural && $scope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi && $scope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.id) {
         	requisicaoService.dominio({
         		params : {
         			ent : 'PessoaGrupo',
         			npk : 'id',
-        			vpk : $rootScope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.id,
+        			vpk : $scope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.id,
         		}
         	}).success(function(data) {
         		if (data.executou) {
-        			$rootScope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.nome = data.resultado[0].nome;
+        			$scope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.nome = data.resultado[0].nome;
         		}
         	});
     	}
-		$modalInstance.close($rootScope.enderecoK);
+		$modalInstance.close($scope.enderecoK);
 	};
 
 	$scope.cancel = function() {
@@ -1209,43 +1172,43 @@ function SubEnderecoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 	};
 
 	$scope.novoEndereco = function() {
-		$rootScope.enderecoK = {};
-		$rootScope.enderecoK["@class"] = "gov.emater.aterweb.model.MeioContatoEndereco";
-		$rootScope.enderecoK['_s'] = $scope.registro.pessoaMeioContatos ? $scope.registro.pessoaMeioContatos.length : 0; 
-		$rootScope.enderecoK['_a'] = 'N'; 
+		$scope.enderecoK = {};
+		$scope.enderecoK["@class"] = "gov.emater.aterweb.model.MeioContatoEndereco";
+		$scope.enderecoK['_s'] = $scope.registro.pessoaMeioContatos ? $scope.registro.pessoaMeioContatos.length : 0; 
+		$scope.enderecoK['_a'] = 'N'; 
 		// iniciar estrutura
-		if (isUndefOrNull($rootScope.enderecoK)) {
-			$rootScope.enderecoK = {};
+		if (isUndefOrNull($scope.enderecoK)) {
+			$scope.enderecoK = {};
 		}
-		if (isUndefOrNull($rootScope.enderecoK.propriedadeRuralConfirmacao)) {
-			$rootScope.enderecoK.propriedadeRuralConfirmacao = "N";
+		if (isUndefOrNull($scope.enderecoK.propriedadeRuralConfirmacao)) {
+			$scope.enderecoK.propriedadeRuralConfirmacao = "N";
 		}
-		if (isUndefOrNull($rootScope.enderecoK.pessoaGrupoCidadeVi)) {
-			$rootScope.enderecoK.pessoaGrupoCidadeVi = {};
+		if (isUndefOrNull($scope.enderecoK.pessoaGrupoCidadeVi)) {
+			$scope.enderecoK.pessoaGrupoCidadeVi = {};
 		}
-		if (isUndefOrNull($rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi)) {
-			$rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi = {};
+		if (isUndefOrNull($scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi)) {
+			$scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi = {};
 		}
-		if (isUndefOrNull($rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi)) {
-			$rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi = {};
+		if (isUndefOrNull($scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi)) {
+			$scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi = {};
 		}
-		if (isUndefOrNull($rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi)) {
-			$rootScope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi = {};
+		if (isUndefOrNull($scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi)) {
+			$scope.enderecoK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi = {};
 		}
-		if (isUndefOrNull($rootScope.enderecoK.propriedadeRural)) {
-			$rootScope.enderecoK.propriedadeRural = {};
+		if (isUndefOrNull($scope.enderecoK.propriedadeRural)) {
+			$scope.enderecoK.propriedadeRural = {};
 		}
-		if (isUndefOrNull($rootScope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi)) {
-			$rootScope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi = {};
+		if (isUndefOrNull($scope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi)) {
+			$scope.enderecoK.propriedadeRural.pessoaGrupoComunidadeVi = {};
 		}
-		if (isUndefOrNull($rootScope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi)) {
-			$rootScope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi = {};
+		if (isUndefOrNull($scope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi)) {
+			$scope.enderecoK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi = {};
 		}
 	}
 };
 
 
-function SubTelefoneCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, $rootScope, requisicaoService) {
+function SubTelefoneCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, requisicaoService) {
 
 	$scope.telefoneNvg = new FrzNavegadorParams();
 	
@@ -1260,10 +1223,10 @@ function SubTelefoneCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 		$scope.registro.pessoaMeioContatos = [];
 //		for (var i = 0; i < 5; i++) {
 //			$scope.novoTelefone();
-//			$rootScope.telefoneK['_a'] = 'I';
-//			$scope.registro.pessoaMeioContatos.push($rootScope.telefoneK);
+//			$scope.telefoneK['_a'] = 'I';
+//			$scope.registro.pessoaMeioContatos.push($scope.telefoneK);
 //		}
-		$rootScope.preparar($scope.registro.pessoaMeioContatos);
+		$scope.preparar($scope.registro.pessoaMeioContatos);
 	};
 
 	$scope.especial = function() {
@@ -1279,7 +1242,7 @@ function SubTelefoneCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 			size : 'lg',
 			resolve : {
 				registro : function() {
-					return $rootScope.telefoneK;
+					return $scope.telefoneK;
 				}
 			}
 		});
@@ -1310,7 +1273,7 @@ function SubTelefoneCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 		});
 	}
 	
-	$rootScope.submitted = false;
+	$scope.submitted = false;
 	
 	$scope.excluir = function() {
 		if ($scope.telefoneNvg.selecao.tipo === 'U') {
@@ -1332,11 +1295,11 @@ function SubTelefoneCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 	
 	$scope.editar = function(id) {
 		if ($scope.telefoneNvg.selecao.tipo === 'U') {
-			$rootScope.telefoneK = angular.copy($scope.telefoneNvg.selecao.item);
+			$scope.telefoneK = angular.copy($scope.telefoneNvg.selecao.item);
 			telefoneModal();
 		} else if ($scope.telefoneNvg.selecao.tipo === 'M') {
 			for (var i in $scope.telefoneNvg.selecao.items) {
-				$rootScope.telefoneK = angular.copy($scope.telefoneNvg.selecao.items[i]);
+				$scope.telefoneK = angular.copy($scope.telefoneNvg.selecao.items[i]);
 				telefoneModal();
 			}
 			$scope.telefoneNvg.selecao.items = [];
@@ -1354,7 +1317,7 @@ function SubTelefoneCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
         $scope.emProcessamento(true);
         if (!$scope.$parent.frmTelefone.$valid) {
             $scope.emProcessamento(false);
-            $rootScope.submitted = true;
+            $scope.submitted = true;
             toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
             return;
     	}
@@ -1368,16 +1331,16 @@ function SubTelefoneCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, r
 	};
 
 	$scope.novoTelefone = function() {
-		$rootScope.telefoneK = {};
-		$rootScope.telefoneK["@class"] = "gov.emater.aterweb.model.MeioContatoTelefone";
-		$rootScope.telefoneK['_s'] = $scope.registro.pessoaMeioContatos ? $scope.registro.pessoaMeioContatos.length : 0; 
-		$rootScope.telefoneK['_a'] = 'N'; 
+		$scope.telefoneK = {};
+		$scope.telefoneK["@class"] = "gov.emater.aterweb.model.MeioContatoTelefone";
+		$scope.telefoneK['_s'] = $scope.registro.pessoaMeioContatos ? $scope.registro.pessoaMeioContatos.length : 0; 
+		$scope.telefoneK['_a'] = 'N'; 
 		// iniciar estrutura
-		$rootScope.telefoneK['numero'] = '61'; 
+		$scope.telefoneK['numero'] = '61'; 
 	}
 };
 
-function SubEmailCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, $rootScope, requisicaoService) {
+function SubEmailCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, requisicaoService) {
 
 	$scope.emailNvg = new FrzNavegadorParams();
 	
@@ -1392,10 +1355,10 @@ function SubEmailCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, regi
 		$scope.registro.pessoaMeioContatos = [];
 //		for (var i = 0; i < 5; i++) {
 //			$scope.novoEmail();
-//			$rootScope.emailK['_a'] = 'I';
-//			$scope.registro.pessoaMeioContatos.push($rootScope.emailK);
+//			$scope.emailK['_a'] = 'I';
+//			$scope.registro.pessoaMeioContatos.push($scope.emailK);
 //		}
-		$rootScope.preparar($scope.registro.pessoaMeioContatos);
+		$scope.preparar($scope.registro.pessoaMeioContatos);
 	};
 
 	$scope.especial = function() {
@@ -1411,7 +1374,7 @@ function SubEmailCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, regi
 			size : 'lg',
 			resolve : {
 				registro : function() {
-					return $rootScope.emailK;
+					return $scope.emailK;
 				}
 			}
 		});
@@ -1442,7 +1405,7 @@ function SubEmailCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, regi
 		});
 	}
 	
-	$rootScope.submitted = false;
+	$scope.submitted = false;
 	
 	$scope.excluir = function() {
 		if ($scope.emailNvg.selecao.tipo === 'U') {
@@ -1464,11 +1427,11 @@ function SubEmailCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, regi
 	
 	$scope.editar = function(id) {
 		if ($scope.emailNvg.selecao.tipo === 'U') {
-			$rootScope.emailK = angular.copy($scope.emailNvg.selecao.item);
+			$scope.emailK = angular.copy($scope.emailNvg.selecao.item);
 			emailModal();
 		} else if ($scope.emailNvg.selecao.tipo === 'M') {
 			for (var i in $scope.emailNvg.selecao.items) {
-				$rootScope.emailK = angular.copy($scope.emailNvg.selecao.items[i]);
+				$scope.emailK = angular.copy($scope.emailNvg.selecao.items[i]);
 				emailModal();
 			}
 			$scope.emailNvg.selecao.items = [];
@@ -1486,7 +1449,7 @@ function SubEmailCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, regi
         $scope.emProcessamento(true);
         if (!$scope.$parent.frmEmail.$valid) {
             $scope.emProcessamento(false);
-            $rootScope.submitted = true;
+            $scope.submitted = true;
             toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
             return;
     	}
@@ -1500,15 +1463,15 @@ function SubEmailCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, regi
 	};
 
 	$scope.novoEmail = function() {
-		$rootScope.emailK = {};
-		$rootScope.emailK["@class"] = "gov.emater.aterweb.model.MeioContatoEmail";
-		$rootScope.emailK['_s'] = $scope.registro.pessoaMeioContatos ? $scope.registro.pessoaMeioContatos.length : 0; 
-		$rootScope.emailK['_a'] = 'N'; 
+		$scope.emailK = {};
+		$scope.emailK["@class"] = "gov.emater.aterweb.model.MeioContatoEmail";
+		$scope.emailK['_s'] = $scope.registro.pessoaMeioContatos ? $scope.registro.pessoaMeioContatos.length : 0; 
+		$scope.emailK['_a'] = 'N'; 
 		// iniciar estrutura
 	}
 };
 
-function SubRelacionamentoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, $rootScope, requisicaoService) {
+function SubRelacionamentoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, requisicaoService) {
 
 	$scope.relacionamentoNvg = new FrzNavegadorParams();
 	
@@ -1523,10 +1486,10 @@ function SubRelacionamentoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInsta
 		$scope.registro.pessoaRelacionamentos = [];
 //		for (var i = 0; i < 5; i++) {
 //			$scope.novoRelacionamento();
-//			$rootScope.relacionamentoK['_a'] = 'I';
-//			$scope.registro.pessoaRelacionamentos.push($rootScope.relacionamentoK);
+//			$scope.relacionamentoK['_a'] = 'I';
+//			$scope.registro.pessoaRelacionamentos.push($scope.relacionamentoK);
 //		}
-		$rootScope.preparar($scope.registro.pessoaRelacionamentos);
+		$scope.preparar($scope.registro.pessoaRelacionamentos);
 	};
 
 	$scope.especial = function() {
@@ -1541,7 +1504,7 @@ function SubRelacionamentoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInsta
 			size : 'lg',
 			resolve : {
 				registro : function() {
-					return $rootScope.relacionamentoK;
+					return $scope.relacionamentoK;
 				}
 			}
 		});
@@ -1572,7 +1535,7 @@ function SubRelacionamentoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInsta
 		});
 	}
 	
-	$rootScope.submitted = false;
+	$scope.submitted = false;
 	
 	$scope.excluir = function() {
 		if ($scope.relacionamentoNvg.selecao.tipo === 'U') {
@@ -1594,11 +1557,11 @@ function SubRelacionamentoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInsta
 	
 	$scope.editar = function(id) {
 		if ($scope.relacionamentoNvg.selecao.tipo === 'U') {
-			$rootScope.relacionamentoK = angular.copy($scope.relacionamentoNvg.selecao.item);
+			$scope.relacionamentoK = angular.copy($scope.relacionamentoNvg.selecao.item);
 			relacionamentoModal();
 		} else if ($scope.relacionamentoNvg.selecao.tipo === 'M') {
 			for (var i in $scope.relacionamentoNvg.selecao.items) {
-				$rootScope.relacionamentoK = angular.copy($scope.relacionamentoNvg.selecao.items[i]);
+				$scope.relacionamentoK = angular.copy($scope.relacionamentoNvg.selecao.items[i]);
 				relacionamentoModal();
 			}
 			$scope.relacionamentoNvg.selecao.items = [];
@@ -1616,7 +1579,7 @@ function SubRelacionamentoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInsta
         $scope.emProcessamento(true);
         if (!$scope.$parent.frmRelacionamento.$valid) {
             $scope.emProcessamento(false);
-            $rootScope.submitted = true;
+            $scope.submitted = true;
             toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
             return;
     	}
@@ -1630,10 +1593,10 @@ function SubRelacionamentoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInsta
 	};
 
 	$scope.novoRelacionamento = function() {
-		$rootScope.relacionamentoK = {};
-		$rootScope.relacionamentoK["@class"] = "gov.emater.aterweb.model.MeioContatoRelacionamento";
-		$rootScope.relacionamentoK['_s'] = $scope.registro.pessoaRelacionamentos ? $scope.registro.pessoaRelacionamentos.length : 0; 
-		$rootScope.relacionamentoK['_a'] = 'N'; 
+		$scope.relacionamentoK = {};
+		$scope.relacionamentoK["@class"] = "gov.emater.aterweb.model.MeioContatoRelacionamento";
+		$scope.relacionamentoK['_s'] = $scope.registro.pessoaRelacionamentos ? $scope.registro.pessoaRelacionamentos.length : 0; 
+		$scope.relacionamentoK['_a'] = 'N'; 
 		// iniciar estrutura
 	}
 };
