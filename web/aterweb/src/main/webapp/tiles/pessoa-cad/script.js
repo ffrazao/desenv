@@ -64,8 +64,8 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
 	};
 
     $scope.acoes = {};
-    $scope.acoes.meioContato =  {}; //funções para meiocontato
-    $scope.acoes.relacionamento = {};//funções para relacionamentos    
+    $scope.acoes.meioContato =  {};   // funções para meiocontato
+    $scope.acoes.relacionamento = {}; // funções para relacionamentos    
     $scope.paisSelecionado = {};
     $scope.estadoSelecionado = {};
     $scope.municipioSelecionado = {};
@@ -74,56 +74,172 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
     
     toaster.options = {positionClass : "toast-bottom-right"};
     $scope.selected = [];
-	
-    $scope.carregarParametros = function(){
-    	//CARREGAR LISTAS E OPÇÕES
-        $http.get(baseUrl + "dominio",{params: {ent: 'OrganizacaoTipo'}})
-            .success(function(data){
-                if(data.executou){
-                    $scope.organizacaoTipo = data.resultado;
-                }else{
-                    toaster.pop('error', "", 'Erro ao tentar carregar parâmetros: OrganizacaoTipo!');
-                }
-            })
-            .error(function(data){
-                toaster.pop('error', "ERRO", data);
-                console.log('ERROR',data);
-            });
+    
+    if (isUndefOrNull($scope.apoio)) {
+    	var sucessoInterno = function (ls, cb) {
+			return function(data) {
+				if (data.executou) {
+					if (cb) {
+						cb(data.resultado);
+					} else {
+						ls.splice(0, ls.length);
+						for (i in data.resultado) {
+							ls.push(data.resultado[i]);
+						}
+					}
+				} else {
+					erroInterno(data);
+				}
+			};
+		};
 
-        $http.get(baseUrl + "dominio",{params: {ent: 'Setor'}})
-            .success(function(data){
-                if(data.executou){
-                    $scope.setor = data.resultado;
-                }else{
-                    toaster.pop('error', "", 'Erro ao tentar carregar parâmetros: Setor!');
+		var erroInterno = function(data) {
+			if (!isUndefOrNull(data["mensagem"])) {
+				toaster.pop('error', 'Erro ao Recuperar Informações', data.mensagem);
+			} else {
+				document.write(data);
+			}
+		};
+        
+        var carregarEnum = function (lista, enumeracao, callback) {
+            requisicaoService.enumeracao(enumeracao).success(sucessoInterno(lista, callback)).error(erroInterno);
+        };
+        
+        var carregarDominio = function (lista, params, callback) {
+	    	requisicaoService.dominio(params).success(sucessoInterno(lista, callback)).error(erroInterno);
+        }
+
+        $scope.apoio = {
+	        camOrgaoList: [],
+	        cnhCategoriaList: [],
+	        escolaridadeList: [],
+	        estadoCivilList: [],
+	        meioContatoFinalidadeList: [],
+	        pessoaSituacaoList: [],
+	        publicoAlvoCategoriaList: [],
+	        publicoAlvoSegmentoList: [],
+	        regimeCasamentoList: [],
+	        
+			organizacaoTipoList: [],
+			relacionamentoTipoList: [],
+			setorList: [],
+        };
+
+        carregarEnum($scope.apoio.camOrgaoList, "CamOrgao");
+        carregarEnum($scope.apoio.cnhCategoriaList, "CnhCategoria");
+        carregarEnum($scope.apoio.escolaridadeList, "Escolaridade");
+        carregarEnum($scope.apoio.estadoCivilList, "EstadoCivil");
+        carregarEnum($scope.apoio.meioContatoFinalidadeList, "MeioContatoFinalidade", function (resultado) {
+            var codigo = "";
+            var descricao = "";
+            for (i in resultado) {
+                if (codigo !== "") {
+                    codigo+=",";
                 }
-            })
-            .error(function(data){
-                toaster.pop('error', "ERRO", data);
-                console.log('ERROR',data);
-            });
+                if (descricao !== "") {
+                    descricao+=" e ";
+                }
+                codigo+=resultado[i].codigo;
+                descricao+=resultado[i].descricao;
+                $scope.apoio.meioContatoFinalidadeList.push(resultado[i]);
+            }
+            $scope.apoio.meioContatoFinalidadeList.push({"codigo": codigo, "descricao": descricao});
+        });
+        carregarEnum($scope.apoio.pessoaSituacaoList, "PessoaSituacao");
+        carregarEnum($scope.apoio.publicoAlvoCategoriaList, "PublicoAlvoCategoria");
+        carregarEnum($scope.apoio.publicoAlvoSegmentoList, "PublicoAlvoSegmento");
+        carregarEnum($scope.apoio.regimeCasamentoList, "RegimeCasamento");
+        
+        carregarDominio($scope.apoio.organizacaoTipoList, {params : { ent : 'OrganizacaoTipo', }});
+        carregarDominio($scope.apoio.relacionamentoTipoList, {params : {ent : 'RelacionamentoTipo', grupoSocial : 'N', }});
+        carregarDominio($scope.apoio.setorList, {params : { ent : 'Setor', }});
+    }
+
+
+	$scope.retornaRelacionamentoFuncao = function(id) {
+		//console.log(id);
+		requisicaoService.dominio({
+			params : {
+				ent : 'RelacionamentoConfiguracaoVi',
+				npk : 'tipo_id',
+				vpk : id
+			}
+		}).success(function(data) {
+			$scope.relacionamentoFuncao = data.resultado;
+		}).error(function(data) {
+			toaster.pop('error', "ERRO", data);
+			console.log('ERROR', data);
+		});
+	};
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	//CARREGAR LISTAS E OPÇÕES
         var anoAtual = (new Date().getFullYear());
         $scope.tradicao = [];
         for(var i = anoAtual - 60; i <= anoAtual; i++){
             $scope.tradicao.push(i);
         }
         
-        $scope.retornaPais();
-    };
-    $scope.carregarParametros();
+    $scope.retornaPais();
     
-    $scope.retornaRelacionamentoFuncao = function(id) {
-        console.log(id);
-        $http.get(baseUrl + "dominio",{params: {ent: 'RelacionamentoConfiguracaoVi',npk:'tipo_id',vpk:id}})
-            .success(function(data){
-                $scope.relacionamentoFuncao = data.resultado;
-
-            })
-            .error(function(data){
-                toaster.pop('error', "ERRO", data);
-                console.log('ERROR',data);
-            });
-    };
     
     $scope.copiarObjeto = function(fonte,campo,valor){
         var retorno = null;
@@ -525,7 +641,7 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
         return true;
     };
     
-    $('.btnTrocar').tooltip()
+    $('.btnTrocar').tooltip();
     
     $scope.$watch('registro.nascimento', function(newValue, oldValue) {
     	$scope.registro.idade = null;
@@ -580,240 +696,10 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
     	cadFiltro = null;
     }
     
-	requisicaoService.dominio({
-		params : {
-			ent : 'RelacionamentoTipo',
-			grupoSocial : 'N'
-		}
-	}).success(function(data) {
-		$scope.relacionamentoTipo = data.resultado;
-	}).error(function(data) {
-		toaster.pop('error', "ERRO", data);
-		console.log('ERROR', data);
-	});
-
-	$scope.retornaRelacionamentoFuncao = function(id) {
-		console.log(id);
-		requisicaoService.dominio({
-			params : {
-				ent : 'RelacionamentoConfiguracaoVi',
-				npk : 'tipo_id',
-				vpk : id
-			}
-		}).success(function(data) {
-			$scope.relacionamentoFuncao = data.resultado;
-		}).error(function(data) {
-			toaster.pop('error', "ERRO", data);
-			console.log('ERROR', data);
-		});
-	};
-	
-$scope.removerArquivo = function(arquivo){
+	$scope.removerArquivo = function(arquivo){
         var index = $scope.registro.arquivoList.indexOf(arquivo);
         $scope.registro.arquivoList.splice(index,1);
     };
-    
-    if (isUndefOrNull($scope.apoio)) {
-    	$scope.apoio = {};
-    	$scope.apoio.filtroEnderecoListInit = function () {
-    		$scope.registro.pessoaMeioContatos = [];
-    	};
-    }
-
-    // carregar as tabelas de apoio ao formulario de cadastro
-    if (isUndefOrNull($scope.apoio.meioContatoFinalidadeList)) {
-    	requisicaoService.enumeracao("MeioContatoFinalidade").success(function(data) {
-    		if (data.executou) {
-    			$scope.apoio.meioContatoFinalidadeList = [];
-    			var codigo = "";
-    			var descricao = "";
-    			for (i in data.resultado) {
-    				if (codigo !== "") {
-    					codigo+=",";
-    				}
-    				if (descricao !== "") {
-    					descricao+=" e ";
-    				}
-    				codigo+=data.resultado[i].codigo;
-    				descricao+=data.resultado[i].descricao;
-    				$scope.apoio.meioContatoFinalidadeList.push(data.resultado[i]);
-    			}
-				$scope.apoio.meioContatoFinalidadeList.push({"codigo": codigo, "descricao": descricao});
-    		} else {
-    			if (!isUndefOrNull(data["mensagem"])) {
-    				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-    			} else {
-    				document.write(data);
-    			}
-    		}
-    	}).error(function(data) {
-			if (!isUndefOrNull(data["mensagem"])) {
-				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-			} else {
-				document.write(data);
-			}
-    	});
-    }
-    
-    if (isUndefOrNull($scope.apoio.estadoCivilList)) {
-    	requisicaoService.enumeracao("EstadoCivil").success(function(data) {
-    		if (data.executou) {
-    			$scope.apoio.estadoCivilList = data.resultado;
-    		} else {
-    			if (!isUndefOrNull(data["mensagem"])) {
-    				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-    			} else {
-    				document.write(data);
-    			}
-    		}
-    	}).error(function(data) {
-			if (!isUndefOrNull(data["mensagem"])) {
-				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-			} else {
-				document.write(data);
-			}
-    	});
-    }
-	
-    if (isUndefOrNull($scope.apoio.escolaridadeList)) {
-    	requisicaoService.enumeracao("Escolaridade").success(function(data) {
-    		if (data.executou) {
-    			$scope.apoio.escolaridadeList = data.resultado;
-    		} else {
-    			if (!isUndefOrNull(data["mensagem"])) {
-    				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-    			} else {
-    				document.write(data);
-    			}
-    		}
-    	}).error(function(data) {
-			if (!isUndefOrNull(data["mensagem"])) {
-				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-			} else {
-				document.write(data);
-			}
-    	});
-    }
-	
-    if (isUndefOrNull($scope.apoio.pessoaSituacaoList)) {
-    	requisicaoService.enumeracao("PessoaSituacao").success(function(data) {
-    		if (data.executou) {
-    			$scope.apoio.pessoaSituacaoList = data.resultado;
-    		} else {
-    			if (!isUndefOrNull(data["mensagem"])) {
-    				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-    			} else {
-    				document.write(data);
-    			}
-    		}
-    	}).error(function(data) {
-			if (!isUndefOrNull(data["mensagem"])) {
-				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-			} else {
-				document.write(data);
-			}
-    	});
-    }
-	
-    if (isUndefOrNull($scope.apoio.cnhCategoriaList)) {
-    	requisicaoService.enumeracao("CnhCategoria").success(function(data) {
-    		if (data.executou) {
-    			$scope.apoio.cnhCategoriaList = data.resultado;
-    		} else {
-    			if (!isUndefOrNull(data["mensagem"])) {
-    				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-    			} else {
-    				document.write(data);
-    			}
-    		}
-    	}).error(function(data) {
-			if (!isUndefOrNull(data["mensagem"])) {
-				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-			} else {
-				document.write(data);
-			}
-    	});
-    }
-	
-    if (isUndefOrNull($scope.apoio.regimeCasamentoList)) {
-    	requisicaoService.enumeracao("RegimeCasamento").success(function(data) {
-    		if (data.executou) {
-    			$scope.apoio.regimeCasamentoList = data.resultado;
-    		} else {
-    			if (!isUndefOrNull(data["mensagem"])) {
-    				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-    			} else {
-    				document.write(data);
-    			}
-    		}
-    	}).error(function(data) {
-			if (!isUndefOrNull(data["mensagem"])) {
-				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-			} else {
-				document.write(data);
-			}
-    	});
-    }
-	
-    if (isUndefOrNull($scope.apoio.camOrgaoList)) {
-    	requisicaoService.enumeracao("CamOrgao").success(function(data) {
-    		if (data.executou) {
-    			$scope.apoio.camOrgaoList = data.resultado;
-    		} else {
-    			if (!isUndefOrNull(data["mensagem"])) {
-    				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-    			} else {
-    				document.write(data);
-    			}
-    		}
-    	}).error(function(data) {
-			if (!isUndefOrNull(data["mensagem"])) {
-				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-			} else {
-				document.write(data);
-			}
-    	});
-    }
-	
-    if (isUndefOrNull($scope.apoio.publicoAlvoCategoriaList)) {
-    	requisicaoService.enumeracao("PublicoAlvoCategoria").success(function(data) {
-    		if (data.executou) {
-    			$scope.apoio.publicoAlvoCategoriaList = data.resultado;
-    		} else {
-    			if (!isUndefOrNull(data["mensagem"])) {
-    				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-    			} else {
-    				document.write(data);
-    			}
-    		}
-    	}).error(function(data) {
-			if (!isUndefOrNull(data["mensagem"])) {
-				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-			} else {
-				document.write(data);
-			}
-    	});
-    }
-	
-    if (isUndefOrNull($scope.apoio.publicoAlvoSegmentoList)) {
-    	requisicaoService.enumeracao("PublicoAlvoSegmento").success(function(data) {
-    		if (data.executou) {
-    			$scope.apoio.publicoAlvoSegmentoList = data.resultado;
-    		} else {
-    			if (!isUndefOrNull(data["mensagem"])) {
-    				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-    			} else {
-    				document.write(data);
-    			}
-    		}
-    	}).error(function(data) {
-			if (!isUndefOrNull(data["mensagem"])) {
-				toaster.pop('error','Erro ao Recuperar Informações', data.mensagem);
-			} else {
-				document.write(data);
-			}
-    	});
-    }
     
 	// funciona assim, definir uma funcao para chamar a tela
 	$scope.apoio.pessoaGrupoIncluir = function() {

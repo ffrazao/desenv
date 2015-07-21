@@ -87,15 +87,21 @@
 <div class="row">
 	<div class="form-group col-md-4">
 		<label class="control-label">Escolaridade</label>
-		<select class="form-control"></select>
+		<select class="form-control" id="escolaridade" name="escolaridade" data-ng-model="registro.escolaridade" data-ng-options="item.codigo as item.descricao for item in apoio.escolaridadeList">
+			<option value="">*** Não Informado ***</option>
+		</select>
 	</div>
 	<div class="form-group col-md-4">
 		<label class="control-label">Profissão</label>
-		<select class="form-control"></select>
+		<select class="form-control" id="profissao" name="profissao" data-ng-model="registro.profissao" data-ng-options="item.codigo as item.descricao for item in apoio.profissaoList">
+			<option value="">*** Não Informado ***</option>
+		</select>
 	</div>
 	<div class="form-group col-md-4">
 		<label class="control-label">Estado Civil</label>
-		<select class="form-control"></select>
+		<select class="form-control" id="estadoCivil" name="estadoCivil" data-ng-model="registro.estadoCivil" data-ng-options="item.codigo as item.descricao for item in apoio.estadoCivilList">
+			<option value="">*** Não Informado ***</option>
+		</select>
 	</div>
 </div>
 <div class="row">
