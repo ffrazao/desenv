@@ -15,14 +15,10 @@
 	<div class="form-group col-md-6">
 		<label class="control-label">Gênero</label>
 		<div class="form-control">
-			<label class="radio-inline" for="genero-0">
-				<input type="radio" name="genero" id="genero-0" value="M" data-ng-model="registro.sexo">
-				Masculino
+			<label class="radio-inline" ng-repeat="item in apoio.sexoList" for="genero-{{item.codigo}}">
+				<input type="radio" id="genero-{{item.codigo}}" name="genero" value="{{item.codigo}}" data-ng-model="registro.sexo">
+				{{item.descricao}}
 			</label> 
-			<label class="radio-inline" for="genero-1">
-				<input type="radio" name="genero" id="genero-1" value="F" data-ng-model="registro.sexo">
-				Feminino
-			</label>
 		</div>
 	</div>
 </div>
@@ -36,7 +32,7 @@
 			</div>
 			<div class="form-group col-md-1">
 				<label class="control-label">Idade</label>
-				<input class="form-control" type="text" readonly="true" /> 
+				<input class="form-control" type="text" readonly="true" data-ng-model="registro.idade" /> 
 			</div>
 			<div class="form-group col-md-3">
 				<label class="control-label">País</label>
@@ -93,7 +89,7 @@
 	</div>
 	<div class="form-group col-md-4">
 		<label class="control-label">Profissão</label>
-		<select class="form-control" id="profissao" name="profissao" data-ng-model="registro.profissao" data-ng-options="item.codigo as item.descricao for item in apoio.profissaoList">
+		<select class="form-control" id="profissao" name="profissao" data-ng-model="registro.profissao" data-ng-options="item.id as item.nome for item in apoio.profissaoList">
 			<option value="">*** Não Informado ***</option>
 		</select>
 	</div>
@@ -162,7 +158,9 @@
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">Regime</label>
-				<select class="form-control" type="text"/>
+				<select class="form-control" id="certidaoCasamentoRegime" name="certidaoCasamentoRegime" data-ng-model="registro.certidaoCasamentoRegime" data-ng-options="item.codigo as item.descricao for item in apoio.regimeCasamentoList">
+					<option value="">*** Não Informado ***</option>
+				</select>
 			</div>
 		</div>
 	</div>
@@ -171,7 +169,9 @@
 		<div class="row">
 			<div class="col-md-3">
 				<label class="control-label">Categoria</label>
-				<input class="form-control" type="text"/>
+				<select class="form-control" id="cnhCategoria" name="cnhCategoria" data-ng-model="registro.cnhCategoria" data-ng-options="item.codigo as item.descricao for item in apoio.cnhCategoriaList">
+					<option value="">*** Não Informado ***</option>
+				</select>
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">Número</label>
@@ -179,11 +179,11 @@
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">1º Habil.</label>
-				<input class="form-control" type="text"/>
+				<input class="form-control" type="text" ng-model="registro.cnhPrimeiraHabilitacao" ui-date-mask />
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">Validade</label>
-				<select class="form-control" type="text"/>
+				<input class="form-control" type="text" ng-model="registro.cnhValidade" ui-date-mask />
 			</div>
 		</div>
 	</div>
@@ -198,7 +198,9 @@
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">Órgão</label>
-				<input class="form-control" type="text"/>
+				<select class="form-control" id="camOrgao" name="camOrgao" data-ng-model="registro.camOrgao" data-ng-options="item.codigo as item.descricao for item in apoio.camOrgaoList">
+					<option value="">*** Não Informado ***</option>
+				</select>
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">Série</label>
@@ -206,7 +208,7 @@
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">Unid. Militar</label>
-				<select class="form-control" type="text"/>
+				<input class="form-control" type="text"/>
 			</div>
 		</div>
 	</div>

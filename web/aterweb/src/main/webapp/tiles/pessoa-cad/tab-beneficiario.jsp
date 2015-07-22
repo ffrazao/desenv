@@ -1,21 +1,27 @@
 <div class="row">
 	<div class="form-group col-md-12">
 		<label class="control-label">Unidade Organizacional</label>
-		<select class="form-control" type="text" /> 
+		<select class="form-control" id="unidadeOrganizacional" name="unidadeOrganizacional" data-ng-model="registro.unidadeOrganizacional" data-ng-options="item.id as item.nome for item in apoio.pessoaGrupoOrganogramaViList">
+			<option value="">*** Não Informado ***</option>
+		</select>
 	</div>
 </div>
 <div class="row">
 	<div class="form-group col-md-4">
 		<label class="control-label">Categoria</label>
-		<select class="form-control" type="text" /> 
+		<select class="form-control" id="categoria" name="categoria" data-ng-model="registro.categoria" data-ng-options="item.codigo as item.descricao for item in apoio.publicoAlvoCategoriaList">
+			<option value="">*** Não Informado ***</option>
+		</select>
 	</div>
 	<div class="form-group col-md-4">
 		<label class="control-label">Geração</label>
-		<select class="form-control" type="text" /> 
+		<input class="form-control" type="text" readonly="true" data-ng-model="registro.geracao" /> 
 	</div>
 	<div class="form-group col-md-4">
 		<label class="control-label">Tradição</label>
-		<select class="form-control" type="text" /> 
+		<select class="form-control" id="tradicao" name="tradicao" data-ng-model="registro.tradicao" data-ng-options="item as item for item in apoio.tradicaoList | orderBy: '-'">
+			<option value="">*** Não Informado ***</option>
+		</select>
 	</div>
 </div>
 <div class="row">
@@ -39,6 +45,10 @@
 		<label class="control-label">IPA FL</label>
 		<input class="form-control" type="text" readonly="true" /> 
 	</div>
+	<div class="form-group col-md-2">
+		<label class="control-label"></label>
+		<button class="btn btn-primary form-control">Calcular</button> 
+	</div>
 </div>
 <div class="row">
 	<div class="form-group col-md-12">
@@ -56,11 +66,11 @@
 			</div>
 			<div class="col-md-4">
 				<label class="control-label">Primeira Habilitação</label>
-				<input class="form-control" type="text"/>
+				<input class="form-control" type="text" ng-model="registro.carteiraProdutorPrimeiraHabilitacao" ui-date-mask />
 			</div>
 			<div class="col-md-4">
 				<label class="control-label">Validade</label>
-				<input class="form-control" type="text"/>
+				<input class="form-control" type="text" ng-model="registro.carteiraProdutorValidade" ui-date-mask />
 			</div>
 		</div>
 	</div>
@@ -73,11 +83,11 @@
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">Registro</label>
-				<input class="form-control" type="text"/>
+				<input class="form-control" type="text" ng-model="registro.carteiraProdutorRegistro" ui-date-mask />
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">Dt. Validade</label>
-				<input class="form-control" type="text"/>
+				<input class="form-control" type="text" ng-model="registro.carteiraProdutorDtValidade" ui-date-mask />
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">Observação</label>

@@ -107,28 +107,38 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
         
         var carregarDominio = function (lista, params, callback) {
 	    	requisicaoService.dominio(params).success(sucessoInterno(lista, callback)).error(erroInterno);
-        }
+        };
 
         $scope.apoio = {
-	        camOrgaoList: [],
-	        cnhCategoriaList: [],
-	        escolaridadeList: [],
-	        estadoCivilList: [],
-	        meioContatoFinalidadeList: [],
-	        pessoaSituacaoList: [],
-	        publicoAlvoCategoriaList: [],
-	        publicoAlvoSegmentoList: [],
-	        regimeCasamentoList: [],
-	        
-			organizacaoTipoList: [],
-			relacionamentoTipoList: [],
-			setorList: [],
+    		camOrgaoList: [],
+    		cnhCategoriaList: [],
+    		confirmacaoList: [],
+    		escolaridadeList: [],
+    		estadoCivilList: [],
+    		geracaoList: [],
+    		meioContatoFinalidadeList: [],
+    		pessoaSituacaoList: [],
+    		publicoAlvoCategoriaList: [],
+    		publicoAlvoSegmentoList: [],
+    		regimeCasamentoList: [],
+    		sexoList: [],
+    		situacaoDapList: [],
+    		
+    		organizacaoTipoList: [],
+    		pessoaGrupoOrganogramaViList: [],
+    		profissaoList: [],
+    		relacionamentoTipoList: [],
+    		setorList: [],
+    		
+    	    tradicaoList: [],
         };
 
         carregarEnum($scope.apoio.camOrgaoList, "CamOrgao");
+        carregarEnum($scope.apoio.confirmacaoList, "Confirmacao");
         carregarEnum($scope.apoio.cnhCategoriaList, "CnhCategoria");
         carregarEnum($scope.apoio.escolaridadeList, "Escolaridade");
-        carregarEnum($scope.apoio.estadoCivilList, "EstadoCivil");
+        carregarEnum($scope.apoio.estadoCivilList, "EstadoCivil");        
+        carregarEnum($scope.apoio.geracaoList, "Geracao");        
         carregarEnum($scope.apoio.meioContatoFinalidadeList, "MeioContatoFinalidade", function (resultado) {
             var codigo = "";
             var descricao = "";
@@ -149,12 +159,21 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
         carregarEnum($scope.apoio.publicoAlvoCategoriaList, "PublicoAlvoCategoria");
         carregarEnum($scope.apoio.publicoAlvoSegmentoList, "PublicoAlvoSegmento");
         carregarEnum($scope.apoio.regimeCasamentoList, "RegimeCasamento");
+        carregarEnum($scope.apoio.situacaoDapList, "SituacaoDap");
+        carregarEnum($scope.apoio.sexoList, "Sexo");
         
         carregarDominio($scope.apoio.organizacaoTipoList, {params : { ent : 'OrganizacaoTipo', }});
+        carregarDominio($scope.apoio.profissaoList, {params : { ent : 'Profissao', order: 'nome', }});
         carregarDominio($scope.apoio.relacionamentoTipoList, {params : {ent : 'RelacionamentoTipo', grupoSocial : 'N', }});
         carregarDominio($scope.apoio.setorList, {params : { ent : 'Setor', }});
+        
+        carregarDominio($scope.apoio.pessoaGrupoOrganogramaViList, {params : { ent : 'PessoaGrupoOrganogramaVi', order: 'sigla' }});
+        
+        var anoAtual = (new Date().getFullYear());
+        for (var i = anoAtual - 60; i <= anoAtual; i++) {
+            $scope.apoio.tradicaoList.push(i);
+        }
     }
-
 
 	$scope.retornaRelacionamentoFuncao = function(id) {
 		//console.log(id);
@@ -165,7 +184,15 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
 				vpk : id
 			}
 		}).success(function(data) {
-			$scope.relacionamentoFuncao = data.resultado;
+			if (data.executou) {
+				$scope.relacionamentoFuncao.splice(0, $scope.relacionamentoFuncao.length);
+				for (i in data.resultado) {
+					$scope.relacionamentoFuncao.push(data.resultado[i]);
+				}
+			} else {
+				toaster.pop('error', "ERRO", data);
+				console.log('ERROR', data);
+			}
 		}).error(function(data) {
 			toaster.pop('error', "ERRO", data);
 			console.log('ERROR', data);
@@ -231,12 +258,6 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
     	
     	
     	
-    	//CARREGAR LISTAS E OPÇÕES
-        var anoAtual = (new Date().getFullYear());
-        $scope.tradicao = [];
-        for(var i = anoAtual - 60; i <= anoAtual; i++){
-            $scope.tradicao.push(i);
-        }
         
     $scope.retornaPais();
     
@@ -646,9 +667,14 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
     $scope.$watch('registro.nascimento', function(newValue, oldValue) {
     	$scope.registro.idade = null;
     	$scope.registro.geracao = null;
-        if(newValue === oldValue || newValue === undefined || newValue.length !== 10){return;}
-        var partes = newValue.split('/');
-        var nascimento = new Date(partes[2],partes[1]-1,partes[0]);
+    	var nascimento = null;
+    	if(newValue instanceof Date) {
+            nascimento = newValue;
+    	} else {
+    		if (newValue === oldValue || newValue === undefined || newValue.length !== 10) {return;}
+    		var partes = newValue.split('/');
+    		nascimento = new Date(partes[2],partes[1]-1,partes[0]);
+    	}
         var hoje = new Date();
         var idade = hoje.getFullYear() - nascimento.getFullYear();
         if ( new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()) < 

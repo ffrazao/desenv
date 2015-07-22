@@ -18,83 +18,56 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="categoria">Categoria</label>
 						<div class="col-md-4">
-							<select id="categoria" name="categoria" class="form-control">
-								<option value="">Sem Filtro</option>
-								<option>Empreendedor Patronal</option>
-								<option>Empreendedor Familiar</option>
-								<option>Habitante Patronal</option>
-								<option>Habitante Familiar</option>
-								<option>Trabalhador Familiar</option>
+							<select class="form-control" id="categoria" name="categoria" data-ng-model="filtro.categoria" data-ng-options="item.codigo as item.descricao for item in apoio.publicoAlvoCategoriaList">
+								<option value="">*** Ignorar ***</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="ater">ATER</label>
 						<div class="col-md-4">
-							<select id="ater" name="ater" class="form-control">
-								<option value="">Sem Filtro</option>
-								<option value="S">Sim</option>
-								<option value="N">Não</option>
+							<select class="form-control" id="ater" name="ater" data-ng-model="filtro.ater" data-ng-options="item.codigo as item.descricao for item in apoio.confirmacaoList">
+								<option value="">*** Ignorar ***</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="dap">DAP</label>
 						<div class="col-md-4">
-							<select id="dap" name="dap" class="form-control">
-								<option value="">Sem Filtro</option>
-								<option>Sim</option>
-								<option>Não</option>
-								<option>NDP</option>
+							<select class="form-control" id="dap" name="dap" data-ng-model="filtro.dap" data-ng-options="item.codigo as item.descricao for item in apoio.situacaoDapList">
+								<option value="">*** Ignorar ***</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="genero">Gênero</label>
 						<div class="col-md-4">
-							<select id="genero" name="genero" class="form-control">
-								<option value="">Sem Filtro</option>
-								<option>Masculino</option>
-								<option>Feminino</option>
+							<select class="form-control" id="genero" name="genero" data-ng-model="filtro.genero" data-ng-options="item.codigo as item.descricao for item in apoio.sexoList">
+								<option value="">*** Ignorar ***</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="geracao">Geração</label>
 						<div class="col-md-4">
-							<select id="geracao" name="geracao" class="form-control">
-								<option value="">Sem Filtro</option>
-								<option>Adulto</option>
-								<option>Idoso</option>
-								<option>Jovem</option>
-								<option>Criança</option>
+							<select class="form-control" id="geracao" name="geracao" data-ng-model="filtro.geracao" data-ng-options="item.codigo as item.descricao for item in apoio.geracaoList">
+								<option value="">*** Ignorar ***</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="setor">Setor</label>
 						<div class="col-md-4">
-							<select id="setor" name="setor" class="form-control">
-								<option value="">Sem Filtro</option>
-								<option>Agropecuária</option>
-								<option>Agroindústria</option>
-								<option>Artesanato</option>
-								<option>Comércio</option>
-								<option>Proc. Artesanal</option>
-								<option>Serviço</option>
-								<option>Turismo</option>
+							<select class="form-control" id="setor" name="setor" data-ng-model="filtro.setor" data-ng-options="item.id as item.nome for item in apoio.setorList">
+								<option value="">*** Ignorar ***</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="ativo">Ativo</label>
 						<div class="col-md-4">
-							<select id="ativo" name="ativo" class="form-control" data-ng-model="filtro.situacao">
-								<option value="">Sem Filtro</option>
-								<option value="A">Ativo</option>
-								<option value="U">Inativo por falta de uso</option>
-								<option value="F">Inativo por falecimento</option>
-								<option value="O">Inativo por outro motivo</option>
+							<select class="form-control" id="ativo" name="ativo" data-ng-model="filtro.ativo" data-ng-options="item.codigo as item.descricao for item in apoio.pessoaSituacaoList">
+								<option value="">*** Ignorar ***</option>
 							</select>
 						</div>
 					</div>
