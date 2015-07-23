@@ -7,6 +7,12 @@
 	</div>
 </div>
 <div class="row">
+	<div class="form-group col-md-12">
+		<label class="control-label">Propriedades Vinculadas</label>
+		<ng-include src="'tiles/pessoa-cad/sub-beneficiario-propriedade.jsp'"/>
+	</div>
+</div>
+<div class="row">
 	<div class="form-group col-md-4">
 		<label class="control-label">Categoria</label>
 		<select class="form-control" id="categoria" name="categoria" data-ng-model="registro.categoria" data-ng-options="item.codigo as item.descricao for item in apoio.publicoAlvoCategoriaList">
@@ -51,12 +57,6 @@
 	</div>
 </div>
 <div class="row">
-	<div class="form-group col-md-12">
-		<label class="control-label">Propriedades Vinculadas</label>
-		<!-- <ng-include src="'views/pessoa/sub-beneficiario-propriedade.html'"/> -->
-	</div>
-</div>
-<div class="row">
 	<div class="form-group col-md-6">
 		<label class="control-label">Carteira do Produtor</label>
 		<div class="row">
@@ -79,7 +79,9 @@
 		<div class="row">
 			<div class="col-md-3">
 				<label class="control-label">Situação</label>
-				<select class="form-control" type="text"/>
+				<select class="form-control" id="dap" name="dap" data-ng-model="registro.dap" data-ng-options="item.codigo as item.descricao for item in apoio.situacaoDapList">
+					<option value="">*** Não Informado ***</option>
+				</select>
 			</div>
 			<div class="col-md-3">
 				<label class="control-label">Registro</label>

@@ -32,10 +32,6 @@ public class Exploracao extends EntidadeBase implements _ChavePrimaria<Integer> 
 	@JsonDeserialize(using = JsonFormatarBigDecimal.class)
 	private BigDecimal area;
 
-	public Exploracao(Integer id) {
-		super(id);
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -47,6 +43,10 @@ public class Exploracao extends EntidadeBase implements _ChavePrimaria<Integer> 
 	private String regime;
 
 	public Exploracao() {
+	}
+
+	public Exploracao(Integer id) {
+		super(id);
 	}
 
 	public Exploracao(PessoaMeioContato pessoaMeioContato) {

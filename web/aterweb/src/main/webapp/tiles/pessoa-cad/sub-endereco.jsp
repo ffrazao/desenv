@@ -37,6 +37,7 @@
             <th>Finalidade</th>
             <th>Endereço</th>
             <th>Propriedade Rural?</th>
+            <th>Mapa</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +68,7 @@
             	{{item.propriedadeRuralConfirmacao === 'S' ? 'Comunidade: ' : ''}}{{item.propriedadeRural.pessoaGrupoComunidadeVi.nome}}<br>
             	{{item.propriedadeRuralConfirmacao === 'S' ? 'Bacia Hidrográfica: ' : ''}}{{item.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.nome}}
             </td>
+            <td><img src="./resources/img/mapa.jpg" class="img-thumbnail"></td>
           </tr>
         </tbody>
         <tfoot>

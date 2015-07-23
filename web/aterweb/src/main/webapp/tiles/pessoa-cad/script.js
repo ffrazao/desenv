@@ -121,6 +121,7 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
     		publicoAlvoCategoriaList: [],
     		publicoAlvoSegmentoList: [],
     		regimeCasamentoList: [],
+    		regimeExploracaoList: [],
     		sexoList: [],
     		situacaoDapList: [],
     		
@@ -137,7 +138,7 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
         carregarEnum($scope.apoio.confirmacaoList, "Confirmacao");
         carregarEnum($scope.apoio.cnhCategoriaList, "CnhCategoria");
         carregarEnum($scope.apoio.escolaridadeList, "Escolaridade");
-        carregarEnum($scope.apoio.estadoCivilList, "EstadoCivil");        
+        carregarEnum($scope.apoio.estadoCivilList, "EstadoCivil");
         carregarEnum($scope.apoio.geracaoList, "Geracao");        
         carregarEnum($scope.apoio.meioContatoFinalidadeList, "MeioContatoFinalidade", function (resultado) {
             var codigo = "";
@@ -159,6 +160,7 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
         carregarEnum($scope.apoio.publicoAlvoCategoriaList, "PublicoAlvoCategoria");
         carregarEnum($scope.apoio.publicoAlvoSegmentoList, "PublicoAlvoSegmento");
         carregarEnum($scope.apoio.regimeCasamentoList, "RegimeCasamento");
+        carregarEnum($scope.apoio.regimeExploracaoList, "RegimeExploracao");        
         carregarEnum($scope.apoio.situacaoDapList, "SituacaoDap");
         carregarEnum($scope.apoio.sexoList, "Sexo");
         
