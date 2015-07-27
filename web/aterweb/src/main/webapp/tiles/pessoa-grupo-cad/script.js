@@ -395,6 +395,66 @@ aterweb.controller("cadastroCtrl",
 	            toaster.pop('info', null, "Selecione um registro!");
 	        }
 	    }
+	    
+	    $scope.grupoSocialOk = function() {
+	        $scope.emProcessamento(true);
+	        if (!$scope.$parent.frmGrupoSocial.$valid) {
+	            $scope.emProcessamento(false);
+	            $scope.submitted = true;
+	            toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
+	            return;
+	        }
+	        $scope.emProcessamento(false);
+	        
+	        requisicaoService.dominio({
+	            params : {
+	                ent : 'PessoaGrupo',
+	                npk : 'id',
+	                vpk : $scope.grupoSocialK.pessoaGrupoCidadeVi.id,
+	            }
+	        }).success(function(data) {
+	            if (data.executou) {
+	                $scope.grupoSocialK.pessoaGrupoCidadeVi.nome = data.resultado[0].nome;
+	                $scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.nome = data.resultado[0].pai.nome;
+	                $scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.nome = data.resultado[0].pai.pai.nome;
+	                $scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi.nome = data.resultado[0].pai.pai.pai.nome;
+	            }
+	        });
+	        
+	        if ($scope.grupoSocialK.propriedadeRural && $scope.grupoSocialK.propriedadeRural.pessoaGrupoComunidadeVi && $scope.grupoSocialK.propriedadeRural.pessoaGrupoComunidadeVi.id) {
+	            requisicaoService.dominio({
+	                params : {
+	                    ent : 'PessoaGrupo',
+	                    npk : 'id',
+	                    vpk : $scope.grupoSocialK.propriedadeRural.pessoaGrupoComunidadeVi.id,
+	                }
+	            }).success(function(data) {
+	                if (data.executou) {
+	                    $scope.grupoSocialK.propriedadeRural.pessoaGrupoComunidadeVi.nome = data.resultado[0].nome;
+	                }
+	            });
+	        }
+	        
+	        if ($scope.grupoSocialK.propriedadeRural && $scope.grupoSocialK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi && $scope.grupoSocialK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.id) {
+	            requisicaoService.dominio({
+	                params : {
+	                    ent : 'PessoaGrupo',
+	                    npk : 'id',
+	                    vpk : $scope.grupoSocialK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.id,
+	                }
+	            }).success(function(data) {
+	                if (data.executou) {
+	                    $scope.grupoSocialK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.nome = data.resultado[0].nome;
+	                }
+	            });
+	        }
+	        $modalInstance.close($scope.grupoSocialK);
+	    };
+
+	    $scope.grupoSocialCancelar = function() {
+	        $modalInstance.dismiss('cancel');
+	    };
+
 });
 
 

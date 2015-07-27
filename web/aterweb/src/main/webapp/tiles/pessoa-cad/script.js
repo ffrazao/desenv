@@ -1548,3 +1548,201 @@ function SubRelacionamentoCtrl($scope, FrzNavegadorParams, $modal_b, $modalInsta
 		// iniciar estrutura
 	}
 };
+
+function GrupoSocialCtrl($scope, FrzNavegadorParams, $modal_b, $modalInstance, registro, toaster, requisicaoService) {
+    $scope.grupoSocialNvg = new FrzNavegadorParams();
+    
+    $scope.grupoSocialNvg.scope = $scope;
+    
+    if (registro != null) {
+        $scope.dados = angular.copy(registro);
+    }
+
+    $scope.abrir = function() {
+        $scope.grupoSocialNvg.mudarEstado('ESPECIAL');
+        $scope.registro.pessoaMeioContatos = [];
+//      for (var i = 0; i < 0; i++) {
+//          $scope.novoGrupoSocial();
+//          $scope.grupoSocialK['_a'] = 'I';
+//          $scope.registro.pessoaMeioContatos.push($scope.grupoSocialK);
+//      }
+        $scope.preparar($scope.registro.pessoaMeioContatos);
+    };
+
+    $scope.especial = function() {
+        $scope.grupoSocialNvg.especialBotoesVisiveis([ 'agir', 'editar', 'excluir', 'incluir', 'navegar', 'tamanhoPagina', ]);
+    };
+
+    function grupoSocialModal() {
+		var modalInstance = $modal_b.open({
+			animation : $scope.animationsEnabled,
+			templateUrl : 'tiles/pessoa-grupo-cad/modal.jsp',
+			controller : 'cadastroCtrl',
+			size : 'lg',
+			resolve : {
+				registro : function() {
+					return $scope.relacionamentoK;
+				}
+			}
+		});
+
+		modalInstance.result.then(function(registro) {
+			if (!registro) {
+				return;
+			}
+			if (!$scope.registro.pessoaRelacionamentos) {
+				$scope.registro.pessoaRelacionamentos = [];
+			}
+			var encontrou = false;
+			for (var i in $scope.registro.pessoaRelacionamentos) {
+				if ($scope.registro.pessoaRelacionamentos[i]['_s'] === registro['_s']) {
+					if (registro['_a'] !== 'N') {
+						registro['_a'] = 'A';
+					}
+					$scope.registro.pessoaRelacionamentos[i] = registro;
+					encontrou = true;
+					break;
+				}
+			}
+			if (!encontrou) {
+				$scope.registro.pessoaRelacionamentos.push(registro);
+			}
+		}, function() {
+			//console.log('Modal dismissed at: ' + new Date());
+		});
+	}
+    
+    $scope.submitted = false;
+    
+    $scope.excluir = function() {
+        if ($scope.grupoSocialNvg.selecao.tipo === 'U') {
+            $scope.grupoSocialNvg.selecao.item['_a'] = 'E';
+        } else if ($scope.grupoSocialNvg.selecao.tipo === 'M') {
+            for (var i in $scope.grupoSocialNvg.selecao.items) {
+                $scope.grupoSocialNvg.selecao.items[i]['_a'] = 'E';
+            }
+            $scope.grupoSocialNvg.selecao.items = [];
+        }
+        toaster.pop('info', null, "Registro(s) Excluido(s)!");
+    };
+    
+    $scope.incluir = function() {
+        $scope.novoGrupoSocial();
+        
+        grupoSocialModal();
+    };
+    
+    $scope.editar = function(id) {
+        if ($scope.grupoSocialNvg.selecao.tipo === 'U') {
+            $scope.grupoSocialK = angular.copy($scope.grupoSocialNvg.selecao.item);
+            grupoSocialModal();
+        } else if ($scope.grupoSocialNvg.selecao.tipo === 'M') {
+            for (var i in $scope.grupoSocialNvg.selecao.items) {
+                $scope.grupoSocialK = angular.copy($scope.grupoSocialNvg.selecao.items[i]);
+                grupoSocialModal();
+            }
+            $scope.grupoSocialNvg.selecao.items = [];
+        }
+    };
+
+//  $scope.items = [];
+//  $scope.selected = {
+//      item : $scope.items[0]
+//  };
+
+    $scope.processado = false;
+    
+    $scope.Ok = function() {
+        $scope.emProcessamento(true);
+        if (!$scope.$parent.frmGrupoSocial.$valid) {
+            $scope.emProcessamento(false);
+            $scope.submitted = true;
+            toaster.pop('error', "Dados incorretos", "Verifique os campos destacados!");
+            return;
+        }
+        $scope.emProcessamento(false);
+        
+        requisicaoService.dominio({
+            params : {
+                ent : 'PessoaGrupo',
+                npk : 'id',
+                vpk : $scope.grupoSocialK.pessoaGrupoCidadeVi.id,
+            }
+        }).success(function(data) {
+            if (data.executou) {
+                $scope.grupoSocialK.pessoaGrupoCidadeVi.nome = data.resultado[0].nome;
+                $scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.nome = data.resultado[0].pai.nome;
+                $scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.nome = data.resultado[0].pai.pai.nome;
+                $scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi.nome = data.resultado[0].pai.pai.pai.nome;
+            }
+        });
+        
+        if ($scope.grupoSocialK.propriedadeRural && $scope.grupoSocialK.propriedadeRural.pessoaGrupoComunidadeVi && $scope.grupoSocialK.propriedadeRural.pessoaGrupoComunidadeVi.id) {
+            requisicaoService.dominio({
+                params : {
+                    ent : 'PessoaGrupo',
+                    npk : 'id',
+                    vpk : $scope.grupoSocialK.propriedadeRural.pessoaGrupoComunidadeVi.id,
+                }
+            }).success(function(data) {
+                if (data.executou) {
+                    $scope.grupoSocialK.propriedadeRural.pessoaGrupoComunidadeVi.nome = data.resultado[0].nome;
+                }
+            });
+        }
+        
+        if ($scope.grupoSocialK.propriedadeRural && $scope.grupoSocialK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi && $scope.grupoSocialK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.id) {
+            requisicaoService.dominio({
+                params : {
+                    ent : 'PessoaGrupo',
+                    npk : 'id',
+                    vpk : $scope.grupoSocialK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.id,
+                }
+            }).success(function(data) {
+                if (data.executou) {
+                    $scope.grupoSocialK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi.nome = data.resultado[0].nome;
+                }
+            });
+        }
+        $modalInstance.close($scope.grupoSocialK);
+    };
+
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $scope.novoGrupoSocial = function() {
+        $scope.grupoSocialK = {};
+        $scope.grupoSocialK["@class"] = "gov.emater.aterweb.model.MeioContatoGrupoSocial";
+        $scope.grupoSocialK['_s'] = $scope.registro.pessoaMeioContatos ? $scope.registro.pessoaMeioContatos.length : 0; 
+        $scope.grupoSocialK['_a'] = 'N'; 
+        // iniciar estrutura
+        if (isUndefOrNull($scope.grupoSocialK)) {
+            $scope.grupoSocialK = {};
+        }
+        if (isUndefOrNull($scope.grupoSocialK.propriedadeRuralConfirmacao)) {
+            $scope.grupoSocialK.propriedadeRuralConfirmacao = "N";
+        }
+        if (isUndefOrNull($scope.grupoSocialK.pessoaGrupoCidadeVi)) {
+            $scope.grupoSocialK.pessoaGrupoCidadeVi = {};
+        }
+        if (isUndefOrNull($scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi)) {
+            $scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi = {};
+        }
+        if (isUndefOrNull($scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi)) {
+            $scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi = {};
+        }
+        if (isUndefOrNull($scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi)) {
+            $scope.grupoSocialK.pessoaGrupoCidadeVi.pessoaGrupoMunicipioVi.pessoaGrupoEstadoVi.pessoaGrupoPaisVi = {};
+        }
+        if (isUndefOrNull($scope.grupoSocialK.propriedadeRural)) {
+            $scope.grupoSocialK.propriedadeRural = {};
+        }
+        if (isUndefOrNull($scope.grupoSocialK.propriedadeRural.pessoaGrupoComunidadeVi)) {
+            $scope.grupoSocialK.propriedadeRural.pessoaGrupoComunidadeVi = {};
+        }
+        if (isUndefOrNull($scope.grupoSocialK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi)) {
+            $scope.grupoSocialK.propriedadeRural.pessoaGrupoBaciaHidrograficaVi = {};
+        }
+    }
+};
