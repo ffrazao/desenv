@@ -3,11 +3,11 @@
 		<label class="control-label">Cadastro Especial</label>
 		<div class="form-control">
 			<label class="checkbox-inline" for="beneficiario">
-				<input type="checkbox" name="beneficiario" id="beneficiario" ng-model="registro.publicoAlvoConfirmacao" ng-click="tabVisivelBeneficiario(registro.publicoAlvoConfirmacao === 'N');" ng-true-value="S" ng-false-value="N">
+				<input type="checkbox" id="beneficiario" name="beneficiario" ng-model="registro.publicoAlvoConfirmacao" ng-true-value="S" ng-false-value="N">
 				Beneficiário
 			</label> 
 			<label class="checkbox-inline" for="colaborador">
-				<input type="checkbox" name="colaborador" id="colaborador" ng-model="colaboradorVisivel" ng-click="tabVisivelColaborador(!colaboradorVisivel);">
+				<input type="checkbox" id="colaborador" name="colaborador" ng-model="registro.colaboradorConfirmacao" ng-true-value="S" ng-false-value="N">
 				Colaborador
 			</label>
 		</div>
@@ -36,20 +36,23 @@
 			</div>
 			<div class="form-group col-md-3">
 				<label class="control-label">País</label>
-				<select class="form-control" ng-model="registro.nascimentoPais.id">
-					<option value="B">Brasil</option>
-					<option value="A">Argentina</option>
+				<select class="form-control" id="pais" name="pais" data-ng-model="registro.nascimentoPais" data-ng-options="item as item.nome for item in apoio.pessoaGrupoPaisViList" ng-change="registro.nascimentoEstado = null">
+					<option value="">*** Não Informado ***</option>
 				</select>
 			</div>
-			<div class="form-group col-md-3" ng-show="registro.nascimentoPais.id === 'B'">
+			<div class="form-group col-md-3" ng-show="registro.nascimentoPais.sigla === 'BR'">
 				<label class="control-label">Estado</label>
-				<select class="form-control"></select>
+				<select class="form-control" id="estado" name="estado" data-ng-model="registro.nascimentoEstado" data-ng-options="item as item.nome for item in apoio.pessoaGrupoEstadoViList" ng-change="registro.nascimentoMunicipio = null">
+					<option value="">*** Não Informado ***</option>
+				</select>
 			</div>
-			<div class="form-group col-md-3" ng-show="registro.nascimentoPais.id === 'B'">
+			<div class="form-group col-md-3" ng-show="registro.nascimentoPais.sigla === 'BR'">
 				<label class="control-label">Município</label>
-				<select class="form-control"></select>
+				<select class="form-control" id="municipio" name="municipio" data-ng-model="registro.nascimentoMunicipio" data-ng-options="item as item.nome for item in apoio.pessoaGrupoMunicipioViList">
+					<option value="">*** Não Informado ***</option>
+				</select>
 			</div>
-			<div class="form-group col-md-3" ng-show="registro.nascimentoPais.id && registro.nascimentoPais.id !== 'B'">
+			<div class="form-group col-md-3" ng-show="registro.nascimentoPais.sigla && registro.nascimentoPais.sigla !== 'BR'">
 				<label class="radio-inline" for="genero-1">
 					<input type="checkbox" name="genero" id="genero-1" value="F">
 					Naturalizado?

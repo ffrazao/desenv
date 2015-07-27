@@ -66,72 +66,74 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
     $scope.acoes = {};
     $scope.acoes.meioContato =  {};   // funções para meiocontato
     $scope.acoes.relacionamento = {}; // funções para relacionamentos    
-    $scope.paisSelecionado = {};
-    $scope.estadoSelecionado = {};
-    $scope.municipioSelecionado = {};
     
     $scope.emProcessamento(false);
     
     toaster.options = {positionClass : "toast-bottom-right"};
     $scope.selected = [];
     
-    if (isUndefOrNull($scope.apoio)) {
-    	var sucessoInterno = function (ls, cb) {
-			return function(data) {
-				if (data.executou) {
-					if (cb) {
-						cb(data.resultado);
-					} else {
-						ls.splice(0, ls.length);
-						for (i in data.resultado) {
-							ls.push(data.resultado[i]);
-						}
-					}
+	var sucessoInterno = function (ls, cb) {
+		return function(data) {
+			if (data.executou) {
+				if (cb) {
+					cb(data.resultado);
 				} else {
-					erroInterno(data);
+					ls.splice(0, ls.length);
+					for (i in data.resultado) {
+						ls.push(data.resultado[i]);
+					}
 				}
-			};
-		};
-
-		var erroInterno = function(data) {
-			if (!isUndefOrNull(data["mensagem"])) {
-				toaster.pop('error', 'Erro ao Recuperar Informações', data.mensagem);
 			} else {
-				document.write(data);
+				erroInterno(data);
 			}
 		};
-        
-        var carregarEnum = function (lista, enumeracao, callback) {
-            requisicaoService.enumeracao(enumeracao).success(sucessoInterno(lista, callback)).error(erroInterno);
-        };
-        
-        var carregarDominio = function (lista, params, callback) {
-	    	requisicaoService.dominio(params).success(sucessoInterno(lista, callback)).error(erroInterno);
-        };
+	};
+
+	var erroInterno = function(data) {
+		if (!isUndefOrNull(data["mensagem"])) {
+			toaster.pop('error', 'Erro ao Recuperar Informações', data.mensagem);
+		} else {
+			document.write(data);
+		}
+	};
+    
+    var carregarEnum = function (lista, enumeracao, callback) {
+        requisicaoService.enumeracao(enumeracao).success(sucessoInterno(lista, callback)).error(erroInterno);
+    };
+    
+    var carregarDominio = function (lista, params, callback) {
+    	requisicaoService.dominio(params).success(sucessoInterno(lista, callback)).error(erroInterno);
+    };
+    
+    if (isUndefOrNull($scope.apoio)) {
 
         $scope.apoio = {
-    		camOrgaoList: [],
-    		cnhCategoriaList: [],
-    		confirmacaoList: [],
-    		escolaridadeList: [],
-    		estadoCivilList: [],
-    		geracaoList: [],
-    		meioContatoFinalidadeList: [],
-    		pessoaSituacaoList: [],
-    		publicoAlvoCategoriaList: [],
-    		publicoAlvoSegmentoList: [],
-    		regimeCasamentoList: [],
-    		regimeExploracaoList: [],
-    		sexoList: [],
-    		situacaoDapList: [],
-    		
-    		organizacaoTipoList: [],
-    		pessoaGrupoOrganogramaViList: [],
-    		profissaoList: [],
-    		relacionamentoTipoList: [],
-    		setorList: [],
-    		
-    	    tradicaoList: [],
+                camOrgaoList: [],
+                cnhCategoriaList: [],
+                confirmacaoList: [],
+                escolaridadeList: [],
+                estadoCivilList: [],
+                geracaoList: [],
+                meioContatoFinalidadeList: [],
+                pessoaSituacaoList: [],
+                publicoAlvoCategoriaList: [],
+                publicoAlvoSegmentoList: [],
+                regimeCasamentoList: [],
+                regimeExploracaoList: [],
+                sexoList: [],
+                situacaoDapList: [],
+                
+                organizacaoTipoList: [],
+                paisList: [],
+                pessoaGrupoEstadoViList: [],
+                pessoaGrupoMunicipioViList: [],
+                pessoaGrupoOrganogramaViList: [],
+                pessoaGrupoPaisViList: [],
+                profissaoList: [],
+                relacionamentoTipoList: [],
+                setorList: [],
+                
+                tradicaoList: [],
         };
 
         carregarEnum($scope.apoio.camOrgaoList, "CamOrgao");
@@ -143,6 +145,7 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
         carregarEnum($scope.apoio.meioContatoFinalidadeList, "MeioContatoFinalidade", function (resultado) {
             var codigo = "";
             var descricao = "";
+            $scope.apoio.meioContatoFinalidadeList.splice(0, $scope.apoio.meioContatoFinalidadeList.length);
             for (i in resultado) {
                 if (codigo !== "") {
                     codigo+=",";
@@ -165,16 +168,40 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
         carregarEnum($scope.apoio.sexoList, "Sexo");
         
         carregarDominio($scope.apoio.organizacaoTipoList, {params : { ent : 'OrganizacaoTipo', }});
+        carregarDominio($scope.apoio.pessoaGrupoOrganogramaViList, {params : { ent : 'PessoaGrupoOrganogramaVi', order: 'sigla' }});
+        carregarDominio($scope.apoio.pessoaGrupoPaisViList, {params : { ent : 'PessoaGrupoPaisVi', }}, function (resultado) {
+            $scope.apoio.pessoaGrupoPaisViList.splice(0, $scope.apoio.pessoaGrupoPaisViList.length);
+            for (i in resultado) {
+                if (resultado[i].sigla === "BR") {
+                	$scope.apoio.brasil = resultado[i]; 
+                }
+                $scope.apoio.pessoaGrupoPaisViList.push(resultado[i]);
+            }
+        });
         carregarDominio($scope.apoio.profissaoList, {params : { ent : 'Profissao', order: 'nome', }});
         carregarDominio($scope.apoio.relacionamentoTipoList, {params : {ent : 'RelacionamentoTipo', grupoSocial : 'N', }});
         carregarDominio($scope.apoio.setorList, {params : { ent : 'Setor', }});
-        
-        carregarDominio($scope.apoio.pessoaGrupoOrganogramaViList, {params : { ent : 'PessoaGrupoOrganogramaVi', order: 'sigla' }});
         
         var anoAtual = (new Date().getFullYear());
         for (var i = anoAtual - 60; i <= anoAtual; i++) {
             $scope.apoio.tradicaoList.push(i);
         }
+        
+    	$scope.$watch("registro.nascimentoPais.id", function(newValue, oldValue, scope) {
+    		if (!isUndefOrNull(newValue) && newValue > 0) {
+    	        carregarDominio($scope.apoio.pessoaGrupoEstadoViList, {params : { ent : 'PessoaGrupoEstadoVi', npk: 'pessoaGrupoPaisVi.id', vpk: newValue, }});
+    		} else {
+    			$scope.apoio.pessoaGrupoEstadoViList.splice(0, $scope.apoio.pessoaGrupoEstadoViList.length);
+    		}
+    	});
+    	
+    	$scope.$watch("registro.nascimentoEstado.id", function(newValue, oldValue, scope) {
+    		if (!isUndefOrNull(newValue) && newValue > 0) {
+    	        carregarDominio($scope.apoio.pessoaGrupoMunicipioViList, {params : { ent : 'PessoaGrupoMunicipioVi', npk: 'pessoaGrupoEstadoVi.id', vpk: newValue, }});
+    		} else {
+    			$scope.apoio.pessoaGrupoMunicipioViList.splice(0, $scope.apoio.pessoaGrupoMunicipioViList.length);
+    		}
+    	});	
     }
 
 	$scope.retornaRelacionamentoFuncao = function(id) {
@@ -201,7 +228,11 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
 		});
 	};
     	
-    	
+	$scope.$watch("registro.publicoAlvoConfirmacao + registro.colaboradorConfirmacao", function() {
+		$scope.tabVisivelBeneficiario(!isUndefOrNull($scope.registro) && !isUndefOrNull($scope.registro.publicoAlvoConfirmacao) && $scope.registro.publicoAlvoConfirmacao === 'S');
+		$scope.tabVisivelColaborador(!isUndefOrNull($scope.registro) && !isUndefOrNull($scope.registro.colaboradorConfirmacao) && $scope.registro.colaboradorConfirmacao === 'S');
+	});
+	
     	
     	
     	
@@ -261,9 +292,6 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
     	
     	
         
-    $scope.retornaPais();
-    
-    
     $scope.copiarObjeto = function(fonte,campo,valor){
         var retorno = null;
         angular.forEach(fonte,function(objeto,chaveObj){
@@ -443,6 +471,10 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
                 }else{
                     $scope.registro['@class'] = null;
                 }
+                
+                if (isUndefOrNull($scope.registro.nascimentoPais)) {
+                	$scope.registro.nascimentoPais = $scope.apoio.brasil;
+                }
 
                 angular.forEach($scope.registro.pessoaMeioContatos, function(value, key){
                     if(value.meioContato.meioContatoTipo === 'END'){
@@ -495,6 +527,8 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
         	$scope.botoesAcao('incluir');
         	
         	$scope.registro = {};
+            $scope.registro.nascimentoPais = $scope.apoio.brasil;
+
         	$scope.registro.pessoaMeioContatos = [];
         	$scope.registro.pessoaRelacionamentos = [];
         	
@@ -515,7 +549,7 @@ function cadastroCtrl($scope,$http,$location,toaster,requisicaoService, FrzNaveg
                 $scope.registro['@class'] = null;
             }
 
-            $scope.registro.publicoAlvoConfirmacao = 'S';
+            //$scope.registro.publicoAlvoConfirmacao = 'S';
             $scope.registro.situacao = 'A';
     };
     

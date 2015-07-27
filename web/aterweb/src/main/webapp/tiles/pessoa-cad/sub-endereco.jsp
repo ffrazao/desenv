@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading container-fluid">
-    	<!-- [{{enderecoK}}] -->
+      <!-- [{{enderecoK}}] -->
       <frz-navegador
         ng-model="enderecoNvg" exibe-texto-botao="false" 
         dados="registro.pessoaMeioContatos"
@@ -28,7 +28,6 @@
       </div>
     </div>
     <div class="table-responsible" ng-show="registro.pessoaMeioContatos.length > 0">
-      
       <table class="table table-striped">
         <thead>
           <tr>
@@ -75,5 +74,4 @@
         </tfoot>
       </table>
     </div>
-
 </div>
