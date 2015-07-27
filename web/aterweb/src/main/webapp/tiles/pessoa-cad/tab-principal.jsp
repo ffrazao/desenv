@@ -4,7 +4,7 @@
 		<div class="form-control">
 			<label class="checkbox-inline" for="beneficiario">
 				<input type="checkbox" name="beneficiario" id="beneficiario" ng-model="registro.publicoAlvoConfirmacao" ng-click="tabVisivelBeneficiario(registro.publicoAlvoConfirmacao === 'N');" ng-true-value="S" ng-false-value="N">
-				Beneficiário[{{registro.publicoAlvoConfirmacao}}]
+				Beneficiário
 			</label> 
 			<label class="checkbox-inline" for="colaborador">
 				<input type="checkbox" name="colaborador" id="colaborador" ng-model="colaboradorVisivel" ng-click="tabVisivelColaborador(!colaboradorVisivel);">
