@@ -1,7 +1,12 @@
-angular.module('contrato', ['ui.bootstrap','ui.utils','ui.router','ngAnimate']);
+angular.module('contrato', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'contrato']);
 
 angular.module('contrato').config(function($stateProvider, $urlRouterProvider) {
+    alert(1);
 
+    $stateProvider.state('home', {
+        url: '',
+        templateUrl: '/home.html',
+    });
     /* Add New States Above */
     $urlRouterProvider.otherwise('/home');
 
