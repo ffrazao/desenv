@@ -1,10 +1,10 @@
-angular.module('principal', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'toastr', 'contrato']);
+angular.module('principal', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'toastr', 'contrato', 'casa']);
 
 angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', function($stateProvider, $urlRouterProvider, toastrConfig) {
 
     $stateProvider.state('casa', {
         url: '',
-        templateUrl: '/casa.html',
+        templateUrl: 'casa/index.html',
         controller: ['$stateParams', 'toastr', function($stateParams, toastr){
             console.log($stateParams.mensagem);
             toastr.warning('Endereço não encontrado! ' + $stateParams.mensagem, 'Atenção!');

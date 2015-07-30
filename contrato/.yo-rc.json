@@ -32,6 +32,10 @@
         "name": "contrato.form",
         "file": "contrato\\form.js"
       },
+      {
+        "name": "casa",
+        "file": "casa\\casa.js"
+      }
     ]
   }
 }
