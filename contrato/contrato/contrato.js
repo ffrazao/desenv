@@ -1,6 +1,6 @@
 angular.module('contrato', ['ui.bootstrap','ui.utils','ui.router','ngAnimate']);
 
-angular.module('contrato').config(function($stateProvider) {
+angular.module('contrato').config(['$stateProvider', function($stateProvider) {
 
     $stateProvider.state('contrato', {
         url: '/contrato',
@@ -21,5 +21,5 @@ angular.module('contrato').config(function($stateProvider) {
     });
     /* Add New States Above */
 
-});
+}]);
 

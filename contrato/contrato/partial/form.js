@@ -1,4 +1,4 @@
-angular.module('contrato').controller('ContratoCtrl',function($scope){
+angular.module('contrato').controller('ContratoFormCtrl', ['$scope', function($scope){
 
 
-});
+}]);
