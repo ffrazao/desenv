@@ -5,7 +5,7 @@ angular.module('contrato').controller('ContratoListaCtrl',['$scope', 'FrzNavegad
 	$scope.cadastro = {lista : [{id:1}, {id:3}]};
 
 	$scope.abrir = function () {
-      $scope.navegador.mudarEstado('FILTRANDO');
-  	};
+		$scope.navegador.mudarEstado('FILTRANDO');
+	};
 
 }]);

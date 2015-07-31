@@ -53,7 +53,7 @@
 			$scope.ngModel = new FrzNavegadorParams();
 			$scope.ngModel.isNullInstance = true;
 		}
-		if ($scope.ngModel && $scope.ngModel.scope) {
+		if ($scope.ngModel && !$scope.ngModel.scope) {
 			$scope.ngModel.scope = $scope;
 		}
 
@@ -256,166 +256,165 @@
 			try {
 				$scope.estados[novoEstado].executar();
 				if ($scope.estados[novoEstado].mudarEstado && $scope.ngModel.estadoAtual() !== 'ESPECIAL') {
-	                // esconder botoes
-	                iniciarBotoes();
-	                // tornar botões visiveis
-	                var botao = null;
-	                for (botao in $scope.estados[novoEstado].visivel) {
-	                	$scope.botoes[$scope.estados[novoEstado].visivel[botao]].visivel = true;
-	                }
-	                // desabilitar botoes
-	                for (botao in $scope.estados[novoEstado].desabilitado) {
-	                	$scope.botoes[$scope.estados[novoEstado].desabilitado[botao]].desabilitado = false;
-	                }
-	                if (novoEstado !== $scope.ngModel.estadoAtual()) {
-	                	$scope.historicoEstados.push(novoEstado);
-	                }
-	            }
-	        } catch (erro) {
-	        	toastr.error('Erro ao executar a operação!', erro);
-	        	console.error('Erro ao executar a operação!', erro);
-	        }
-	    };
+					// esconder botoes
+					iniciarBotoes();
+					// tornar botões visiveis
+					var botao = null;
+					for (botao in $scope.estados[novoEstado].visivel) {
+						$scope.botoes[$scope.estados[novoEstado].visivel[botao]].visivel = true;
+					}
+					// desabilitar botoes
+					for (botao in $scope.estados[novoEstado].desabilitado) {
+						$scope.botoes[$scope.estados[novoEstado].desabilitado[botao]].desabilitado = false;
+					}
+					if (novoEstado !== $scope.ngModel.estadoAtual()) {
+						$scope.historicoEstados.push(novoEstado);
+					}
+				}
+			} catch (erro) {
+				toastr.error('Erro ao executar a operação!', erro);
+				console.error('Erro ao executar a operação!', erro);
+			}
+		};
 
-	    $scope.temAcoesEspeciais = function() {
-	    	if ($scope.acoesEspeciais && $scope.acoesEspeciais.length) {
-	    		var e = $scope.ngModel.estadoAtual();
-	    		for (var acao in $scope.acoesEspeciais) {
-	    			for (var est in $scope.acoesEspeciais[acao].estado) {
-	    				if ($scope.acoesEspeciais[acao].estado[est] === e) {
-	    					if ($scope.acoesEspeciais[acao].selecaoAtiva) {
-	    						return $scope.ngModel.selecao.selecionado;
-	    					} else {
-	    						return true;
-	    					}
-	    				}
-	    			}
-	    		}
-	    	}
-	    	return false;
-	    };
+		$scope.temAcoesEspeciais = function() {
+			if ($scope.acoesEspeciais && $scope.acoesEspeciais.length) {
+				var e = $scope.ngModel.estadoAtual();
+				for (var acao in $scope.acoesEspeciais) {
+					for (var est in $scope.acoesEspeciais[acao].estado) {
+						if ($scope.acoesEspeciais[acao].estado[est] === e) {
+							if ($scope.acoesEspeciais[acao].selecaoAtiva) {
+								return $scope.ngModel.selecao.selecionado;
+							} else {
+								return true;
+							}
+						}
+					}
+				}
+			}
+			return false;
+		};
 
-	    $scope.acaoEspecial = function(item) {
-	    	try {
-	    		$scope.onAgir();
-	    		item.acao();
-	    	} catch (erro) {
-	    		toastr.error('Erro ao executar a operação!', erro);
-	    		console.error('Erro ao executar a operação!', erro);
-	    	}
-	    };
+		$scope.acaoEspecial = function(item) {
+			try {
+				$scope.onAgir();
+				item.acao();
+			} catch (erro) {
+				toastr.error('Erro ao executar a operação!', erro);
+				console.error('Erro ao executar a operação!', erro);
+			}
+		};
 
-	    $scope.botaoNavegarVisivel = function () {
-	    	if (!$scope.ngModel) return;
-	    	var e = $scope.ngModel.estadoAtual();
-	    	return $scope.botoes.navegar.visivel && (e !== 'VISUALIZANDO' || (e === 'VISUALIZANDO' && $scope.ngModel.selecao.tipo === 'M')) 
-	    	&& $scope.dados && $scope.dados.length > 0;
-	    };
+		$scope.botaoNavegarVisivel = function () {
+			if (!$scope.ngModel) {return;}
+			var e = $scope.ngModel.estadoAtual();
+			return $scope.botoes.navegar.visivel && (e !== 'VISUALIZANDO' || (e === 'VISUALIZANDO' && $scope.ngModel.selecao.tipo === 'M')) && $scope.dados && $scope.dados.length > 0;
+		};
 
-	    $scope.botaoVoltarVisivel = function () {
-	    	return $scope.botoes.voltar.visivel && $scope.historicoEstados.length > 1;
-	    };
+		$scope.botaoVoltarVisivel = function () {
+			return $scope.botoes.voltar.visivel && $scope.historicoEstados.length > 1;
+		};
 
-	    var getUltimaPagina = function() {
-	    	if (!$scope.dados) {
-	    		return 0;
-	    	}
-	    	var result = parseInt($scope.dados.length / $scope.ngModel.tamanhoPagina, 10);
-	    	if ($scope.dados.length % $scope.ngModel.tamanhoPagina > 0) {
-	    		result++;
-	    	}
-	    	return result;
-	    };
+		var getUltimaPagina = function() {
+			if (!$scope.dados) {
+				return 0;
+			}
+			var result = parseInt($scope.dados.length / $scope.ngModel.tamanhoPagina, 10);
+			if ($scope.dados.length % $scope.ngModel.tamanhoPagina > 0) {
+				result++;
+			}
+			return result;
+		};
 
-	    var navegar = function (sentido) {
-	    	var novaPagina = 0, ultimaPagina = getUltimaPagina();
-	    	switch(sentido) {
-	    		case 'primeiro':
-	    		novaPagina = 1;
-	    		break;
-	    		case 'anterior':
-	    		novaPagina = $scope.ngModel.paginaAtual - 1;
-	    		break;
-	    		case 'proximo':
-	    		novaPagina = $scope.ngModel.paginaAtual + 1;
-	    		break;
-	    		case 'ultimo':
-	    		novaPagina = ultimaPagina;
-	    		$scope.onUltimaPagina();
-	    		break;
-	    	}
-	    	novaPagina = (novaPagina < 1) ? 1 : novaPagina;
-	    	$scope.ngModel.paginaAtual = novaPagina;
-	    	if (novaPagina > ultimaPagina) {
-	    		$scope.ngModel.paginaAtual = ultimaPagina;
-	    		$scope.onProximaPagina();
-	    	}
-	    	$scope.ngModel.mudarEstado('NAVEGANDO');
-	    };
+		var navegar = function (sentido) {
+			var novaPagina = 0, ultimaPagina = getUltimaPagina();
+			switch(sentido) {
+				case 'primeiro':
+				novaPagina = 1;
+				break;
+				case 'anterior':
+				novaPagina = $scope.ngModel.paginaAtual - 1;
+				break;
+				case 'proximo':
+				novaPagina = $scope.ngModel.paginaAtual + 1;
+				break;
+				case 'ultimo':
+				novaPagina = ultimaPagina;
+				$scope.onUltimaPagina();
+				break;
+			}
+			novaPagina = (novaPagina < 1) ? 1 : novaPagina;
+			$scope.ngModel.paginaAtual = novaPagina;
+			if (novaPagina > ultimaPagina) {
+				$scope.ngModel.paginaAtual = ultimaPagina;
+				$scope.onProximaPagina();
+			}
+			$scope.ngModel.mudarEstado('NAVEGANDO');
+		};
 
-	    var folhear = function (sentido) {
-	    	var folha = $scope.ngModel.folhaAtual;
-	    	switch(sentido) {
-	    		case 'primeiro':
-	    		for (folha = 0; folha < $scope.ngModel.selecao.items.length; folha++) {
-	    			if (angular.isObject($scope.ngModel.selecao.items[folha])) {
-	    				$scope.ngModel.folhaAtual = parseInt(folha);
-	    				break;
-	    			}
-	    		}
-	    		break;
-	    		case 'anterior': 
-	    		for (folha = parseInt($scope.ngModel.folhaAtual) - 1; folha >= 0; folha--) {
-	    			if (angular.isObject($scope.ngModel.selecao.items[folha])) {
-	    				$scope.ngModel.folhaAtual = parseInt(folha);
-	    				break;
-	    			}
-	    		}
-	    		break;
-	    		case 'proximo': 
-	    		for (folha = parseInt($scope.ngModel.folhaAtual) + 1; folha < $scope.ngModel.selecao.items.length; folha++) {
-	    			if (angular.isObject($scope.ngModel.selecao.items[folha])) {
-	    				$scope.ngModel.folhaAtual = parseInt(folha);
-	    				break;
-	    			}
-	    		}
-	    		break;
-	    		case 'ultimo': 
-	    		for (folha = $scope.ngModel.selecao.items.length - 1; folha >= 0; folha--) {
-	    			if (angular.isObject($scope.ngModel.selecao.items[folha])) {
-	    				$scope.ngModel.folhaAtual = parseInt(folha);
-	    				break;
-	    			}
-	    		}
-	    		break;
-	    	}
-	    	$scope.ngModel.mudarEstado('FOLHEANDO');
-	    };
+		var folhear = function (sentido) {
+			var folha = $scope.ngModel.folhaAtual;
+			switch(sentido) {
+				case 'primeiro':
+				for (folha = 0; folha < $scope.ngModel.selecao.items.length; folha++) {
+					if (angular.isObject($scope.ngModel.selecao.items[folha])) {
+						$scope.ngModel.folhaAtual = parseInt(folha);
+						break;
+					}
+				}
+				break;
+				case 'anterior': 
+				for (folha = parseInt($scope.ngModel.folhaAtual) - 1; folha >= 0; folha--) {
+					if (angular.isObject($scope.ngModel.selecao.items[folha])) {
+						$scope.ngModel.folhaAtual = parseInt(folha);
+						break;
+					}
+				}
+				break;
+				case 'proximo': 
+				for (folha = parseInt($scope.ngModel.folhaAtual) + 1; folha < $scope.ngModel.selecao.items.length; folha++) {
+					if (angular.isObject($scope.ngModel.selecao.items[folha])) {
+						$scope.ngModel.folhaAtual = parseInt(folha);
+						break;
+					}
+				}
+				break;
+				case 'ultimo': 
+				for (folha = $scope.ngModel.selecao.items.length - 1; folha >= 0; folha--) {
+					if (angular.isObject($scope.ngModel.selecao.items[folha])) {
+						$scope.ngModel.folhaAtual = parseInt(folha);
+						break;
+					}
+				}
+				break;
+			}
+			$scope.ngModel.mudarEstado('FOLHEANDO');
+		};
 
-	    var vaiPara = function(sentido) {
-	    	var e = $scope.ngModel.estadoAtual();
-	    	if (e === 'LISTANDO') {
-	    		navegar(sentido);
-	    	} else if (e === 'VISUALIZANDO') {
-	    		folhear(sentido);
-	    	}
-	    };
+		var vaiPara = function(sentido) {
+			var e = $scope.ngModel.estadoAtual();
+			if (e === 'LISTANDO') {
+				navegar(sentido);
+			} else if (e === 'VISUALIZANDO') {
+				folhear(sentido);
+			}
+		};
 
-	    $scope.primeiro = function() {
-	    	vaiPara('primeiro');
-	    };
+		$scope.primeiro = function() {
+			vaiPara('primeiro');
+		};
 
-	    $scope.anterior = function() {
-	    	vaiPara('anterior');
-	    };
+		$scope.anterior = function() {
+			vaiPara('anterior');
+		};
 
-	    $scope.proximo = function() {
-	    	vaiPara('proximo');
-	    };
+		$scope.proximo = function() {
+			vaiPara('proximo');
+		};
 
-	    $scope.ultimo = function() {
-	    	vaiPara('ultimo');
-	    };
+		$scope.ultimo = function() {
+			vaiPara('ultimo');
+		};
 
 	}]);
 
@@ -457,11 +456,11 @@
 			controller: 'FrzNavegadorCtrl',
 			link: function(scope, element, attributes) {
 				scope.exibeTextoBotao = angular.isUndefined(attributes.exibeTextoBotao) || (attributes.exibeTextoBotao.toLowerCase() === 'true');
-	            // executar o estado inicial do navegador
-	            (scope.ngModel && scope.ngModel.mudarEstado('ABRINDO'));
-	        },
-	        templateUrl: 'directive/frz-navegador/frz-navegador.html',
-	    };
+				// executar o estado inicial do navegador
+				if (scope.ngModel) {scope.ngModel.mudarEstado('ABRINDO');}
+			},
+			templateUrl: 'directive/frz-navegador/frz-navegador.html',
+		};
 	});
 
 	frzNavegadorModule.directive('frzSeletor', function() {
@@ -482,14 +481,14 @@
 				ngModel: '=',
 				dados: '=',
 			},
-			controller: function($scope) {
+			controller: ['$scope', function($scope) {
 				$scope.marcarElementos = function(checked) {
 					$scope.ngModel.selecao.items = checked ? angular.copy($scope.dados): [];
 				};
-			},
+			}],
 			link: function (scope, element) {
 				scope.$watch('ngModel.selecao.tipo', function() {
-					if (!scope.ngModel || !scope.ngModel.selecao) return;
+					if (!scope.ngModel || !scope.ngModel.selecao) {return;}
 					if (scope.ngModel.selecao.tipo === 'U') {
 						scope.ngModel.selecao.selecionado = scope.ngModel.selecao.item && angular.isDefined(scope.ngModel.selecao.item) && scope.ngModel.selecao.item;
 					} else if (scope.ngModel.selecao.tipo === 'M') {
@@ -498,14 +497,14 @@
 				}, true);
 
 				scope.$watch('ngModel.selecao.item', function() {
-					if (!scope.ngModel || !scope.ngModel.selecao) return;
+					if (!scope.ngModel || !scope.ngModel.selecao) {return;}
 					if (scope.ngModel.selecao.tipo === 'U') {
 						scope.ngModel.selecao.selecionado = scope.ngModel.selecao.item && angular.isDefined(scope.ngModel.selecao.item) && scope.ngModel.selecao.item;
 					}
 				}, true);
 
 				scope.$watch('ngModel.selecao.items', function() {
-					if (!scope.ngModel || !scope.ngModel.selecao) return;
+					if (!scope.ngModel || !scope.ngModel.selecao) {return;}
 					if (!scope.ngModel.selecao.items) {
 						return;
 					}
