@@ -1,4 +1,3 @@
-angular.module('contrato').controller('ContratoFiltroCtrl', ['$scope', function($scope, toastr){
+angular.module('contrato').controller('ContratoFiltroCtrl', ['$scope', 'toastr', function($scope, toastr){
 
-//toastr.warning('Endereço não encontrado! ', 'Atenção!');
 }]);

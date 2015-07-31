@@ -1,10 +1,10 @@
-angular.module('contrato', ['ui.bootstrap','ui.utils','ui.router','ngAnimate']);
+angular.module('contrato', ['ui.bootstrap','ui.utils','ui.router','ngAnimate', 'frz.navegador']);
 
 angular.module('contrato').config(['$stateProvider', function($stateProvider) {
 
     $stateProvider.state('contrato', {
         url: '/contrato',
-        templateUrl: 'contrato/index.html',
+        templateUrl: 'contrato/contrato.html',
         abstract: true,
     });
     $stateProvider.state('contrato.filtro', {
@@ -23,3 +23,14 @@ angular.module('contrato').config(['$stateProvider', function($stateProvider) {
 
 }]);
 
+angular.module('contrato').controller('ContratoCtrl', ['$scope', 'toastr', 'FrzNavegadorParams', function($scope, toastr, FrzNavegadorParams) {
+
+    $scope.cadastro = {lista : [{id:1}, {id:3}]};
+
+    $scope.navegador = new FrzNavegadorParams($scope.cadastro.lista);
+
+    $scope.abrir = function () {
+        $scope.navegador.mudarEstado('LISTANDO');
+    };
+
+}]);
