@@ -458,6 +458,92 @@
 				scope.exibeTextoBotao = angular.isUndefined(attributes.exibeTextoBotao) || (attributes.exibeTextoBotao.toLowerCase() === 'true');
 				// executar o estado inicial do navegador
 				if (scope.ngModel) {scope.ngModel.mudarEstado('ABRINDO');}
+
+
+				scope.botaoExibeTexto = true;
+				scope.grupoBotoes = [
+					{
+						codigo: 'g1',
+						ordem: 1,
+						visivel: true,
+						desabilitado: false,
+						botoes: [{
+								tipo: 'dropdown',
+								codigo: 'b1',
+								nome: 'xddd',
+								ordem: 1,
+								visivel: true,
+								desabilitado: false,
+								descricao: 'abcd dos bt dos bt1',
+								classe: 'btn-warn',
+								acao: function() {console.log('abc')},
+								glyphicon: 'glyphicon-share-alt',
+								subFuncoes: [
+								{
+									nome: 10, 
+									acao: function() {console.log('sub acao click ' + this.nome)},
+								}, 
+								{
+									nome: 25, 
+									acao: function() {console.log('sub acao click ' + this.nome)},
+								}, 
+								{
+									nome: 50, 
+									acao: function() {console.log('sub acao click ' + this.nome)},
+								}, 
+								{
+									nome: 100, 
+									acao: function() {console.log('sub acao click ' + this.nome)},
+								}, 
+								]
+							},
+							{
+								nome: 'b2',
+								ordem: 2,
+								visivel: true,
+								desabilitado: false,
+								classe: 'btn btn-sm btn-info',
+								titulo: 'bt dos bt2',
+								acao: function() {console.log('abc2')},
+								glyphicon: 'glyphicon glyphicon-ok',
+								etiqueta: 'abcd dos bt dos bt2',
+							},
+						],
+					}, 
+					{
+						codigo: 'g2',
+						ordem: 2,
+						visivel: true,
+						desabilitado: false,
+						botoes: [
+							{
+								tipo: 'normal',
+								codigo: 'b3',
+								nome: 'bt dos bt3',
+								descricao: 'abcd dos bt dos bt3',
+								ordem: 1,
+								visivel: true,
+								desabilitado: true,
+								classe: 'btn-info',
+								glyphicon: 'glyphicon-ok',
+								acao: function() {console.log('abc3')},
+							},
+							{
+								tipo: 'normal',
+								nome: 'b4',
+								ordem: 2,
+								visivel: true,
+								desabilitado: false,
+								classe: 'btn btn-sm btn-info',
+								titulo: 'bt dos bt4',
+								acao: function() {console.log('abc4')},
+								glyphicon: 'glyphicon glyphicon-share-alt',
+								etiqueta: 'abcd dos bt dos bt4',
+							},
+						],
+					}, 
+				];
+
 			},
 			templateUrl: 'directive/frz-navegador/frz-navegador.html',
 		};

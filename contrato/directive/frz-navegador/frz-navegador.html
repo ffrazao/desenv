@@ -1,3 +1,79 @@
+<span>
+/{{grupoBotoes}}/{{botaoExibeTexto}}/
+<br><br>
+
+  <div class="btn-toolbar pull-right" role="toolbar" aria-label="Barra de Ferramentas" style=".ng-valid {border: 0px;}">
+
+
+    <div class="btn-group" role="group" ng-repeat="grupo in grupoBotoes | orderBy: 'ordem'" ng-show="grupo.visivel" ng-disabled="grupo.desabilitado">
+      <span ng-repeat="botao in grupo.botoes | orderBy: 'ordem'" ng-switch="botao.tipo">
+
+        <button ng-switch-default 
+          class="btn btn-sm {{botao.classe}}" 
+          title="{{botao.descricao}}"
+          ng-click="botao.acao()">
+          <i class="glyphicon {{botao.glyphicon}}"></i>
+          <small ng-show="botaoExibeTexto">{{botao.nome}}</small>
+        </button>
+
+        <button ng-switch-when="dropdown" 
+          class="btn btn-sm dropdown-toggle {{botao.classe}}"
+          title="{{botao.descricao}}"
+          ng-click="botao.acao()"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="glyphicon {{botao.glyphicon}}"></i>
+          <small ng-show="botaoExibeTexto">{{botao.nome}}</small>
+          <span class="caret"></span>
+        </button>
+        <ul ng-switch-when="dropdown" class="dropdown-menu pull-right">
+          <li ng-repeat="subFuncao in botao.subFuncoes | orderBy: 'ordem'">
+            <a ng-click="subFuncao.acao()">{{subFuncao.nome}}</a>
+          </li>
+        </ul>
+      </span>
+    </div>
+  </div>
+
+
+<!--
+
+
+    <button 
+      class="{{botao.classe}}" 
+      title="{{botao.titulo}}" 
+
+
+      data-toggle="{{dataToggle}}" aria-haspopup="true" aria-expanded="false"
+
+      ng-click="botao.acao()" 
+      ng-show="botao.visivel" 
+      ng-disabled="botao.desabilitado">
+
+      <i class="{{botao.glyphicon}}"></i>
+      <span class="caret"></span>
+      <small ng-show="botaoExibeTexto">{{botao.etiqueta}}</small>
+    </button>
+    <ul ng-repeat-end class="dropdown-menu pull-right" role="menu">
+      <li ng-repeat="subFuncao in botao.subFuncoes | orderBy: 'ordem'">
+        <a ng-click="subFuncao.acao">{{subFuncao.nome}}</a>
+      </li>
+    </ul>
+
+
+    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="glyphicon glyphicon-share-alt"></i>
+      <small>teste</small>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Dropdown link</a></li>
+      <li><a href="#">Dropdown link</a></li>
+    </ul>
+
+
+
+
+
 <div class="btn-toolbar pull-right" role="toolbar" aria-label="Barra de Ferramentas" style=".ng-valid {border: 0px;}">
   <div class="btn-group" role="group">
     <button type="button" class="btn btn-sm btn-success" title="OK" ng-click="ngModel.mudarEstado('CONFIRMANDO')" ng-show="botoes.confirmar.visivel" ng-disabled="botoes.confirmar.desabilitado"><i class="glyphicon glyphicon-ok"></i><small ng-show="exibeTextoBotao">OK</small></button>
@@ -48,3 +124,6 @@
     <button type="button" class="btn btn-sm btn-default" title="Ajuda"><b>?</b><small ng-show="exibeTextoBotao">ajuda</small></button>
   </div>
 </div>
+-->
+
+</span>
