@@ -21,21 +21,13 @@
     },
     "modules": [
       {
-        "name": "contrato.filtro",
-        "file": "contrato\\filtro.js"
-      },
-      {
-        "name": "contrato.lista",
-        "file": "contrato\\lista.js"
-      },
-      {
-        "name": "contrato.form",
-        "file": "contrato\\form.js"
-      },
-      {
         "name": "casa",
         "file": "casa\\casa.js"
       }
+      {
+        "name": "contrato",
+        "file": "contrato.js"
+      },
     ]
   }
 }

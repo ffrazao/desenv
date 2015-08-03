@@ -1,7 +1,17 @@
-angular.module('principal', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'toastr', 'sticky', 'frz.navegador', 'contrato', 'casa']);
+angular.module('principal', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'toastr', 'sticky', 'frz.navegador', 'casa', 'contrato']);
 
-angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', function($stateProvider, $urlRouterProvider, toastrConfig) {
+// inicio: codigo para habilitar o modal recursivo
+angular.module('principal').factory('$modalInstance', function () {
+  return null;
+});
 
+angular.module('principal').factory('modalCadastro', function () {
+  return null;
+});
+// fim: codigo para habilitar o modal recursivo
+
+angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', '$locationProvider', function($stateProvider, $urlRouterProvider, toastrConfig, $locationProvider) {
+    //$locationProvider.html5Mode(true);
     $stateProvider.state('casa', {
         url: '',
         templateUrl: 'casa/index.html',

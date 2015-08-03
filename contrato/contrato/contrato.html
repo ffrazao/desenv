@@ -1,4 +1,4 @@
-<div ng-controller="ContratoCtrl" class="container-fluid">
+<div class="container-fluid">
 	<div class="row">Cadastro de Contratos e Convênios</div>
 	<div class="row" sticky offset="15" stick-limit="true">
 		<frz-navegador 
@@ -37,5 +37,8 @@
 			on-tem-mais-registros = "temMaisRegistros()"
 			></frz-navegador>
 	</div>
-	<div ui-view></div>
+	<div ng-show="!modalEstado" ui-view></div>
+	<ng-include src="'contrato/partial/filtro.html'" ng-if="modalEstado === 'filtro'"></ng-include>
+	<ng-include src="'contrato/partial/lista.html'" ng-if="modalEstado === 'lista'"></ng-include>
+	<ng-include src="'contrato/partial/form.html'" ng-if="modalEstado === 'form'"></ng-include>
 </div>
