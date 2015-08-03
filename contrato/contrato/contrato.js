@@ -9,18 +9,15 @@ angular.module('contrato').config(['$stateProvider', function($stateProvider) {
         url: '/contrato',
     });
     $stateProvider.state('contrato.filtro', {
-        controller: 'ContratoFiltroCtrl',
-        templateUrl: 'contrato/partial/filtro.html',
+        templateUrl: 'contrato/filtro.html',
         url: '',
     });
     $stateProvider.state('contrato.lista', {
-        controller: 'ContratoListaCtrl',
-        templateUrl: 'contrato/partial/lista.html',
+        templateUrl: 'contrato/lista.html',
         url: '/lista',
     });
     $stateProvider.state('contrato.form', {
-        controller: 'ContratoFormCtrl',
-        templateUrl: 'contrato/partial/form.html',
+        templateUrl: 'contrato/form.html',
         url: '/form/:id',
     });
     /* Add New States Above */
@@ -70,6 +67,7 @@ angular.module('contrato').controller('ContratoCtrl',
     // se dados do modal estao vazios
     if ($modalInstance === null) {
         // construir um novo item
+        $scope.modalEstado = null;
         $scope.cadastro = {lista : []};
         for (var i = 0; i < 200; i++) {
             $scope.cadastro.lista.push({id: i, nome: 'nome ' + i});

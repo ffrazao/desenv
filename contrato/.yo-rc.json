@@ -23,11 +23,11 @@
       {
         "name": "casa",
         "file": "casa\\casa.js"
-      }
+      },
       {
         "name": "contrato",
-        "file": "contrato.js"
-      },
+        "file": "contrato\\contrato.js"
+      }
     ]
   }
 }

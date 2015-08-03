@@ -37,8 +37,12 @@
 			on-tem-mais-registros = "temMaisRegistros()"
 			></frz-navegador>
 	</div>
-	<div ng-show="!modalEstado" ui-view></div>
-	<ng-include src="'contrato/partial/filtro.html'" ng-if="modalEstado === 'filtro'"></ng-include>
-	<ng-include src="'contrato/partial/lista.html'" ng-if="modalEstado === 'lista'"></ng-include>
-	<ng-include src="'contrato/partial/form.html'" ng-if="modalEstado === 'form'"></ng-include>
+	<span ng-switch="modalEstado">
+		<span ng-switch-when="null">
+			<div ui-view></div>
+		</span>
+		<span ng-switch-default>
+			<ng-include src="'contrato/' + modalEstado + '.html'"></div>
+		</span>
+	</span>
 </div>
