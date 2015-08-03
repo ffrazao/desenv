@@ -9,6 +9,8 @@
   <link rel="stylesheet" type="text/css" href="bower_components/angular-toastr/dist/angular-toastr.css" />
 </head>
 <body>
+  <div ui-view class="container">
+  </div>
 
   <!-- Livereload script for development only (stripped during dist build) -->
   <script src="http://localhost:35729/livereload.js" data-concat="false"></script>
@@ -33,8 +35,8 @@
   <script src="bower_components/angular-ui-uploader/dist/uploader.js"></script>
   <script src="bower_components/angular-ui-utils/index.js"></script>
   <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+  <script src="bower_components/ngSticky/lib/sticky.js"></script>
   <!-- Add New Bower Component JS Above -->
-
 
   <!-- Main App JS -->
   <script src="app.js"></script>
@@ -45,15 +47,5 @@
   <script src="casa/casa.js"></script>
   <script src="directive/frz-navegador/frz-navegador.js"></script>
   <!-- Add New Component JS Above -->
-
-  <div>
-    <div id="content" class="container">
-      <div class="row">
-        <div ui-view>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </body>
 </html>

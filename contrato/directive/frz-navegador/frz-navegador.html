@@ -1,129 +1,20 @@
-<span>
-/{{grupoBotoes}}/{{botaoExibeTexto}}/
-<br><br>
-
-  <div class="btn-toolbar pull-right" role="toolbar" aria-label="Barra de Ferramentas" style=".ng-valid {border: 0px;}">
-
-
-    <div class="btn-group" role="group" ng-repeat="grupo in grupoBotoes | orderBy: 'ordem'" ng-show="grupo.visivel" ng-disabled="grupo.desabilitado">
-      <span ng-repeat="botao in grupo.botoes | orderBy: 'ordem'" ng-switch="botao.tipo">
-
-        <button ng-switch-default 
-          class="btn btn-sm {{botao.classe}}" 
-          title="{{botao.descricao}}"
-          ng-click="botao.acao()">
-          <i class="glyphicon {{botao.glyphicon}}"></i>
-          <small ng-show="botaoExibeTexto">{{botao.nome}}</small>
-        </button>
-
-        <button ng-switch-when="dropdown" 
-          class="btn btn-sm dropdown-toggle {{botao.classe}}"
-          title="{{botao.descricao}}"
-          ng-click="botao.acao()"
-          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="glyphicon {{botao.glyphicon}}"></i>
-          <small ng-show="botaoExibeTexto">{{botao.nome}}</small>
-          <span class="caret"></span>
-        </button>
-        <ul ng-switch-when="dropdown" class="dropdown-menu pull-right">
-          <li ng-repeat="subFuncao in botao.subFuncoes | orderBy: 'ordem'">
-            <a ng-click="subFuncao.acao()">{{subFuncao.nome}}</a>
-          </li>
-        </ul>
-      </span>
-    </div>
-  </div>
-
-
-<!--
-
-
-    <button 
-      class="{{botao.classe}}" 
-      title="{{botao.titulo}}" 
-
-
-      data-toggle="{{dataToggle}}" aria-haspopup="true" aria-expanded="false"
-
-      ng-click="botao.acao()" 
-      ng-show="botao.visivel" 
-      ng-disabled="botao.desabilitado">
-
-      <i class="{{botao.glyphicon}}"></i>
-      <span class="caret"></span>
-      <small ng-show="botaoExibeTexto">{{botao.etiqueta}}</small>
-    </button>
-    <ul ng-repeat-end class="dropdown-menu pull-right" role="menu">
-      <li ng-repeat="subFuncao in botao.subFuncoes | orderBy: 'ordem'">
-        <a ng-click="subFuncao.acao">{{subFuncao.nome}}</a>
-      </li>
-    </ul>
-
-
-    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <i class="glyphicon glyphicon-share-alt"></i>
-      <small>teste</small>
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-      <li><a href="#">Dropdown link</a></li>
-      <li><a href="#">Dropdown link</a></li>
-    </ul>
-
-
-
-
-
 <div class="btn-toolbar pull-right" role="toolbar" aria-label="Barra de Ferramentas" style=".ng-valid {border: 0px;}">
-  <div class="btn-group" role="group">
-    <button type="button" class="btn btn-sm btn-success" title="OK" ng-click="ngModel.mudarEstado('CONFIRMANDO')" ng-show="botoes.confirmar.visivel" ng-disabled="botoes.confirmar.desabilitado"><i class="glyphicon glyphicon-ok"></i><small ng-show="exibeTextoBotao">OK</small></button>
-    <button type="button" class="btn btn-sm btn-default" title="Limpar" ng-click="ngModel.mudarEstado('LIMPANDO')" ng-show="botoes.limpar.visivel" ng-disabled="botoes.limpar.desabilitado"><i class="glyphicon glyphicon-trash"></i><small ng-show="exibeTextoBotao">Limpar</small></button>
-    <button type="button" class="btn btn-sm btn-default" title="Restaurar" ng-click="ngModel.mudarEstado('RESTAURANDO')" ng-show="botoes.restaurar.visivel" ng-disabled="botoes.restaurar.desabilitado"><i class="glyphicon glyphicon-repeat"></i><small ng-show="exibeTextoBotao">Restaurar</small></button>
-    <button type="button" class="btn btn-sm btn-danger" title="Cancelar" ng-click="ngModel.mudarEstado('CANCELANDO')" ng-show="botoes.cancelar.visivel" ng-disabled="botoes.cancelar.desabilitado"><i class="glyphicon glyphicon-remove"></i><small ng-show="exibeTextoBotao">Cancelar</small></button>
-    <button type="button" class="btn btn-sm btn-info" title="Voltar" ng-click="ngModel.mudarEstado('VOLTANDO')" ng-show="botaoVoltarVisivel()" ng-disabled="botoes.voltar.desabilitado"><i class="glyphicon glyphicon-share-alt"></i><small ng-show="exibeTextoBotao">Voltar</small></button>
-  </div>
-  <div class="btn-group" role="group" ng-show="botaoNavegarVisivel()" ng-disabled="botoes.navegar.desabilitado">
-    <button type="button" class="btn btn-sm btn-default" title="Primeiro" ng-click="primeiro()"><i class="glyphicon glyphicon-step-backward"></i><small class="sr-only">Primeiro</small></button>
-    <button type="button" class="btn btn-sm btn-default" title="Anterior" ng-click="anterior()"><i class="glyphicon glyphicon-backward"></i><small class="sr-only">Anterior</small></button>
-    <div class="btn-group" ng-show="botoes.tamanhoPagina.visivel" ng-disabled="botoes.tamanhoPagina.desabilitado">
-      <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Tamanho da Página"><span>{{ngModel.tamanhoPagina}}</span><span class="caret"></span></button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a ng-click="ngModel.tamanhoPagina = 10">10</a></li>
-        <li><a ng-click="ngModel.tamanhoPagina = 25">25</a></li>
-        <li><a ng-click="ngModel.tamanhoPagina = 50">50</a></li>
-        <li><a ng-click="ngModel.tamanhoPagina = 100">100</a></li>
+  <div class="btn-group" role="group" ng-repeat="grupo in grupoBotoes | orderBy: 'ordem'" ng-if="!grupo.invisivel">
+    <span ng-repeat="botao in grupo.botoes | orderBy: 'ordem'" ng-switch="botao.tipo">
+      <button ng-switch-default class="btn btn-sm {{botao.classe}}" title="{{botao.descricao}}" ng-click="botao.acao()" ng-show="botao.visivel && (!botao.exibir || (botao.exibir && botao.exibir()))" ng-disabled="botao.desabilitado">
+        <i class="glyphicon {{botao.glyphicon}}"></i>
+        <small ng-show="exibeNomeBotao || botao.nomeSempreVisivel">{{botao.nome}}</small>
+      </button>
+      <button ng-switch-when="dropdown" class="btn btn-sm dropdown-toggle {{botao.classe}}" title="{{botao.descricao}}" ng-click="botao.acao()" ng-show="botao.visivel && (!botao.exibir || (botao.exibir && botao.exibir()))" ng-disabled="botao.desabilitado" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="glyphicon {{botao.glyphicon}}"></i>
+        <small ng-show="exibeNomeBotao || botao.nomeSempreVisivel">{{botao.nome}}</small>
+        <span class="caret"></span>
+      </button>
+      <ul ng-switch-when="dropdown" class="dropdown-menu pull-right" ng-show="botao.visivel && (!botao.exibir || (botao.exibir && botao.exibir()))" ng-disabled="botao.desabilitado">
+        <li ng-repeat="subFuncao in botao.subFuncoes | orderBy: 'ordem'">
+          <a ng-click="subFuncao.acao()" title="{{subFuncao.descricao}}" ng-show="!subFuncao.exibir || (subFuncao.exibir && subFuncao.exibir())">{{subFuncao.nome}}</a>
+        </li>
       </ul>
-    </div>
-    <button type="button" class="btn btn-sm btn-default" title="Posterior" ng-click="proximo()"><i class="glyphicon glyphicon-forward"></i><small class="sr-only">Posterior</small></button>
-    <button type="button" class="btn btn-sm btn-default" title="Último" ng-click="ultimo()"><i class="glyphicon glyphicon-step-forward"></i><small class="sr-only">Último</small></button>
-  </div>
-  <div class="btn-group" role="group" ng-show="botoes.filtrar.visivel" ng-disabled="botoes.filtrar.desabilitado">
-    <button type="button" class="btn btn-sm btn-primary" title="Filtrar" ng-click="ngModel.mudarEstado('FILTRANDO')"><i class="glyphicon glyphicon-filter"></i><small ng-show="exibeTextoBotao">filtrar</small></button>
-  </div>
-  <div class="btn-group" role="group" ng-show="botoes.incluir.visivel" ng-disabled="botoes.incluir.desabilitado">
-    <button type="button" class="btn btn-sm btn-success" title="Incluir" ng-click="ngModel.mudarEstado('INCLUINDO')"><i class="glyphicon glyphicon-plus"></i><small ng-show="exibeTextoBotao">Incluir</small></button>
-  </div>
-  <div class="btn-group" role="group" ng-show="botoes.visualizar.visivel && ngModel.selecao.selecionado" ng-disabled="botoes.visualizar.desabilitado">
-    <button type="button" class="btn btn-sm btn-warning" title="Visualizar" ng-click="ngModel.mudarEstado('VISUALIZANDO')"><i class="glyphicon glyphicon-eye-open"></i><small ng-show="exibeTextoBotao">Visualizar</small></button>
-  </div>
-  <div class="btn-group" role="group" ng-show="botoes.editar.visivel && ngModel.selecao.selecionado" ng-disabled="botoes.editar.desabilitado">
-    <button type="button" class="btn btn-sm btn-warning" title="Editar" ng-click="ngModel.mudarEstado('EDITANDO')"><i class="glyphicon glyphicon-pencil"></i><small ng-show="exibeTextoBotao">Editar</small></button>
-  </div>
-  <div class="btn-group" role="group" ng-show="botoes.excluir.visivel && ngModel.selecao.selecionado" ng-disabled="botoes.excluir.desabilitado">
-    <button type="button" class="btn btn-sm btn-danger " title="Excluir" ng-click="ngModel.mudarEstado('EXCLUINDO')"><i class="glyphicon glyphicon-minus"></i><small ng-show="exibeTextoBotao">Excluir</small></button>
-  </div>
-  <div class="btn-group" role="group" ng-show="botoes.agir.visivel && temAcoesEspeciais()" ng-disabled="botoes.agir.desabilitado">
-    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Ações">
-      <i class="glyphicon glyphicon-menu-hamburger"></i><small ng-show="exibeTextoBotao">Ações</small><span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu pull-right" role="menu">
-      <li ng-repeat="item in acoesEspeciais | filter: { estado: ngModel.estadoAtual() }"><a ng-click="acaoEspecial(item)">{{item.descricao}}</a></li>
-    </ul>
-  </div>
-  <div class="btn-group" role="group">
-    <button type="button" class="btn btn-sm btn-default" title="Ajuda"><b>?</b><small ng-show="exibeTextoBotao">ajuda</small></button>
+    </span>
   </div>
 </div>
--->
-
-</span>

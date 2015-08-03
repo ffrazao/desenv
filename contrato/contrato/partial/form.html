@@ -1,3 +1,58 @@
-<div class="col-md-12" ng-controller="ContratoFormCtrl">
-Form Princip
-</div>
+<form class="form-horizontal" ng-controller="ContratoFormCtrl">
+	{{['INSERINDO', 'EDITANDO'].indexOf(navegador.estadoAtual()) >= 0}}
+	{{navegador.estadoAtual()}}
+	<fieldset ng-disabled="['INCLUINDO', 'EDITANDO'].indexOf(navegador.estadoAtual()) < 0">
+
+		<!-- Form Name -->
+		<legend>Form Name</legend>
+
+		<!-- Text input-->
+		<div class="form-group">
+			<label class="col-md-4 control-label" for="textinput">Text Input</label>  
+			<div class="col-md-4">
+				<input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md">
+				<span class="help-block">help</span>  
+			</div>
+		</div>
+
+		<!-- Text input-->
+		<div class="form-group">
+			<label class="col-md-4 control-label" for="textinput">Text Input</label>  
+			<div class="col-md-4">
+				<input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md">
+				<span class="help-block">help</span>  
+			</div>
+		</div>
+
+		<!-- Select Basic -->
+		<div class="form-group">
+			<label class="col-md-4 control-label" for="selectbasic">Select Basic</label>
+			<div class="col-md-4">
+				<select id="selectbasic" name="selectbasic" class="form-control">
+					<option value="1">Option one</option>
+					<option value="2">Option two</option>
+				</select>
+			</div>
+		</div>
+
+		<!-- Multiple Checkboxes -->
+		<div class="form-group">
+			<label class="col-md-4 control-label" for="checkboxes">Multiple Checkboxes</label>
+			<div class="col-md-4">
+				<div class="checkbox">
+					<label for="checkboxes-0">
+						<input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
+						Option one
+					</label>
+				</div>
+				<div class="checkbox">
+					<label for="checkboxes-1">
+						<input type="checkbox" name="checkboxes" id="checkboxes-1" value="2">
+						Option two
+					</label>
+				</div>
+			</div>
+		</div>
+
+	</fieldset>
+</form>
