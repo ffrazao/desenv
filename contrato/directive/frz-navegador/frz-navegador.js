@@ -44,7 +44,7 @@
 				this.scopeNavegador.refresh();
 			};
 			this.estadoAtual = function() {
-				if (!this.scopeNavegador) return null;
+				if (!this.scopeNavegador) {return null;}
 				return this.scopeNavegador.historicoEstados[this.scopeNavegador.historicoEstados.length - 1];
 			};
 			this.voltar = function() {
