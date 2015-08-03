@@ -10,14 +10,17 @@ angular.module('contrato').config(['$stateProvider', function($stateProvider) {
     $stateProvider.state('contrato.filtro', {
         url: '',
         templateUrl: 'contrato/partial/filtro.html',
+        controller: 'ContratoFiltroCtrl',
     });
     $stateProvider.state('contrato.lista', {
         url: '/lista',
         templateUrl: 'contrato/partial/lista.html',
+        controller: 'ContratoListaCtrl',
     });
     $stateProvider.state('contrato.form', {
-        url: '/form',
+        url: '/form/:id',
         templateUrl: 'contrato/partial/form.html',
+        controller: 'ContratoFormCtrl',
     });
     /* Add New States Above */
 

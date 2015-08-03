@@ -7,7 +7,7 @@ angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toa
         templateUrl: 'casa/index.html',
         controller: ['$stateParams', 'toastr', function($stateParams, toastr){
             console.log($stateParams.mensagem);
-            toastr.warning('Endereço não encontrado! ' + $stateParams.mensagem, 'Atenção!');
+            //toastr.warning('Endereço não encontrado! ' + $stateParams.mensagem, 'Atenção!');
         }],
     });
     /* Add New States Above */

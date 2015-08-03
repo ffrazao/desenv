@@ -1,6 +1,4 @@
-<form class="form-horizontal" ng-controller="ContratoFormCtrl">
-	{{['INSERINDO', 'EDITANDO'].indexOf(navegador.estadoAtual()) >= 0}}
-	{{navegador.estadoAtual()}}
+<form class="form-horizontal">
 	<fieldset ng-disabled="['INCLUINDO', 'EDITANDO'].indexOf(navegador.estadoAtual()) < 0">
 
 		<!-- Form Name -->
