@@ -363,6 +363,9 @@
 			scope: {
 				ngModel: '=',
 
+				exibeNomeBotao: '=',
+				exibeEstadoAtual: '=',
+
 				onAbrir: '&',
 
 				onTemMaisRegistros: '&',
@@ -400,6 +403,7 @@
 			controller: 'FrzNavegadorCtrl',
 			link: function(scope, element, attributes) {
 				scope.exibeNomeBotao = !angular.isUndefined(attributes.exibeNomeBotao) && (attributes.exibeNomeBotao.toLowerCase() === 'true');
+				scope.exibeEstadoAtual = !angular.isUndefined(attributes.exibeEstadoAtual) && (attributes.exibeEstadoAtual.toLowerCase() === 'true');
 				scope.estados = {
 					'FILTRANDO': {botoes: ['ok', 'inclusao', 'limpar', 'voltar', 'acao', 'ajuda', ], },
 					'LISTANDO': {botoes: ['informacao', 'filtro', 'inclusao', 'primeiro', 'anterior', 'tamanhoPagina', 'proximo', 'ultimo', 'visualizacao', 'exclusao', 'acao', 'ajuda', ], }, 
