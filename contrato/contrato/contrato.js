@@ -33,6 +33,8 @@ angular.module('contrato').controller('ContratoCtrl',
     // inicio: atividades do Modal
     $scope.modalEstado = 'filtro';
 
+    $scope.frm = {};
+
     $scope.modalOk = function () {
         $scope.cadastro.lista = [];
         $scope.cadastro.lista.push({id: 21, nome: 'Fernando'});
@@ -186,11 +188,12 @@ angular.module('contrato').controller('ContratoCtrl',
     };
     $scope.confirmar = function() {
         $scope.navegador.submitido = true;
-        if ($scope.formulario.$invalid) {
+        if ($scope.frm.formulario.$invalid) {
             return;
         }
         $scope.navegador.mudarEstado('VISUALIZANDO');
         vaiPara('form');
+        $scope.navegador.submitido = false;
     };
     $scope.confirmarEditar = function() {
         $scope.confirmar();
@@ -204,6 +207,7 @@ angular.module('contrato').controller('ContratoCtrl',
     };
     $scope.confirmarIncluir = function() {
         $scope.confirmar();
+        $scope.cadastro.lista.push($scope.cadastro.registro);
     };
     $scope.editar = function() {
         $scope.navegador.mudarEstado('EDITANDO');
@@ -216,16 +220,37 @@ angular.module('contrato').controller('ContratoCtrl',
         $scope.navegador.mudarEstado('FILTRANDO');
         vaiPara('filtro');
     };
-    $scope.folhearAnterior = function() {};
-    $scope.folhearPrimeiro = function() {};
-    $scope.folhearProximo = function() {};
-    $scope.folhearUltimo = function() {};
+    var verRegistro = function() {
+        $scope.cadastro.registro = $scope.dados[$scope.navegador.folhaAtual];
+    };
+
+    $scope.folhearAnterior = function() {
+        verRegistro();
+    };
+    $scope.folhearPrimeiro = function() {
+        verRegistro();
+    };
+    $scope.folhearProximo = function() {
+        verRegistro();
+    };
+    $scope.folhearUltimo = function() {
+        verRegistro();
+    };
+
     $scope.incluir = function() {
         $scope.navegador.mudarEstado('INCLUINDO');
         vaiPara('form');
+        $scope.cadastro.registro = {};
     };
     $scope.informacao = function() {};
-    $scope.limpar = function() {};
+    $scope.limpar = function() {
+        var e = $scope.navegador.estadoAtual();
+        if ('FILTRANDO' === e) {
+            $scope.cadastro.filtro = {};
+        } else {
+            $scope.cadastro.registro = {};
+        }
+    };
     $scope.paginarAnterior = function() {};
     $scope.paginarPrimeiro = function() {};
     $scope.paginarProximo = function() {};
@@ -234,6 +259,7 @@ angular.module('contrato').controller('ContratoCtrl',
     $scope.visualizar = function() {
         $scope.navegador.mudarEstado('VISUALIZANDO');
         vaiPara('form');
+        verRegistro();
     };
     $scope.voltar = function() {
         $scope.navegador.voltar();
@@ -256,5 +282,5 @@ angular.module('contrato').controller('ContratoCtrl',
           toastr.warning('O e-mail não foi enviado...');
         });
 
-    }
+    };
 }]);

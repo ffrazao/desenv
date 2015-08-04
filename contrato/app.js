@@ -63,8 +63,8 @@ angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toa
 
 }]);
 
-angular.module('principal').run(['$rootScope', '$modal', '$rootScope', 
-  function($rootScope, $modal, $rootScope) {
+angular.module('principal').run(['$rootScope', '$modal', 
+  function($rootScope, $modal) {
 
     $rootScope.safeApply = function(fn) {
         var phase = $rootScope.$$phase;

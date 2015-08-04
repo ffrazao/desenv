@@ -22,7 +22,7 @@
 				this.botao('tamanhoPagina').nome = this.tamanhoPagina;
 			};
 			this.paginaAtual = 1;
-			this.folhaAtual = 0;
+			this.folhaAtual = -1;
 			this.mudarEstado = function (novoEstado) {
 				this.historicoEstados.push(novoEstado);
 				this.refresh();
@@ -609,6 +609,9 @@
 								classe: 'btn-warning',
 								glyphicon: 'glyphicon-eye-open',
 								acao: function() {
+									if (scope.ngModel.selecao.tipo === 'M') {
+										scope.ngModel.folhaAtual = 0;
+									}
 									scope.onVisualizar();
 								},
 								exibir: function() {
@@ -736,22 +739,21 @@
 				scope.$watch('ngModel.selecao.tipo', function() {
 					var info = '0/' + scope.ngModel.dados.length;
 					if (scope.ngModel.selecao.tipo === 'U') {
-						scope.ngModel.selecao.selecionado = scope.ngModel.selecao.item && angular.isDefined(scope.ngModel.selecao.item) && scope.ngModel.selecao.item;
+						scope.ngModel.selecao.selecionado = angular.isDefined(scope.ngModel.selecao.item) && scope.ngModel.selecao.item;
 						if (scope.ngModel.selecao.selecionado) {
-							info = '1/' + scope.ngModel.dados.length;	
+							info = '1/' + scope.ngModel.dados.length;
 						}
 					} else if (scope.ngModel.selecao.tipo === 'M') {
 						scope.ngModel.selecao.selecionado = scope.ngModel.selecao.marcado > 0;
-						info = scope.ngModel.selecao.marcado + '/' + scope.ngModel.dados.length;	
+						info = scope.ngModel.selecao.marcado + '/' + scope.ngModel.dados.length;
 					}
 					if (scope.ngModel.botao('informacao')) {scope.ngModel.botao('informacao').nome = info;}
 				}, true);
 
-				scope.$watch('ngModel.selecao.item', function() {
-					//if (!scope.ngModel || !scope.ngModel.selecao) {return;}
+				scope.$watch('ngModel.selecao.item', function(newItem) {
 					var info = '0/' + scope.ngModel.dados.length;
 					if (scope.ngModel.selecao.tipo === 'U') {
-						scope.ngModel.selecao.selecionado = scope.ngModel.selecao.item && angular.isDefined(scope.ngModel.selecao.item) && scope.ngModel.selecao.item;
+						scope.ngModel.selecao.selecionado = angular.isDefined(scope.ngModel.selecao.item) && scope.ngModel.selecao.item;
 						if (scope.ngModel.selecao.selecionado) {
 							info = '1/' + scope.ngModel.dados.length;
 						}
@@ -760,27 +762,29 @@
 				}, true);
 
 				scope.$watch('ngModel.selecao.items', function() {
-					//if (!scope.ngModel || !scope.ngModel.selecao) {return;}
 					var info = '0/' + scope.ngModel.dados.length;
 					if (!scope.ngModel.selecao.items) {
 						if (scope.ngModel.botao('informacao')) {scope.ngModel.botao('informacao').nome = info;}
 						return;
 					}
 					var marcado = 0, desmarcado = 0, total = scope.ngModel.dados ? scope.ngModel.dados.length : 0;
-					out: for (var item in scope.ngModel.dados) {
-						for (var sel in scope.ngModel.selecao.items) {
-							if (angular.equals(scope.ngModel.dados[item], scope.ngModel.selecao.items[sel])) {
-								marcado ++;
-								continue out;
+					if (total) {
+						out: for (var item in scope.ngModel.dados) {
+							for (var sel in scope.ngModel.selecao.items) {
+								if (angular.equals(scope.ngModel.dados[item], scope.ngModel.selecao.items[sel])) {
+									marcado ++;
+									continue out;
+								}
 							}
+							desmarcado ++;
 						}
-						desmarcado ++;
 					}
-					if ((desmarcado === 0) || (marcado === 0)) {
+					scope.ngModel.selecao.checked = false;
+					if (desmarcado === 0 || marcado === 0) {
 						scope.ngModel.selecao.checked = (marcado === total);
 					}
 
-					info = marcado + '/' + scope.ngModel.dados.length;
+					info = marcado + '/' + total;
 
 					scope.ngModel.selecao.marcado = marcado;
 					scope.ngModel.selecao.desmarcado = desmarcado;
