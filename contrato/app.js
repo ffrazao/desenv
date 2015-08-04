@@ -10,7 +10,8 @@ angular.module('principal').factory('modalCadastro', function () {
 });
 // fim: codigo para habilitar o modal recursivo
 
-angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', '$locationProvider', function($stateProvider, $urlRouterProvider, toastrConfig, $locationProvider) {
+angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', '$locationProvider',
+  function($stateProvider, $urlRouterProvider, toastrConfig, $locationProvider) {
     //$locationProvider.html5Mode(true);
     $stateProvider.state('casa', {
         url: '',
@@ -62,7 +63,8 @@ angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toa
 
 }]);
 
-angular.module('principal').run(['$rootScope', function($rootScope) {
+angular.module('principal').run(['$rootScope', '$modal', '$rootScope', 
+  function($rootScope, $modal, $rootScope) {
 
     $rootScope.safeApply = function(fn) {
         var phase = $rootScope.$$phase;
@@ -74,5 +76,41 @@ angular.module('principal').run(['$rootScope', function($rootScope) {
             this.$apply(fn);
         }
     };
+
+  $rootScope.exibirAlerta = function (mensagem) {
+      var modalInstance = $modal.open({
+          animation: true,
+          template: 
+            '<div class="modal-header">' +
+            '  <h3 class="modal-title">Atenção!</h3>' +
+            '</div>' +
+            '<div class="modal-body">' +
+            '<p class=\"bg-info\">' + mensagem + '</p>' +
+            '</div>' +
+            '<div class="modal-footer">' +
+            '  <button class="btn btn-primary" ng-click=\"$dismiss(\'ok\')\">OK</button>' +
+            '</div>',
+          resolve: {},
+      });
+  };
+
+  $rootScope.pegarConfirmacao = function (mensagem) {
+      var modalInstance = $modal.open({
+          animation: true,
+          template: 
+            '<div class="modal-header">' +
+            '  <h3 class="modal-title">Confirme!</h3>' +
+            '</div>' +
+            '<div class="modal-body">' +
+            '<p class=\"bg-info\">' + mensagem + '</p>' +
+            '</div>' +
+            '<div class="modal-footer">' +
+            '  <button class="btn btn-primary" ng-click=\"$close(\'ok\')\">OK</button>' +
+            '  <button class="btn btn-warning" ng-click=\"$dismiss(\'cancelar\')\">Cancelar</button>' +
+            '</div>',
+          resolve: {},
+      });
+      return modalInstance;
+  };
 
 }]);

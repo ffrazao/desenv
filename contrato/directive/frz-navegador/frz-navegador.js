@@ -12,10 +12,10 @@
 					throw 'Dados inconsistentes!';
 				}
 				this.dados = dados;
-				this.selecao = { tipo: 'U', checked: false, item: null, items: [], selecionado: false};
+				this.selecao = {tipo: 'U', checked: false, item: null, items: [], selecionado: false};
+				this.submitido = false;
 			};
 			this.setDados(dados);
-
 			this.tamanhoPagina = 10;
 			this.setTamanhoPagina = function(tamanho) {
 				this.tamanhoPagina = parseInt(tamanho, 10);
@@ -23,38 +23,33 @@
 			};
 			this.paginaAtual = 1;
 			this.folhaAtual = 0;
-
-			this.especialBotoesVisiveis = function (botoes) {
-				for (var e in this.scopeNavegador.estados) {
-					if (e === 'ESPECIAL') {
-						console.log(this.scopeNavegador.estados[e]);
-						this.scopeNavegador.estados[e].visivel = botoes;
-					}
-				}
-			};
 			this.mudarEstado = function (novoEstado) {
-				this.scopeNavegador.historicoEstados.push(novoEstado);
-				this.scopeNavegador.refresh();
+				this.historicoEstados.push(novoEstado);
+				this.refresh();
 			};
 			this.refresh = function () {
+				if (!this.scopeNavegador) {return;}
 				this.scopeNavegador.refresh();
 			};
 			this.limparEstados = function () {
-				this.scopeNavegador.historicoEstados = [];
-				this.scopeNavegador.refresh();
+				this.historicoEstados = [];
+				this.refresh();
 			};
+			this.limparEstados();
 			this.estadoAtual = function() {
 				if (!this.scopeNavegador) {return null;}
-				return this.scopeNavegador.historicoEstados[this.scopeNavegador.historicoEstados.length - 1];
+				return this.historicoEstados[this.historicoEstados.length - 1];
 			};
 			this.voltar = function() {
-				this.scopeNavegador.historicoEstados.pop();
-				this.scopeNavegador.refresh();
+				this.historicoEstados.pop();
+				this.refresh();
 			};
 			this.grupoBotoes = function() {
+				if (!this.scopeNavegador) {return;}
 				return this.scopeNavegador.grupoBotoes;
 			};
 			this.grupoBotao = function(codigoGrupo) {
+				if (!this.scopeNavegador) {return;}
 				return this.scopeNavegador.grupoBotao(codigoGrupo);
 			};
 			this.botao = function(codigoBotao, codigoGrupo) {
@@ -89,7 +84,6 @@
 			}
 			return false;
 		}
-
 		// add
 		function add(arr, item, comparator) {
 			arr = angular.isArray(arr) ? arr : [];
@@ -98,7 +92,6 @@
 			}
 			return arr;
 		}  
-
 		// remove
 		function remove(arr, item, comparator) {
 			if (angular.isArray(arr)) {
@@ -111,7 +104,6 @@
 			}
 			return arr;
 		}
-
 		// http://stackoverflow.com/a/19228302/1458162
 		function postLinkFn(scope, elem, attrs) {
 			// compile with `ng-model` pointing to `checked`
@@ -124,14 +116,10 @@
 
 			// value added to list
 			var value = $parse(attrs.checklistValue)(scope.$parent);
-
-
 			var comparator = angular.equals;
-
 			if (attrs.hasOwnProperty('checklistComparator')){
 				comparator = $parse(attrs.checklistComparator)(scope.$parent);
 			}
-
 			// watch UI checked change
 			scope.$watch('checked', function(newValue, oldValue) {
 				if (newValue === oldValue) { 
@@ -143,7 +131,6 @@
 				} else {
 					setter(scope.$parent, remove(current, value, comparator));
 				}
-
 				if (checklistChange) {
 					checklistChange(scope);
 				}
@@ -162,7 +149,6 @@
 				scope.$parent.$watch(attrs.checklistModel, setChecked, true);
 			}
 		}
-
 		return {
 			restrict: 'A',
 			priority: 1000,
@@ -172,24 +158,20 @@
 				if (tElement[0].tagName !== 'INPUT' || tAttrs.type !== 'checkbox') {
 					throw 'frz-checklist-model deve ser usado em `input[type="checkbox"]`.';
 				}
-
 				if (!tAttrs.checklistValue) {
 					throw 'Faltou informar `checklist-value`.';
 				}
-
 				// exclude recursion
 				tElement.removeAttr('checklist-model');
-
 				// local scope var storing individual checkbox model
 				tElement.attr('ng-model', 'checked');
-
 				return postLinkFn;
 			}
 		};
 	}]);
 
 	// controller para a barra de navegacao
-	frzNavegadorModule.controller('FrzNavegadorCtrl', ['$scope', 'FrzNavegadorParams', 'toastr', function($scope, FrzNavegadorParams, toastr) {
+	frzNavegadorModule.controller('FrzNavegadorCtrl', ['$scope', 'FrzNavegadorParams', function($scope, FrzNavegadorParams) {
 
 		// a saber: $scope.ngModel é um objeto do tipo FrzNavegadorParams
 		if ($scope.ngModel && !$scope.ngModel.hasOwnProperty('scopeNavegador')) {
@@ -199,8 +181,6 @@
 		if ($scope.ngModel && !$scope.ngModel.scopeNavegador) {
 			$scope.ngModel.scopeNavegador = $scope;
 		}
-
-		$scope.historicoEstados = [];
 
 		$scope.refresh = function () {
 			var estadoAtual = $scope.ngModel.estadoAtual();
@@ -220,7 +200,6 @@
 				b2['visivel'] = true;
 			}
 		};
-
 		$scope.grupoBotao = function(codigoGrupo) {
 			var grupoBotoes = $scope.grupoBotoes;
 			for (var grupo in grupoBotoes) {
@@ -229,7 +208,6 @@
 				}
 			}
 		};
-
 		$scope.botao = function(codigoBotao, codigoGrupo) {
 			if (codigoGrupo) {
 				var grupoBotao1 = $scope.grupoBotao(codigoGrupo);
@@ -250,7 +228,6 @@
 				}
 			}
 		};
-
 		// funcoes de apoio a navegacao
 		var getUltimaPagina = function() {
 			if (!$scope.ngModel.dados) {
@@ -262,7 +239,6 @@
 			}
 			return result;
 		};
-
 		var navegar = function (sentido) {
 			var novaPagina = 0, ultimaPagina = getUltimaPagina();
 			switch(sentido) {
@@ -287,7 +263,6 @@
 				$scope.onTemMaisRegistros();
 			}
 		};
-
 		var folhear = function (sentido) {
 			var folha = $scope.ngModel.folhaAtual;
 			switch(sentido) {
@@ -325,7 +300,6 @@
 				break;
 			}
 		};
-
 		var vaiPara = function(sentido) {
 			var e = $scope.ngModel.estadoAtual();
 			if (e === 'LISTANDO') {
@@ -334,23 +308,18 @@
 				folhear(sentido);
 			}
 		};
-
 		$scope.primeiro = function() {
 			vaiPara('primeiro');
 		};
-
 		$scope.anterior = function() {
 			vaiPara('anterior');
 		};
-
 		$scope.proximo = function() {
 			vaiPara('proximo');
 		};
-
 		$scope.ultimo = function() {
 			vaiPara('ultimo');
 		};
-
 	}]);
 
 	// diretiva da barra de navegação de dados
@@ -491,7 +460,7 @@
 									scope.onVoltar();
 								},
 								exibir: function() {
-									return scope.historicoEstados.length > 1;
+									return scope.ngModel.historicoEstados.length > 1;
 								},
 							},
 						],

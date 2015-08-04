@@ -28,6 +28,8 @@ angular.module('contrato').controller('ContratoCtrl',
     ['$scope', 'toastr', 'FrzNavegadorParams', '$state', '$rootScope', '$modal', '$log', '$modalInstance', 'modalCadastro', 
     function($scope, toastr, FrzNavegadorParams, $state, $rootScope, $modal, $log, $modalInstance, modalCadastro) {
 
+        $scope.nomeFormulario = 'Cadastro de Contratos & Convênios';
+
     // inicio: atividades do Modal
     $scope.modalEstado = 'filtro';
 
@@ -57,7 +59,7 @@ angular.module('contrato').controller('ContratoCtrl',
         });
 
         modalInstance.result.then(function (cadastroModificado) {
-            $scope.cadastro = angular.copy(cadastroModificado);
+            $scope.navegador.setDados(cadastroModificado.lista);
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -85,7 +87,7 @@ angular.module('contrato').controller('ContratoCtrl',
         {
             nome: 'Enviar E-mail',
             descricao: 'Enviar e-mails',
-            acao: function() {console.log($scope.navegador.tamanhoPagina);},
+            acao: function() {console.log($scope.navegador.tamanhoPagina);$scope.enviarEmailConfirmacao();},
             exibir: function() {
                 return $scope.navegador.estadoAtual() === 'LISTANDO' && ($scope.navegador.selecao.tipo === 'U' && $scope.navegador.selecao.selecionado) ||
                 ($scope.navegador.selecao.tipo === 'M' && $scope.navegador.selecao.marcado > 0);
@@ -183,6 +185,10 @@ angular.module('contrato').controller('ContratoCtrl',
         $scope.cancelar();
     };
     $scope.confirmar = function() {
+        $scope.navegador.submitido = true;
+        if ($scope.formulario.$invalid) {
+            return;
+        }
         $scope.navegador.mudarEstado('VISUALIZANDO');
         vaiPara('form');
     };
@@ -240,4 +246,15 @@ angular.module('contrato').controller('ContratoCtrl',
             vaiPara('form');
         }
     };
+
+    $scope.enviarEmailConfirmacao = function () {
+        var conf = $scope.pegarConfirmacao('Confirme o envio do e-mail?');
+
+        conf.result.then(function () {
+          $scope.exibirAlerta('E-mail enviado');
+        }, function () {
+          toastr.warning('O e-mail não foi enviado...');
+        });
+
+    }
 }]);

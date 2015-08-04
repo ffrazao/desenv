@@ -1,15 +1,15 @@
-<form class="form-horizontal">
+<form class="form-horizontal" name="formulario" novalidate>
 	<fieldset ng-disabled="['INCLUINDO', 'EDITANDO'].indexOf(navegador.estadoAtual()) < 0">
 
 		<!-- Form Name -->
-		<legend>Form Name</legend>
+		<legend>{{nomeFormulario}}</legend>
 
 		<!-- Text input-->
 		<div class="form-group">
 			<label class="col-md-4 control-label" for="textinput">Text Input</label>  
 			<div class="col-md-4">
-				<input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md">
-				<span class="help-block">help</span>  
+				<input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md" required>
+				<span class="help-block" ng-show="navegador.submitido && formulario.textinput.$invalid">help</span>  
 			</div>
 		</div>
 
