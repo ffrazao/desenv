@@ -24,7 +24,10 @@
 			this.paginaAtual = 1;
 			this.folhaAtual = -1;
 			this.mudarEstado = function (novoEstado) {
-				this.historicoEstados.push(novoEstado);
+				var e = this.estadoAtual();
+				if (novoEstado !== e) {
+					this.historicoEstados.push(novoEstado);
+				}
 				this.refresh();
 			};
 			this.refresh = function () {
@@ -377,9 +380,9 @@
 					'FILTRANDO': {botoes: ['ok', 'inclusao', 'limpar', 'voltar', 'acao', 'ajuda', ], },
 					'LISTANDO': {botoes: ['informacao', 'filtro', 'inclusao', 'primeiro', 'anterior', 'tamanhoPagina', 'proximo', 'ultimo', 'visualizacao', 'exclusao', 'acao', 'ajuda', ], }, 
 					'ESPECIAL': {botoes: ['informacao', 'inclusao', 'primeiro', 'anterior', 'tamanhoPagina', 'proximo', 'ultimo', 'edicao', 'exclusao', 'acao', 'ajuda', ], },
-					'INCLUINDO': {botoes: ['ok', 'limpar', 'voltar', 'cancelar', 'ajuda', ], },
+					'INCLUINDO': {botoes: ['ok', 'limpar', 'cancelar', 'ajuda', ], },
 					'VISUALIZANDO': {botoes: ['informacao', 'filtro', 'inclusao', 'primeiro', 'anterior', 'proximo', 'ultimo', 'edicao', 'voltar', 'exclusao', 'acao', 'ajuda', ], },
-					'EDITANDO': {botoes: ['ok', 'restaurar', 'voltar', 'cancelar', 'ajuda', ], },
+					'EDITANDO': {botoes: ['ok', 'restaurar', 'cancelar', 'ajuda', ], },
 					'EXCLUINDO': {botoes: ['ok', 'cancelar', 'ajuda', ], },
 				};
 				scope.grupoBotoes = [
@@ -467,6 +470,10 @@
 					},
 					{
 						codigo: 'navegacao',
+						exibir: function() {
+							var e = scope.ngModel.estadoAtual();
+							return e !== 'VISUALIZANDO' || (e === 'VISUALIZANDO' && scope.ngModel.selecao.tipo === 'M');
+						},
 						botoes: [
 							{
 								codigo: 'primeiro',
@@ -475,11 +482,11 @@
 								classe: 'btn-default',
 								glyphicon: 'glyphicon-step-backward',
 								acao: function() {
+									scope.primeiro();
 									switch (scope.ngModel.estadoAtual()) {
 										case 'VISUALIZANDO': scope.onFolhearPrimeiro(); break;
 										default: scope.onPaginarPrimeiro(); break;
 									}
-									scope.primeiro();
 								},
 							},
 							{
@@ -489,11 +496,11 @@
 								classe: 'btn-default',
 								glyphicon: 'glyphicon-backward',
 								acao: function() {
+									scope.anterior();
 									switch (scope.ngModel.estadoAtual()) {
 										case 'VISUALIZANDO': scope.onFolhearAnterior(); break;
 										default: scope.onPaginarAnterior(); break;
 									}
-									scope.anterior();
 								},
 							},
 							{
@@ -546,11 +553,11 @@
 								classe: 'btn-default',
 								glyphicon: 'glyphicon-forward',
 								acao: function() {
+									scope.proximo();
 									switch (scope.ngModel.estadoAtual()) {
 										case 'VISUALIZANDO': scope.onFolhearProximo(); break;
 										default: scope.onPaginarProximo(); break;
 									}
-									scope.proximo();
 								},
 							},
 							{
@@ -560,11 +567,11 @@
 								classe: 'btn-default',
 								glyphicon: 'glyphicon-step-forward',
 								acao: function() {
+									scope.ultimo();
 									switch (scope.ngModel.estadoAtual()) {
 										case 'VISUALIZANDO': scope.onFolhearUltimo(); break;
 										default: scope.onPaginarUltimo(); break;
 									}
-									scope.ultimo();
 								},
 							},
 						],

@@ -113,4 +113,13 @@ angular.module('principal').run(['$rootScope', '$modal',
       return modalInstance;
   };
 
+  $rootScope.indiceDe = function(arr, item) {
+    for (var i = arr.length; i--;) {
+      if (angular.equals(arr[i], item)) {
+        return i;
+      }
+    }
+    return null;
+  };
+
 }]);
