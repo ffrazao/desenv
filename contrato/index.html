@@ -1,17 +1,40 @@
 <!DOCTYPE html>
-<html ng-app="principal">
+<html ng-app="principal" class="no-js" lang="pt_BR">
 <head>
-  <title></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
+  <title>ATER web</title>
+  <meta name="description" content="Controle de Atividades Operacionais, Táticas e Estratégicas de ATER">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="app.less" type="text/css" rel="stylesheet/less">
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css" />
   <link rel="stylesheet" type="text/css" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="css/painel-vidro.css">
+  <style type="text/css">
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+          display: none !important;
+      }
+  </style>
   <base href="/" />
 </head>
-<body>
+<body ng-cloak class="ng-cloak">
+  <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <!-- directive: painel-vidro -->
   <center>Gestão de Contratos e Convênios</center>
   <div ui-view class="container"></div>
+
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+  <script>
+     !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+     (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+     r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+     }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+     ga('create', 'UA-XXXXX-X');
+     ga('send', 'pageview');
+  </script>
 
   <!-- Livereload script for development only (stripped during dist build) -->
   <script src="http://localhost:35729/livereload.js" data-concat="false"></script>
@@ -38,6 +61,8 @@
   <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
   <script src="bower_components/ngSticky/lib/sticky.js"></script>
   <!-- Add New Bower Component JS Above -->
+
+  <script src="js/painel-vidro.js" data-concat="false"></script>
 
   <!-- Main App JS -->
   <script src="app.js"></script>

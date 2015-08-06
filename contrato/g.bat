@@ -1,1 +1,1 @@
-start grunt serve
+grunt serve
