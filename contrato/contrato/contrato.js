@@ -28,26 +28,32 @@ angular.module('contrato').controller('ContratoCtrl',
     ['$scope', 'toastr', 'FrzNavegadorParams', '$state', '$rootScope', '$modal', '$log', '$modalInstance', 'modalCadastro', 
     function($scope, toastr, FrzNavegadorParams, $state, $rootScope, $modal, $log, $modalInstance, modalCadastro) {
 
-    $scope.nomeFormulario = 'Cadastro de Contratos & Convênios';
-
-    $scope.frm = {};
+    // inicializacao
+    var init = function() {
+        $scope.nomeFormulario = 'Cadastro de Contratos & Convênios';
+        $scope.frm = {};
+        $scope.cadastro = {filtro: {}, lista: [], registro: {}, original: {}};
+        $scope.navegador = new FrzNavegadorParams($scope.cadastro.lista);
+    };
+    init();
 
     // inicio: atividades do Modal
-    $scope.modalEstado = 'filtro';
-
     $scope.modalOk = function () {
+        // Retorno da modal
         $scope.cadastro.lista = [];
         $scope.cadastro.lista.push({id: 21, nome: 'Fernando'});
         $scope.cadastro.lista.push({id: 12, nome: 'Frazao'});
 
         $modalInstance.close($scope.cadastro);
+        toastr.info('Operação realizada!', 'Informação');
     };
-
     $scope.modalCancelar = function () {
+        // Cancelar a modal
         $modalInstance.dismiss('cancel');
+        toastr.warning('Operação cancelada!', 'Atenção!');
     };
-
     $scope.modalAbrir = function (size) {
+        // abrir a modal
         var modalInstance = $modal.open({
             animation: true,
             template: '<ng-include src=\"\'contrato/contrato-modal.html\'\"></ng-include>',
@@ -59,30 +65,93 @@ angular.module('contrato').controller('ContratoCtrl',
                 }
             }
         });
-
+        // processar retorno da modal
         modalInstance.result.then(function (cadastroModificado) {
+            // processar o retorno positivo da modal
             $scope.navegador.setDados(cadastroModificado.lista);
         }, function () {
+            // processar o retorno negativo da modal
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
-    // fim: atividades do Modal
-
-    // se dados do modal estao vazios
     if ($modalInstance === null) {
-        // construir um novo item
+        // se objeto modal esta vazio abrir de forma normal
         $scope.modalEstado = null;
-        $scope.cadastro = {lista : []};
         for (var i = 0; i < 200; i++) {
             $scope.navegador.dados.push({id: i, nome: 'nome ' + i});
         }
     } else {
         // recuperar o item
+        $scope.modalEstado = 'filtro';
+        // atualizar o cadastro
         $scope.cadastro = angular.copy(modalCadastro);
     }
+    // fim: atividades do Modal
 
-    $scope.navegador = new FrzNavegadorParams($scope.cadastro.lista);
+    // inicio rotinas de apoio
+    var vaiPara = function (estado) {
+        if ($scope.modalEstado) {
+            $scope.modalEstado = estado;
+        } else {
+            $state.go('^.' + estado);
+        }
+    };
+    var meuEstado = function (estado) {
+        if ($scope.modalEstado) {
+            return $scope.modalEstado === estado;
+        } else {
+            return $state.is('^.' + estado);
+        }
+    };
+    var verRegistro = function() {
+        if ($scope.navegador.selecao.tipo === 'U') {
+            $scope.cadastro.original = $scope.navegador.selecao.item;
+        } else {
+            $scope.cadastro.original = $scope.navegador.selecao.items[$scope.navegador.folhaAtual];
+        }
+        $scope.cadastro.registro = angular.copy($scope.cadastro.original);
+        $scope.navegador.refresh();
+    };
+    $scope.seleciona = function(item) {
+        if (!angular.isObject(item)) {
+            return;
+        }
+        // apoio a selecao de linhas na listagem
+        if ($scope.navegador.selecao.tipo === 'U') {
+            $scope.navegador.selecao.item = item;
+        } else {
+            var its = $scope.navegador.selecao.items;
+            for (var i in its) {
+                if (angular.equals(its[i], item)) {
+                    its.splice(i, 1);
+                    return;
+                }
+            }
+            $scope.navegador.selecao.items.push(item);
+        }
+    };
+    $scope.mataClick = function(event, item) {
+        event.stopPropagation();
+        $scope.seleciona(item);
+    };
+    // fim rotinas de apoio
 
+    // inicio rotina para sincronizar estado da tela e navegador
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
+        var estadoAtual = $scope.navegador.estadoAtual();
+        if (meuEstado('filtro') && ['FILTRANDO'].indexOf(estadoAtual) < 0) {
+            $scope.navegador.mudarEstado('FILTRANDO');
+        } else 
+        if (meuEstado('lista') && ['LISTANDO', 'ESPECIAL'].indexOf(estadoAtual) < 0) {
+            $scope.navegador.mudarEstado('LISTANDO');
+        } else 
+        if (meuEstado('form') && ['INCLUINDO', 'VISUALIZANDO', 'EDITANDO'].indexOf(estadoAtual) < 0) {
+            $scope.navegador.mudarEstado('INCLUINDO');
+        }
+    });
+    // fim rotina para sincronizar estado da tela e navegador
+
+    // inicio das operaçoes atribuidas ao navagador
     $scope.abrir = function() {
         // ajustar o menu das acoes especiais
         $scope.navegador.botao('acao', 'acao')['subFuncoes'] = [
@@ -113,62 +182,12 @@ angular.module('contrato').controller('ContratoCtrl',
             $scope.navegador.mudarEstado('VISUALIZANDO');
         }
     };
-
-    var vaiPara = function (estado) {
-        if ($scope.modalEstado) {
-            $scope.modalEstado = estado;
-        } else {
-            $state.go('^.' + estado);
-        }
-    };
-
-    var meuEstado = function (estado) {
-        if ($scope.modalEstado) {
-            return $scope.modalEstado === estado;
-        } else {
-            return $state.is('^.' + estado);
-        }
-    };
-
-    // rotina para sincronizar estado da tela e navegador
-    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
-        var estadoAtual = $scope.navegador.estadoAtual();
-        if (meuEstado('filtro') && ['FILTRANDO'].indexOf(estadoAtual) < 0) {
-            $scope.navegador.mudarEstado('FILTRANDO');
-        } else 
-        if (meuEstado('lista') && ['LISTANDO', 'ESPECIAL'].indexOf(estadoAtual) < 0) {
-            $scope.navegador.mudarEstado('LISTANDO');
-        } else 
-        if (meuEstado('form') && ['INCLUINDO', 'VISUALIZANDO', 'EDITANDO'].indexOf(estadoAtual) < 0) {
-            $scope.navegador.mudarEstado('INCLUINDO');
-        }
-    });
-
-    // apoio a selecao de linhas na listagem
-    $scope.seleciona = function(item) {
-        if ($scope.navegador.selecao.tipo === 'U') {
-            $scope.navegador.selecao.item = item;
-        } else {
-            var its = $scope.navegador.selecao.items;
-            for (var i in its) {
-                if (angular.equals(its[i], item)) {
-                    its.splice(i, 1);
-                    return;
-                }
-            }
-            $scope.navegador.selecao.items.push(item);
-        }
-    };
-    $scope.mataClick = function(event, item) {
-        event.stopPropagation();
-        $scope.seleciona(item);
-    };
-
     $scope.agir = function() {};
     $scope.ajudar = function() {};
     $scope.alterarTamanhoPagina = function() {};
     $scope.cancelar = function() {
         $scope.voltar();
+        toastr.warning('Operação cancelada!', 'Atenção!');
     };
     $scope.cancelarEditar = function() {
         $scope.cancelar();
@@ -195,30 +214,66 @@ angular.module('contrato').controller('ContratoCtrl',
     $scope.confirmarEditar = function() {
         $scope.confirmar();
         angular.copy($scope.cadastro.registro, $scope.cadastro.original);
+        toastr.info('Operação realizada!', 'Informação');
     };
     $scope.confirmarExcluir = function() {
-        if ($scope.navegador.selecao.tipo === 'U') {
-            $scope.navegador.dados.splice($scope.indiceDe($scope.navegador.dados, $scope.navegador.selecao.item), 1);
-            $scope.navegador.selecao.item = null;
-        } else {
-            for (var item in $scope.navegador.selecao.items) {
-                $scope.navegador.dados.splice($scope.indiceDe($scope.navegador.dados, $scope.navegador.selecao.items[item]), 1);
+        if (meuEstado('form')) {
+            if ($scope.navegador.selecao.tipo === 'U') {
+                $scope.navegador.dados.splice($scope.indiceDe($scope.navegador.dados, $scope.navegador.selecao.item), 1);
+                $scope.navegador.selecao.item = null;
+                $scope.navegador.mudarEstado('LISTANDO');
+                vaiPara('lista');
+            } else {
+                var reg = $scope.navegador.selecao.items[$scope.navegador.folhaAtual];
+                $scope.navegador.dados.splice($scope.indiceDe($scope.navegador.dados, reg), 1);
+                $scope.navegador.selecao.items.splice($scope.indiceDe($scope.navegador.selecao.items, reg), 1);
+                if (!$scope.navegador.selecao.items.length) {
+                    $scope.navegador.mudarEstado('LISTANDO');
+                    vaiPara('lista');
+                } else {
+                    if ($scope.navegador.folhaAtual >= $scope.navegador.selecao.items.length) {
+                        $scope.navegador.folhaAtual = $scope.navegador.selecao.items.length -1;
+                    }
+                    verRegistro();
+                    $scope.voltar();
+                }
             }
-            $scope.navegador.selecao.items = [];
-        };
-        $scope.voltar();
+        } else if (meuEstado('lista')) {
+            if ($scope.navegador.selecao.tipo === 'U') {
+                $scope.navegador.dados.splice($scope.indiceDe($scope.navegador.dados, $scope.navegador.selecao.item), 1);
+                $scope.navegador.selecao.item = null;
+            } else {
+                for (var item = $scope.navegador.selecao.items.length; item--;) {
+                    $scope.navegador.dados.splice($scope.indiceDe($scope.navegador.dados, $scope.navegador.selecao.items[item]), 1);
+                }
+                $scope.navegador.selecao.items = [];
+            }
+            $scope.voltar();
+        }
+        toastr.info('Operação realizada!', 'Informação');
     };
     $scope.confirmarFiltrar = function() {
         $scope.navegador.mudarEstado('LISTANDO');
         vaiPara('lista');
+        $scope.navegador.setDados($scope.cadastro.lista);
     };
     $scope.confirmarIncluir = function() {
         $scope.confirmar();
         $scope.navegador.dados.push($scope.cadastro.registro);
+        if ($scope.navegador.selecao.tipo === 'U') {
+            $scope.navegador.selecao.item = $scope.cadastro.registro;
+        } else {
+            $scope.navegador.folhaAtual = $scope.navegador.selecao.items.length;
+            $scope.navegador.selecao.items.push($scope.cadastro.registro);
+        }
+        $scope.navegador.refresh();
+
+        toastr.info('Operação realizada!', 'Informação');
     };
     $scope.editar = function() {
         $scope.navegador.mudarEstado('EDITANDO');
         vaiPara('form');
+        verRegistro();
     };
     $scope.excluir = function() {
         $scope.navegador.mudarEstado('EXCLUINDO');
@@ -227,15 +282,6 @@ angular.module('contrato').controller('ContratoCtrl',
         $scope.navegador.mudarEstado('FILTRANDO');
         vaiPara('filtro');
     };
-    var verRegistro = function() {
-        if ($scope.navegador.selecao.tipo === 'U') {
-            $scope.cadastro.original = $scope.navegador.selecao.item;
-        } else {
-            $scope.cadastro.original = $scope.navegador.selecao.items[$scope.navegador.folhaAtual];
-        };
-        $scope.cadastro.registro = angular.copy($scope.cadastro.original);
-    };
-
     $scope.folhearAnterior = function() {
         verRegistro();
     };
@@ -248,7 +294,6 @@ angular.module('contrato').controller('ContratoCtrl',
     $scope.folhearUltimo = function() {
         verRegistro();
     };
-
     $scope.incluir = function() {
         $scope.navegador.mudarEstado('INCLUINDO');
         vaiPara('form');
@@ -286,15 +331,19 @@ angular.module('contrato').controller('ContratoCtrl',
             vaiPara('form');
         }
     };
+    // fim das operaçoes atribuidas ao navagador
 
+    // inicio ações especiais
     $scope.enviarEmailConfirmacao = function () {
         var conf = $scope.pegarConfirmacao('Confirme o envio do e-mail?');
 
         conf.result.then(function () {
           $scope.exibirAlerta('E-mail enviado');
         }, function () {
-          toastr.warning('O e-mail não foi enviado...');
+          toastr.warning('O e-mail não foi enviado...', 'Atenção!');
         });
 
     };
+    // fim ações especiais
+
 }]);

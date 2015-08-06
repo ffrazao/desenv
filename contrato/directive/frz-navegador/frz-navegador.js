@@ -202,6 +202,18 @@
 				b2['ordem'] = ++ordem;
 				b2['visivel'] = true;
 			}
+			var info = '0/' + $scope.ngModel.dados.length;
+			if ($scope.ngModel.selecao.tipo === 'U') {
+				if ($scope.ngModel.selecao.selecionado) {
+					info = '1/' + $scope.ngModel.dados.length;
+				}
+			} else if ($scope.ngModel.selecao.tipo === 'M') {
+				info = $scope.ngModel.selecao.items.length + '/' + $scope.ngModel.dados.length;
+				$scope.ngModel.selecao.items.marcados = $scope.ngModel.selecao.items.length;
+			}
+			if ($scope.ngModel.botao('informacao')) {
+				$scope.ngModel.botao('informacao').nome = info;
+			}
 		};
 		$scope.grupoBotao = function(codigoGrupo) {
 			var grupoBotoes = $scope.grupoBotoes;

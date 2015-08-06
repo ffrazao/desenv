@@ -14,32 +14,32 @@ angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toa
   function($stateProvider, $urlRouterProvider, toastrConfig, $locationProvider) {
     //$locationProvider.html5Mode(true);
     $stateProvider.state('casa', {
-        url: '',
-        templateUrl: 'casa/index.html',
-        controller: ['$stateParams', 'toastr', function($stateParams, toastr){
-            console.log($stateParams.mensagem);
+      url: '',
+      templateUrl: 'casa/index.html',
+      controller: ['$stateParams', 'toastr', function($stateParams, toastr){
+        console.log($stateParams.mensagem);
             //toastr.warning('Endereço não encontrado! ' + $stateParams.mensagem, 'Atenção!');
-        }],
-    });
+          }],
+        });
     /* Add New States Above */
     $urlRouterProvider.otherwise(function ($injector, $location) {
-        var $state = $injector.get('$state');
+      var $state = $injector.get('$state');
 
-        $state.go('casa', {mensagem: 'Endereço não localizado!' + $location.$$absUrl}, {'location': true});
+      $state.go('casa', {mensagem: 'Endereço não localizado!' + $location.$$absUrl}, {'location': true});
     });
-
+    // configuracao do toastr
     angular.extend(toastrConfig, {
-        allowHtml: false,
-        autoDismiss: false,
-        closeButton: true,
-        closeHtml: '<button>&times;</button>',
-        containerId: 'toast-container',
-        extendedTimeOut: 1000,
-        iconClasses: {
-          error: 'toast-error',
-          info: 'toast-info',
-          success: 'toast-success',
-          warning: 'toast-warning'
+      allowHtml: false,
+      autoDismiss: false,
+      closeButton: true,
+      closeHtml: '<button>&times;</button>',
+      containerId: 'toast-container',
+      extendedTimeOut: 1000,
+      iconClasses: {
+        error: 'toast-error',
+        info: 'toast-info',
+        success: 'toast-success',
+        warning: 'toast-warning'
       },
       maxOpened: 0,    
       messageClass: 'toast-message',
@@ -53,73 +53,70 @@ angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toa
       tapToDismiss: true,
       target: 'body',
       templates: {
-          toast: 'directives/toast/toast.html',
-          progressbar: 'directives/progressbar/progressbar.html'
+        toast: 'directives/toast/toast.html',
+        progressbar: 'directives/progressbar/progressbar.html'
       },
       timeOut: 4000,
       titleClass: 'toast-title',
       toastClass: 'toast'
-  });
+    });
 
-}]);
+  }]);
 
 angular.module('principal').run(['$rootScope', '$modal', 
   function($rootScope, $modal) {
-
     $rootScope.safeApply = function(fn) {
-        var phase = $rootScope.$$phase;
-        if (phase === '$apply' || phase === '$digest') {
-            if (fn && (typeof(fn) === 'function')) {
-                fn();
-            }
-        } else {
-            this.$apply(fn);
+      var phase = $rootScope.$$phase;
+      if (phase === '$apply' || phase === '$digest') {
+        if (fn && (typeof(fn) === 'function')) {
+          fn();
         }
+      } else {
+        this.$apply(fn);
+      }
     };
-
-  $rootScope.exibirAlerta = function (mensagem) {
+    // inicio funcoes de apoio
+    $rootScope.exibirAlerta = function (mensagem) {
       var modalInstance = $modal.open({
-          animation: true,
-          template: 
-            '<div class="modal-header">' +
-            '  <h3 class="modal-title">Atenção!</h3>' +
-            '</div>' +
-            '<div class="modal-body">' +
-            '<p class=\"bg-info\">' + mensagem + '</p>' +
-            '</div>' +
-            '<div class="modal-footer">' +
-            '  <button class="btn btn-primary" ng-click=\"$dismiss(\'ok\')\">OK</button>' +
-            '</div>',
-          resolve: {},
+        animation: true,
+        template: 
+        '<div class="modal-header">' +
+        '  <h3 class="modal-title">Atenção!</h3>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<p class=\"bg-info\">' + mensagem + '</p>' +
+        '</div>' +
+        '<div class="modal-footer">' +
+        '  <button class="btn btn-primary" ng-click=\"$dismiss(\'ok\')\">OK</button>' +
+        '</div>',
+        resolve: {},
       });
-  };
-
-  $rootScope.pegarConfirmacao = function (mensagem) {
+    };
+    $rootScope.pegarConfirmacao = function (mensagem) {
       var modalInstance = $modal.open({
-          animation: true,
-          template: 
-            '<div class="modal-header">' +
-            '  <h3 class="modal-title">Confirme!</h3>' +
-            '</div>' +
-            '<div class="modal-body">' +
-            '<p class=\"bg-info\">' + mensagem + '</p>' +
-            '</div>' +
-            '<div class="modal-footer">' +
-            '  <button class="btn btn-primary" ng-click=\"$close(\'ok\')\">OK</button>' +
-            '  <button class="btn btn-warning" ng-click=\"$dismiss(\'cancelar\')\">Cancelar</button>' +
-            '</div>',
-          resolve: {},
+        animation: true,
+        template: 
+        '<div class="modal-header">' +
+        '  <h3 class="modal-title">Confirme!</h3>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<p class=\"bg-info\">' + mensagem + '</p>' +
+        '</div>' +
+        '<div class="modal-footer">' +
+        '  <button class="btn btn-primary" ng-click=\"$close(\'ok\')\">OK</button>' +
+        '  <button class="btn btn-warning" ng-click=\"$dismiss(\'cancelar\')\">Cancelar</button>' +
+        '</div>',
+        resolve: {},
       });
       return modalInstance;
-  };
-
-  $rootScope.indiceDe = function(arr, item) {
-    for (var i = arr.length; i--;) {
-      if (angular.equals(arr[i], item)) {
-        return i;
+    };
+    $rootScope.indiceDe = function(arr, item) {
+      for (var i = arr.length; i--;) {
+        if (angular.equals(arr[i], item)) {
+          return i;
+        }
       }
-    }
-    return null;
-  };
-
+      return null;
+    };
+    // fim funcoes de apoio
 }]);
