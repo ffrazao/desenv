@@ -211,6 +211,7 @@ angular.module('contrato').controller('ContratoCtrl',
         $scope.navegador.mudarEstado('VISUALIZANDO');
         vaiPara('form');
         $scope.navegador.submitido = false;
+        return true;
     };
     $scope.confirmarEditar = function() {
         if (!$scope.confirmar()) {

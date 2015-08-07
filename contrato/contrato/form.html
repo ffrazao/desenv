@@ -1,61 +1,290 @@
 <div class="panel panel-default">
-  <div class="panel-heading"><h4>{{nomeFormulario}}</h4></div>
-  <div class="panel-body">
-    <form class="form-horizontal" name="frm.formulario" novalidate>
-        <fieldset ng-disabled="['INCLUINDO', 'EDITANDO'].indexOf(navegador.estadoAtual()) < 0">
-
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="textinput">Text Input</label>  
-                <div class="col-md-4">
-                    <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md" ng-model="cadastro.registro.nome" required>
-                    <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.textinput.$invalid">
+    <div class="panel-heading"><h4>{{nomeFormulario}}</h4></div>
+    <div class="panel-body">
+        <form class="form-horizontal" name="frm.formulario" novalidate>
+            <fieldset ng-disabled="['INCLUINDO', 'EDITANDO'].indexOf(navegador.estadoAtual()) < 0">
+                <!-- Select Basic -->
+                <div class="form-group" title="Tipo de contrato ou convênio">
+                    <label class="col-md-4 control-label" for="tipoContratoConvenio">Tipo</label>
+                    <div class="col-md-4">
+                        <select id="tipoContratoConvenio" name="tipoContratoConvenio" class="form-control" required ng-model="registro.tipoContratoConvenio">
+                            <option value="C">Contrato</option>
+                            <option value="V">Convênio</option>
+                        </select>
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.tipoContratoConvenio.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group" title="Número do Processo">
+                    <label class="col-md-4 control-label" for="numeroProcesso">Processo</label>  
+                    <div class="col-md-4">
+                        <input id="numeroProcesso" name="numeroProcesso" type="text" placeholder="placeholder" class="form-control input-md" required ng-model="registro.">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.numeroProcesso.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Select Basic -->
+                <div class="form-group" title="Instrumento">
+                    <label class="col-md-4 control-label" for="instrumento">Instrumento</label>
+                    <div class="col-md-4">
+                        <select id="instrumento" name="instrumento" class="form-control" required ng-model="registro.instrumento">
+                            <option value="1">Option one</option>
+                            <option value="2">Option two</option>
+                        </select>
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.instrumento.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group" title="Número do Documento">
+                    <label class="col-md-4 control-label" for="numero">Número</label>
+                    <div class="col-md-4">
+                        <input id="numero" name="numero" type="text" placeholder="placeholder" class="form-control input-md" required ng-model="registro.numero">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.numero.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group" title="Cadastro Nacional de Pessoa Jurídica">
+                    <label class="col-md-4 control-label" for="cnpj">CNPJ</label>  
+                    <div class="col-md-4">
+                        <input id="cnpj" name="cnpj" type="text" placeholder="placeholder" class="form-control input-md" required ng-model="registro.cnpj">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cnpj.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group" title="Contraparte">
+                    <label class="col-md-4 control-label" for="contraparte">Contraparte</label>  
+                    <div class="col-md-4">
+                        <input id="contraparte" name="contraparte" type="text" placeholder="placeholder" class="form-control input-md" required ng-model="registro.contraparte">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.contraparte.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Textarea -->
+                <div class="form-group" title="Objeto do Contrato/Convênio">
+                    <label class="col-md-4 control-label" for="objeto">Objeto</label>
+                    <div class="col-md-4">                     
+                        <textarea class="form-control" id="objeto" name="objeto" required ng-model="registro.objeto">default text</textarea>
+                    </div>
+                    <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.objeto.$invalid">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         Campo Obrigatório
                     </div>
                 </div>
-            </div>
-
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="textinput">Text Input</label>  
-                <div class="col-md-4">
-                    <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md">
-                    <span class="help-block">help</span>  
-                </div>
-            </div>
-
-            <!-- Select Basic -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="selectbasic">Select Basic</label>
-                <div class="col-md-4">
-                    <select id="selectbasic" name="selectbasic" class="form-control">
-                        <option value="1">Option one</option>
-                        <option value="2">Option two</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Multiple Checkboxes -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="checkboxes">Multiple Checkboxes</label>
-                <div class="col-md-4">
-                    <div class="checkbox">
-                        <label for="checkboxes-0">
-                            <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
-                            Option one
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label for="checkboxes-1">
-                            <input type="checkbox" name="checkboxes" id="checkboxes-1" value="2">
-                            Option two
-                        </label>
+                <!-- Text input-->
+                <div class="form-group" title="Valor do Contrato">
+                    <label class="col-md-4 control-label" for="valorContrato">Valor do Contrato</label>  
+                    <div class="col-md-4">
+                        <input id="valorContrato" name="valorContrato" type="text" placeholder="placeholder" class="form-control input-md" required ng-model="registro.valorContrato">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.valorContrato.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
                     </div>
                 </div>
-            </div>
-
-        </fieldset>
-    </form>
-  </div>
+                <!-- Text input-->
+                <div class="form-group" title="Valor Pago">
+                    <label class="col-md-4 control-label" for="valorPago">Valor Pago</label>  
+                    <div class="col-md-4">
+                        <input id="valorPago" name="valorPago" type="text" placeholder="placeholder" class="form-control input-md" required ng-model="registro.valorPago">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.valorPago.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group" title="Valor Remanescente">
+                    <label class="col-md-4 control-label" for="valorRemanescente">Valor Remanescente</label>  
+                    <div class="col-md-4">
+                        <input id="valorRemanescente" name="valorRemanescente" type="text" placeholder="placeholder" class="form-control input-md" required ng-model="registro.valorRemanescente">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.valorRemanescente.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Multiple Radios (inline) -->
+                <div class="form-group" title="Situação do Contrato">
+                    <label class="col-md-4 control-label" for="situacao">Situação</label>
+                    <div class="col-md-4"> 
+                        <label class="radio-inline" for="situacao-0">
+                            <input type="radio" name="situacao" id="situacao-0" value="1"  required ng-model="registro.situacao">
+                            1
+                        </label> 
+                        <label class="radio-inline" for="situacao-1">
+                            <input type="radio" name="situacao" id="situacao-1" value="2" required ng-model="registro.situacao">
+                            2
+                        </label> 
+                    </div>
+                    <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.situacao.$invalid">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        Campo Obrigatório
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group" title="Início do Contrato">
+                    <label class="col-md-4 control-label" for="inicio">Início</label>  
+                    <div class="col-md-4">
+                        <input id="inicio" name="inicio" type="text" placeholder="placeholder" class="form-control input-md" required ng-model="registro.inicio">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.inicio.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group" title="Fim do Contrato">
+                    <label class="col-md-4 control-label" for="fim">Fim</label>  
+                    <div class="col-md-4">
+                        <input id="fim" name="fim" type="text" placeholder="placeholder" class="form-control input-md" required ng-model="registro.fim">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.fim.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group" title="Dias Restantes para o término do Contrato">
+                    <label class="col-md-4 control-label" for="diaRestante">Dias Restantes</label>  
+                    <div class="col-md-4">
+                        <input id="diaRestante" name="diaRestante" type="text" placeholder="placeholder" class="form-control input-md" required ng-model="registro.diaRestante">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.diaRestante.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Select Basic -->
+                <div class="form-group" title="Unidade Gestora">
+                    <label class="col-md-4 control-label" for="ug">U.G.</label>
+                    <div class="col-md-4">
+                        <select id="ug" name="ug" class="form-control" required ng-model="registro.ug">
+                            <option value="1">Option one</option>
+                            <option value="2">Option two</option>
+                        </select>
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.ug.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Appended Input-->
+                <div class="form-group" title="Executor do Contrato">
+                    <label class="col-md-4 control-label" for="executor">Executor</label>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input id="executor" name="executor" class="form-control" placeholder="placeholder" type="text" required ng-model="registro.executor">
+                            <span class="input-group-addon">append</span>
+                        </div>
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.executor.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Multiple Radios (inline) -->
+                <div class="form-group" title="Prorrogável">
+                    <label class="col-md-4 control-label" for="prorrogavel">Prorrogável</label>
+                    <div class="col-md-4"> 
+                        <label class="radio-inline" for="prorrogavel-0">
+                            <input type="radio" name="prorrogavel" id="prorrogavel-0" value="1"  required ng-model="registro.prorrogavel">
+                            1
+                        </label> 
+                        <label class="radio-inline" for="prorrogavel-1">
+                            <input type="radio" name="prorrogavel" id="prorrogavel-1" value="2" required ng-model="registro.prorrogavel">
+                            2
+                        </label> 
+                    </div>
+                    <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.prorrogavel.$invalid">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        Campo Obrigatório
+                    </div>
+                </div>
+                <!-- Select Basic -->
+                <div class="form-group" title="Aditivos do Contrato">
+                    <label class="col-md-4 control-label" for="aditivo">Aditivos</label>
+                    <div class="col-md-4">
+                        <select id="aditivo" name="aditivo" class="form-control" required ng-model="registro.aditivo">
+                            <option value="1">Option one</option>
+                            <option value="2">Option two</option>
+                        </select>
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.aditivo.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Select Basic -->
+                <div class="form-group" title="Local do Contrato">
+                    <label class="col-md-4 control-label" for="local">Local</label>
+                    <div class="col-md-4">
+                        <select id="local" name="local" class="form-control" required ng-model="registro.local">
+                            <option value="1">Option one</option>
+                            <option value="2">Option two</option>
+                        </select>
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.local.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Campo Obrigatório
+                        </div>
+                    </div>
+                </div>
+                <!-- Multiple Radios (inline) -->
+                <div class="form-group" title="Garantia Contrapartida">
+                    <label class="col-md-4 control-label" for="garantiaContrapartida">Garantia Contrapartida</label>
+                    <div class="col-md-4"> 
+                        <label class="radio-inline" for="garantiaContrapartida-0">
+                            <input type="radio" name="garantiaContrapartida" id="garantiaContrapartida-0" value="1"  required ng-model="registro.garantiaContrapartida">
+                            1
+                        </label> 
+                        <label class="radio-inline" for="garantiaContrapartida-1">
+                            <input type="radio" name="garantiaContrapartida" id="garantiaContrapartida-1" value="2" required ng-model="registro.garantiaContrapartida">
+                            2
+                        </label> 
+                    </div>
+                    <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.garantiaContrapartida.$invalid">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        Campo Obrigatório
+                    </div>
+                </div>
+                <!-- Textarea -->
+                <div class="form-group" title="Documentos">
+                    <label class="col-md-4 control-label" for="documento">Documentos</label>
+                    <div class="col-md-4">                     
+                        <textarea class="form-control" id="documento" name="documento" required ng-model="registro.documento">default text</textarea>
+                    </div>
+                    <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.documento.$invalid">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        Campo Obrigatório
+                    </div>
+                </div>
+                <!-- Textarea -->
+                <div class="form-group" title="Observações do Contrato">
+                    <label class="col-md-4 control-label" for="observacao">Observação</label>
+                    <div class="col-md-4">                     
+                        <textarea class="form-control" id="observacao" name="observacao" required ng-model="registro.observacao">default text</textarea>
+                    </div>
+                    <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.observacao.$invalid">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        Campo Obrigatório
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 </div>

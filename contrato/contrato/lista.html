@@ -16,27 +16,28 @@
                     <th width="30">
                         #
                     </th>
-                    <th>
-                        Foto/Logomarca
-                    </th>
-                    <th>
-                        Tipo Pessoa
-                    </th>
-                    <th>
-                        Nome/Razão Social
-                    </th>
-                    <th>
-                        Apelido/Sigla
-                    </th>
-                    <th>
-                        CPF/CNPJ
-                    </th>
-                    <th>
-                        Beneficiário
-                    </th>
-                    <th>
-                        Colaborador
-                    </th>
+                    <th>Tipo</th>
+                    <th>Número do Processo</th>
+                    <th>Instrumento</th>
+                    <th>número</th>
+                    <th>CNPJ</th>
+                    <th>Contraparte</th>
+                    <th>Objeto</th>
+                    <th>Valor do Contrato </th>
+                    <th>Valor Pago </th>
+                    <th>Valor Remanescente </th>
+                    <th>Situação</th>
+                    <th>Início</th>
+                    <th>Fim</th>
+                    <th>Dias Restantes</th>
+                    <th>Unidade Gestora</th>
+                    <th>Executor</th>
+                    <th>Prorrogável</th>
+                    <th>Aditivos</th>
+                    <th>Local</th>
+                    <th>Garantia Contrapartida</th>
+                    <th>Documentos</th>
+                    <th>Observação</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,27 +49,28 @@
                     <td>
                         {{$index + 1 + ((navegador.paginaAtual-1) * navegador.tamanhoPagina)}}
                     </td>
-                    <td>
-                        <img class="img-thumbnail" src="img/foto.gif" width="50px" height="50px">
-                    </td>
-                    <td>
-                        {{item.pessoaTipo}}
-                    </td>
-                    <td>
-                        {{item.nome}}
-                    </td>
-                    <td>
-                        {{item.apelidoSigla}}
-                    </td>
-                    <td>
-                        {{item.documento}}
-                    </td>
-                    <td>
-                        Sim
-                    </td>
-                    <td>
-                        Não
-                    </td>
+                    <td>{{item.tipo}}</td>
+                    <td>{{item.numeroProcesso}}</td>
+                    <td>{{item.instrumento}}</td>
+                    <td>{{item.numero}}</td>
+                    <td>{{item.cnpj}}</td>
+                    <td>{{item.contraparte}}</td>
+                    <td>{{item.objeto}}</td>
+                    <td>{{item.valorContrato }}</td>
+                    <td>{{item.valorPago }}</td>
+                    <td>{{item.valorRemanescente }}</td>
+                    <td>{{item.situacao}}</td>
+                    <td>{{item.inicio}}</td>
+                    <td>{{item.fim}}</td>
+                    <td>{{item.diasRestantes}}</td>
+                    <td>{{item.unidadeGestora}}</td>
+                    <td>{{item.executor}}</td>
+                    <td>{{item.prorrogavel}}</td>
+                    <td>{{item.aditivos}}</td>
+                    <td>{{item.local}}</td>
+                    <td>{{item.garantiaContrapartida}}</td>
+                    <td>{{item.documentos}}</td>
+                    <td>{{item.observacao}}</td>
                 </tr>
             </tbody>
         </table>
