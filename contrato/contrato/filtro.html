@@ -1,55 +1,57 @@
-<form class="form-horizontal" name="frm.filtro" novalidate>
-  <fieldset>
+<div class="panel panel-default">
+  <div class="panel-heading"><h4>{{nomeFormulario}}</h4></div>
+  <div class="panel-body">
+    <form class="form-horizontal" name="frm.filtro" novalidate>
+      <fieldset>
 
-    <!-- Form Name -->
-    <legend>{{nomeFormulario}}</legend>
-
-    <!-- Appended checkbox -->
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="appendedcheckbox">Appended Checkbox</label>
-      <div class="col-md-4">
-        <div class="input-group">
-          <input id="appendedcheckbox" name="appendedcheckbox" class="form-control" type="text" placeholder="placeholder" ng-click="modalAbrir('lg')" ng-model="cadastro.filtro.nome">
-          <span class="input-group-addon">     
-            <input type="checkbox">
-          </span>
+        <!-- Appended checkbox -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="appendedcheckbox">Appended Checkbox</label>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input id="appendedcheckbox" name="appendedcheckbox" class="form-control" type="text" placeholder="placeholder" ng-click="modalAbrir('lg')" ng-model="cadastro.filtro.nome">
+              <span class="input-group-addon">     
+                <input type="checkbox">
+              </span>
+            </div>
+            <p class="help-block">help</p>
+          </div>
         </div>
-        <p class="help-block">help</p>
-      </div>
-    </div>
 
-    <!-- Prepended checkbox -->
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="prependedcheckbox">Prepended Checkbox</label>
-      <div class="col-md-4">
-        <div class="input-group">
-          <span class="input-group-addon">     
-            <input type="checkbox">     
-          </span>
-          <input id="prependedcheckbox" name="prependedcheckbox" class="form-control" type="text" placeholder="placeholder">
+        <!-- Prepended checkbox -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="prependedcheckbox">Prepended Checkbox</label>
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">     
+                <input type="checkbox">     
+              </span>
+              <input id="prependedcheckbox" name="prependedcheckbox" class="form-control" type="text" placeholder="placeholder">
+            </div>
+            <p class="help-block">help</p>
+          </div>
         </div>
-        <p class="help-block">help</p>
-      </div>
-    </div>
 
-    <!-- Multiple Radios -->
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="radios">Multiple Radios</label>
-      <div class="col-md-4">
-        <div class="radio">
-          <label for="radios-0">
-            <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
-            Option one
-          </label>
+        <!-- Multiple Radios -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="radios">Multiple Radios</label>
+          <div class="col-md-4">
+            <div class="radio">
+              <label for="radios-0">
+                <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
+                Option one
+              </label>
+            </div>
+            <div class="radio">
+              <label for="radios-1">
+                <input type="radio" name="radios" id="radios-1" value="2">
+                Option two
+              </label>
+            </div>
+          </div>
         </div>
-        <div class="radio">
-          <label for="radios-1">
-            <input type="radio" name="radios" id="radios-1" value="2">
-            Option two
-          </label>
-        </div>
-      </div>
-    </div>
 
-  </fieldset>
-</form>
+      </fieldset>
+    </form>
+  </div>
+</div>

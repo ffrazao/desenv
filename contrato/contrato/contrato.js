@@ -2,21 +2,21 @@ angular.module('contrato', ['ui.bootstrap','ui.utils','ui.router','ngAnimate', '
 
 angular.module('contrato').config(['$stateProvider', function($stateProvider) {
 
-    $stateProvider.state('contrato', {
+    $stateProvider.state('p.contrato', {
         abstract: true,
         controller: 'ContratoCtrl',
         templateUrl: 'contrato/contrato.html',
         url: '/contrato',
     });
-    $stateProvider.state('contrato.filtro', {
+    $stateProvider.state('p.contrato.filtro', {
         templateUrl: 'contrato/filtro.html',
         url: '',
     });
-    $stateProvider.state('contrato.lista', {
+    $stateProvider.state('p.contrato.lista', {
         templateUrl: 'contrato/lista.html',
         url: '/lista',
     });
-    $stateProvider.state('contrato.form', {
+    $stateProvider.state('p.contrato.form', {
         templateUrl: 'contrato/form.html',
         url: '/form/:id',
     });
@@ -204,7 +204,8 @@ angular.module('contrato').controller('ContratoCtrl',
     $scope.confirmar = function() {
         $scope.navegador.submitido = true;
         if ($scope.frm.formulario.$invalid) {
-            return;
+            toastr.error('Verifique os campos marcados', 'Erro');
+            return false;
         }
         $scope.navegador.voltar();
         $scope.navegador.mudarEstado('VISUALIZANDO');
@@ -212,7 +213,9 @@ angular.module('contrato').controller('ContratoCtrl',
         $scope.navegador.submitido = false;
     };
     $scope.confirmarEditar = function() {
-        $scope.confirmar();
+        if (!$scope.confirmar()) {
+            return;
+        }
         angular.copy($scope.cadastro.registro, $scope.cadastro.original);
         toastr.info('Operação realizada!', 'Informação');
     };
@@ -258,7 +261,9 @@ angular.module('contrato').controller('ContratoCtrl',
         $scope.navegador.setDados($scope.cadastro.lista);
     };
     $scope.confirmarIncluir = function() {
-        $scope.confirmar();
+        if (!$scope.confirmar()) {
+            return;
+        }
         $scope.navegador.dados.push($scope.cadastro.registro);
         if ($scope.navegador.selecao.tipo === 'U') {
             $scope.navegador.selecao.item = $scope.cadastro.registro;
