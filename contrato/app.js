@@ -1,4 +1,4 @@
-angular.module('principal', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'toastr', 'sticky', 'painel.vidro', 'frz.navegador', 'casa', 'contrato']);
+angular.module('principal', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'toastr', 'sticky', 'ui.mask', 'ui.utils.masks', 'painel.vidro', 'frz.navegador', 'casa', 'contrato']);
 
 // inicio: codigo para habilitar o modal recursivo
 angular.module('principal').factory('$modalInstance', function () {
@@ -12,6 +12,7 @@ angular.module('principal').factory('modalCadastro', function () {
 
 angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', '$locationProvider',
   function($stateProvider, $urlRouterProvider, toastrConfig, $locationProvider) {
+
     //$locationProvider.html5Mode(true);
     $stateProvider.state('p', {templateUrl: 'casa/principal.html'});
     
@@ -78,6 +79,7 @@ angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toa
 
 angular.module('principal').run(['$rootScope', '$modal', 
   function($rootScope, $modal) {
+    $rootScope.localizacao = "pt-BR";
     $rootScope.safeApply = function(fn) {
       var phase = $rootScope.$$phase;
       if (phase === '$apply' || phase === '$digest') {

@@ -23,6 +23,9 @@
     "less.js": "~2.5",
     "font-awesome": "~4.4",
     "angular-toastr": "~1.4",
-    "ngSticky": "~1.7.9"
+    "ngSticky": "~1.7.9",
+    "angular-ui-mask": "~1.4.1",
+    "angular-input-masks": "~2.0.0",
+    "angular-i18n": "~1.4.3"
   }
 }

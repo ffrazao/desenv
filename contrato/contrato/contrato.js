@@ -28,6 +28,14 @@ angular.module('contrato').controller('ContratoCtrl',
     ['$scope', 'toastr', 'FrzNavegadorParams', '$state', '$rootScope', '$modal', '$log', '$modalInstance', 'modalCadastro', 
     function($scope, toastr, FrzNavegadorParams, $state, $rootScope, $modal, $log, $modalInstance, modalCadastro) {
 
+    $scope.dateOptions = {
+        formatYear: 'yyyy',
+        startingDay: 1
+    };
+    $scope.open = function($event) {
+        $scope.opened = true;
+    };
+
     // inicializacao
     var init = function() {
         $scope.nomeFormulario = 'Cadastro de Contratos & Convênios';
