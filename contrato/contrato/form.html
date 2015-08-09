@@ -295,7 +295,7 @@
                 <div class="form-group" title="Documentos">
                     <label class="col-md-4 control-label" for="documento">Documentos</label>
                     <div class="col-md-7">                     
-                        <textarea class="form-control" id="documento" name="documento" required ng-model="cadastro.registro.documento">default text</textarea>
+                        <ng-include src="'contrato/sub-documento.html'" ng-controller="ContratoDocumentoCtrl"></ng-include>
                         <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.documento.$invalid">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório

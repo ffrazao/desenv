@@ -653,6 +653,11 @@
 								acao: function() {
 									scope.onEditar();
 								},
+								exibir: function() {
+									return (scope.ngModel.dados && scope.ngModel.dados.length) && 
+										((scope.ngModel.selecao.tipo === 'U' && scope.ngModel.selecao.selecionado) ||
+										(scope.ngModel.selecao.tipo === 'M' && scope.ngModel.selecao.marcado > 0));
+								},
 							},
 						],
 					},
