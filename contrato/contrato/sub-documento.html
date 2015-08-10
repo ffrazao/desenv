@@ -1,120 +1,110 @@
 <div class="panel panel-default">
   <div class="panel-heading container-fluid">
     <frz-navegador ng-model="contratoArquivoNvg" 
-      exibe-nome-botao = "false"
-      on-abrir = "abrir()"
-      on-agir = "agir()"
-      on-ajudar = "ajudar()"
-      on-alterar-tamanho-pagina = "alterarTamanhoPagina()"
-      on-cancelar = "cancelar()"
-      on-cancelar-editar = "cancelarEditar()"
-      on-cancelar-excluir = "cancelarExcluir()"
-      on-cancelar-filtrar = "cancelarFiltrar()"
-      on-cancelar-incluir = "cancelarIncluir()"
-      on-confirmar = "confirmar()"
-      on-confirmar-editar = "confirmarEditar()"
-      on-confirmar-excluir = "confirmarExcluir()"
-      on-confirmar-filtrar = "confirmarFiltrar()"
-      on-confirmar-incluir = "confirmarIncluir()"
-      on-editar = "editar()"
-      on-excluir = "excluir()"
-      on-filtrar = "filtrar()"
-      on-folhear-anterior = "folhearAnterior()"
-      on-folhear-primeiro = "folhearPrimeiro()"
-      on-folhear-proximo = "folhearProximo()"
-      on-folhear-ultimo = "folhearUltimo()"
-      on-incluir = "incluir()"
-      on-informacao = "informacao()"
-      on-limpar = "limpar()"
-      on-paginar-anterior = "paginarAnterior()"
-      on-paginar-primeiro = "paginarPrimeiro()"
-      on-paginar-proximo = "paginarProximo()"
-      on-paginar-ultimo = "paginarUltimo()"
-      on-restaurar = "restaurar()"
-      on-visualizar = "visualizar()"
-      on-voltar = "voltar()"
-      on-tem-mais-registros = "temMaisRegistros()">
-    </frz-navegador>
+    exibe-nome-botao = "false"
+    on-abrir = "abrir()"
+    on-agir = "agir()"
+    on-ajudar = "ajudar()"
+    on-alterar-tamanho-pagina = "alterarTamanhoPagina()"
+    on-cancelar = "cancelar()"
+    on-cancelar-editar = "cancelarEditar()"
+    on-cancelar-excluir = "cancelarExcluir()"
+    on-cancelar-filtrar = "cancelarFiltrar()"
+    on-cancelar-incluir = "cancelarIncluir()"
+    on-confirmar = "confirmar()"
+    on-confirmar-editar = "confirmarEditar()"
+    on-confirmar-excluir = "confirmarExcluir()"
+    on-confirmar-filtrar = "confirmarFiltrar()"
+    on-confirmar-incluir = "confirmarIncluir()"
+    on-editar = "editar()"
+    on-excluir = "excluir()"
+    on-filtrar = "filtrar()"
+    on-folhear-anterior = "folhearAnterior()"
+    on-folhear-primeiro = "folhearPrimeiro()"
+    on-folhear-proximo = "folhearProximo()"
+    on-folhear-ultimo = "folhearUltimo()"
+    on-incluir = "incluir()"
+    on-informacao = "informacao()"
+    on-limpar = "limpar()"
+    on-paginar-anterior = "paginarAnterior()"
+    on-paginar-primeiro = "paginarPrimeiro()"
+    on-paginar-proximo = "paginarProximo()"
+    on-paginar-ultimo = "paginarUltimo()"
+    on-restaurar = "restaurar()"
+    on-visualizar = "visualizar()"
+    on-voltar = "voltar()"
+    on-tem-mais-registros = "temMaisRegistros()">
+  </frz-navegador>
+</div>
+<div class="painel-body"  ng-if="!contratoArquivoNvg.dados.length">
+  <div class="alert alert-warning" role="alert">
+    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+    Nenhum registro localizado!
   </div>
-  <div class="painel-body"  ng-if="!contratoArquivoNvg.dados.length">
-    <div class="alert alert-warning" role="alert">
-      <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-      Nenhum registro localizado!
-    </div>
-  </div>
-  <div class="table-responsible" ng-if="contratoArquivoNvg.dados.length">
-    <table class="table table-hover table-striped">
-      <thead>
-        <tr>
-          <th><frz-seletor ng-model="contratoArquivoNvg"></frz-seletor></th>
-          <th width="30">#</th>
-          <th>Nome</th>
-          <th>Arquivo</th>
-          <th>Função</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="item in contratoArquivoNvg.dados | orderBy: 'nome' | pagina: contratoArquivoNvg.paginaAtual : contratoArquivoNvg.tamanhoPagina | limitTo: contratoArquivoNvg.tamanhoPagina" ng-click="seleciona(item); contratoArquivoNvg.folhaAtual = $index + ((contratoArquivoNvg.paginaAtual-1) * contratoArquivoNvg.tamanhoPagina)">
-          <td width="30px">
-            <input type="radio" ng-show="contratoArquivoNvg.selecao.tipo === 'U'" ng-model="contratoArquivoNvg.selecao.item" ng-value="item"/>
-            <input type="checkbox" ng-show="contratoArquivoNvg.selecao.tipo === 'M'" checklist-model="contratoArquivoNvg.selecao.items" checklist-value="item" ng-click="mataClick($event);"/>
-          </td>
-          <td>
-            {{$index + 1 + ((contratoArquivoNvg.paginaAtual-1) * contratoArquivoNvg.tamanhoPagina)}}
-          </td>
-          <td>{{item.contrato.nome}}</td>
-          <td>{{item.arquivoTipo.id}}</td>
-          <td>{{item.arquivoFuncao.id}}</td>
-        </tr>
-      </tbody>
-      <tfoot>
-      </tfoot>
-    </table>
-  </div>
-  <div class="panel-footer">
-  </div>
+</div>
+<div class="table-responsible" ng-if="contratoArquivoNvg.dados.length">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th><frz-seletor ng-model="contratoArquivoNvg"></frz-seletor></th>
+        <th width="30">#</th>
+        <th>Nome</th>
+        <th>Arquivo</th>
+        <th>Função</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in contratoArquivoNvg.dados | orderBy: 'nome' | pagina: contratoArquivoNvg.paginaAtual : contratoArquivoNvg.tamanhoPagina | limitTo: contratoArquivoNvg.tamanhoPagina" ng-click="seleciona(item); contratoArquivoNvg.folhaAtual = $index + ((contratoArquivoNvg.paginaAtual-1) * contratoArquivoNvg.tamanhoPagina)">
+        <td width="30px">
+          <input type="radio" ng-show="contratoArquivoNvg.selecao.tipo === 'U'" ng-model="contratoArquivoNvg.selecao.item" ng-value="item"/>
+          <input type="checkbox" ng-show="contratoArquivoNvg.selecao.tipo === 'M'" checklist-model="contratoArquivoNvg.selecao.items" checklist-value="item" ng-click="mataClick($event);"/>
+        </td>
+        <td>
+          {{$index + 1 + ((contratoArquivoNvg.paginaAtual-1) * contratoArquivoNvg.tamanhoPagina)}}
+        </td>
+        <td>{{item.contrato.nome}}</td>
+        <td>{{item.arquivoTipo.id}}</td>
+        <td>{{item.arquivoFuncao.id}}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+    </tfoot>
+  </table>
+</div>
+<div class="panel-footer">
+</div>
 </div>
 
 <script type="text/ng-template" id="contratoArquivoFrm.html">
   <div class="modal-header">
-    <h3 class="modal-title">Arquivo</h3>
+    <h3 class="modal-title">Upload de Arquivos</h3>
   </div>
   <div class="modal-body">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <label class="form-label">Contrato</label>
-          <div class="input-group">
-            <input type="hidden" ng-model="arquivo.contrato.id">
-            <input type="text" class="form-control" placeholder="Pesquisar..." readonly="true" ng-model="arquivo.contrato.nome">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button" aria-label="Left Align" ng-click="pesquisaContrato('lg')">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-              </button>
-            </span>
+          <div flow-init="" flow-files-submitted="$flow.upload()" class="ng-scope"  flow-file-success="$file.msg = $message">
+            <div class="drop" flow-drop="" flow-drag-enter="style={border:'4px solid green'}" flow-drag-leave="style={}" ng-style="style" style="padding: 15px; border: 2px #f1f1f1 dashed; border-radius: 5px; line-height: 34px;">
+              <span class="btn btn-default" flow-btn="">Upload de Arquivo<input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+              <span class="btn btn-default" flow-btn="" flow-directory="" ng-show="$flow.supportDirectory">Upload de Diretório<input type="file" multiple="multiple" webkitdirectory="webkitdirectory" style="visibility: hidden; position: absolute;"></span>
+              <b>OU</b>
+              Arraste e Solte arquivos aqui
+            </div>
+            <br>
+            <div class="well">
+              <a class="btn btn-small btn-success" ng-click="$flow.resume()">Executar Todos</a>
+              <a class="btn btn-small btn-danger" ng-click="$flow.pause()">Pausar Todos</a>
+              <a class="btn btn-small btn-info" ng-click="$flow.cancel()">Cancelar Todos</a>
+              <span class="label label-info ng-binding">Tamanho Total: 0bytes</span>
+            </div>
+            <table>
+              <tr ng-repeat="file in $flow.files">
+                <td>{{$index+1}}</td>
+                <td>{{file.name}}</td>
+                <td>{{file.size}}</td>
+              </tr>
+            </table>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <label class="form-label">Arquivo</label>
-          <select class="form-control" ng-model="arquivo.arquivoTipo.id">
-            <option value="1">Familiar</option>
-            <option value="2">Profissional</option>
-            <option value="3">Acadêmico</option>
-          </select>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Função</label>
-          <select class="form-control" ng-model="arquivo.arquivoFuncao.id">
-            <option value="1">Pai</option>
-            <option value="2">Filho</option>
-            <option value="3">Neto</option>
-          </select>
-        </div>
-        <div class="col-md-4" ng-show="false">
-          <label class="form-label">Detalhes</label>
-          <select class="form-control"/>
         </div>
       </div>
     </div>
