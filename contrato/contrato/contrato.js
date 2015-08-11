@@ -85,7 +85,7 @@ angular.module('contrato').controller('ContratoCtrl',
     if ($modalInstance === null) {
         // se objeto modal esta vazio abrir de forma normal
         $scope.modalEstado = null;
-        for (var i = 0; i < 200; i++) {
+        for (var i = 0; i < 0; i++) {
             $scope.navegador.dados.push({id: i, nome: 'nome ' + i});
         }
     } else {

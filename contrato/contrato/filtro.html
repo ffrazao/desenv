@@ -4,51 +4,53 @@
     <form class="form-horizontal" name="frm.filtro" novalidate>
       <fieldset>
 
-        <!-- Appended checkbox -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="appendedcheckbox">Appended Checkbox</label>
-          <div class="col-md-4">
-            <div class="input-group">
-              <input id="appendedcheckbox" name="appendedcheckbox" class="form-control" type="text" placeholder="placeholder" ng-click="modalAbrir('lg')" ng-model="cadastro.filtro.nome">
-              <span class="input-group-addon">     
-                <input type="checkbox">
-              </span>
+        <!-- Select Basic -->
+        <div class="form-group" title="Tipo de contrato ou convênio">
+            <label class="col-md-4 control-label" for="tipoContratoConvenio">Tipo</label>
+            <div class="col-md-3">
+                <select id="tipoContratoConvenio" name="tipoContratoConvenio" class="form-control" ng-model="cadastro.filtro.tipoContratoConvenio">
+                    <option value="1">CONTRATO</option>
+                    <option value="2">CONVÊNIO</option>
+                    <option value="3">COOPERAÇÃO INTERNACIONAL</option>
+                    <option value="4">COOPERAÇÃO</option>
+                </select>
+                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.tipoContratoConvenio.$invalid">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    Campo Obrigatório
+                </div>
             </div>
-            <p class="help-block">help</p>
-          </div>
         </div>
-
-        <!-- Prepended checkbox -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="prependedcheckbox">Prepended Checkbox</label>
-          <div class="col-md-4">
-            <div class="input-group">
-              <span class="input-group-addon">     
-                <input type="checkbox">     
-              </span>
-              <input id="prependedcheckbox" name="prependedcheckbox" class="form-control" type="text" placeholder="placeholder">
+        <!-- Text input-->
+        <div class="form-group" title="Número do Processo">
+            <label class="col-md-4 control-label" for="numeroProcesso">Processo</label>  
+            <div class="col-md-2">
+                <input id="numeroProcesso" name="numeroProcesso" type="text" class="form-control input-md" ng-model="cadastro.filtro.numeroProcesso" ui-mask="9999.999.999/9999">
+                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.numeroProcesso.$invalid">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    Campo Obrigatório
+                </div>
             </div>
-            <p class="help-block">help</p>
-          </div>
         </div>
-
-        <!-- Multiple Radios -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="radios">Multiple Radios</label>
-          <div class="col-md-4">
-            <div class="radio">
-              <label for="radios-0">
-                <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
-                Option one
-              </label>
+        <!-- Select Basic -->
+        <div class="form-group" title="Instrumento">
+            <label class="col-md-4 control-label" for="instrumento">Instrumento</label>
+            <div class="col-md-4">
+                <select id="instrumento" name="instrumento" class="form-control" ng-model="cadastro.filtro.instrumento">
+                    <option value="1">TERMO DE CONTRATO</option>
+                    <option value="2">CONTRATAÇÃO DE SERVIÇO</option>
+                    <option value="3">CONTRATO</option>
+                    <option value="4">Inexigibilidade de licitação</option>
+                    <option value="5">NOTA DE EMPENHO</option>
+                    <option value="6">TERMO DE CONTRATO</option>
+                    <option value="7">TERMO DE CONVÊNIO</option>
+                    <option value="8">TERMO DE COOPERAÇÃO</option>
+                    <option value="9">TERMO DE COOPERAÇÃO INTERNACIONAL</option>
+                </select>
+                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.instrumento.$invalid">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    Campo Obrigatório
+                </div>
             </div>
-            <div class="radio">
-              <label for="radios-1">
-                <input type="radio" name="radios" id="radios-1" value="2">
-                Option two
-              </label>
-            </div>
-          </div>
         </div>
 
       </fieldset>
