@@ -1,5 +1,5 @@
 angular.module('principal', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'toastr', 'sticky', 'ui.mask', 'ui.utils.masks', 'flow',
-  'painel.vidro', 'frz.navegador', 'casa', 'contrato']);
+  'painel.vidro', 'endereco', 'frz.navegador', 'casa', 'contrato']);
 
 // inicio: codigo para habilitar o modal recursivo
 angular.module('principal').factory('$modalInstance', function () {
