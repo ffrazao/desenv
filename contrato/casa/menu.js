@@ -1,8 +1,8 @@
 (function() {
-  
+
   'use strict';
 
-  angular.module('principal').controller('MenuCtrl', function ($scope) {
+  angular.module('principal').controller('MenuCtrl', ['$scope', function ($scope) {
     $scope.tree = 
     [
     {
@@ -102,6 +102,6 @@
       ],
     },
     ];
-  });
+  }]);
 
 })();

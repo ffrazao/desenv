@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('principal').controller('EsqueciMinhaSenhaCtrl', function ($scope, $modalInstance, toastr) {
+  angular.module('principal').controller('EsqueciMinhaSenhaCtrl', ['$scope', '$modalInstance', 'toastr', function ($scope, $modalInstance, toastr) {
     $scope.iniciar = function() {
       $scope.registroOrig = {};
       $scope.reiniciar();
@@ -33,6 +33,6 @@
     $modalInstance.dismiss('cancel');
   };
   
-});
+}]);
 
 })();

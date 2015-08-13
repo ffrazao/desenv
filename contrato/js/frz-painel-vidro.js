@@ -3,9 +3,9 @@
     'use strict';
 
     // necessário registrar o listener das chamadas XHR na configuração da aplicação
-    angular.module('painel.vidro', []);
+    angular.module('frz.painel.vidro', []);
 
-    angular.module('painel.vidro').config(function($httpProvider) {
+    angular.module('frz.painel.vidro').config(function($httpProvider) {
         $httpProvider.interceptors.push(function ($rootScope) {
             if ($rootScope.chamadasAtivas === undefined) {
                 $rootScope.chamadasAtivas = 0;
@@ -33,7 +33,7 @@
     });
 
     // aqui está a diretiva em si
-    angular.module('painel.vidro').directive('painelVidro', function () {
+    angular.module('frz.painel.vidro').directive('frzPainelVidro', function () {
         return {
             restrict: 'M',
             replace: true,

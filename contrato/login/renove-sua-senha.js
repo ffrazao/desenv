@@ -2,7 +2,8 @@
 
   'use strict';
 
-  angular.module('principal').controller('RenoveSuaSenhaCtrl', function ($scope, $modalInstance, toastr, registroOrig) {
+  angular.module('principal').controller('RenoveSuaSenhaCtrl', ['$scope', '$modalInstance', 'toastr', 'registroOrig', 
+    function ($scope, $modalInstance, toastr, registroOrig) {
     $scope.iniciar = function() {
     //$scope.registroOrig = {};
     console.log("ddd", registroOrig);
@@ -33,6 +34,6 @@
   $scope.cancelar = function () {
     $modalInstance.dismiss('cancel');
   };
-});
+}]);
   
 })();

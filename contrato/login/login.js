@@ -2,7 +2,8 @@
 
   'use strict';
 
-  angular.module('principal').controller('LoginCtrl', function ($scope, $location, $modal, toastr, $state, $http) {
+  angular.module('principal').controller('LoginCtrl', ['$scope', '$location', '$modal', 'toastr', '$state', '$http',
+    function ($scope, $location, $modal, toastr, $state, $http) {
     $scope.iniciar = function() {
       $scope.registroOrig = $location.search();
       $scope.reiniciar();
@@ -76,6 +77,6 @@ $scope.mensagens = [
     });
     };
 
-  });
+  }]);
 
 })();

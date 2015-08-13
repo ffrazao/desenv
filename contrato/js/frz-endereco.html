@@ -102,7 +102,7 @@
 								<tr data-ng-repeat="item in enderecoList | filter: filtroEndereco | offset : filtroEnderecoPagina : tamanhoPagina | limitTo: tamanhoPagina">
 									<td>{{$index + 1 + ((filtroEnderecoPagina-1)*tamanhoPagina)}}</td>
 									<td>
-										<span data-ng-bind-html="item.enderecoHtml | sanitize"></span>
+										<span data-ng-bind-html="item.enderecoHtml"></span>
 									</td>
 									<td>{{item.propriedadeRuralConfirmacao}}</td>
 									<td><button class="btn btn-primary" data-ng-click="selecionaEndereco(item)">Selecionar</button></td>
