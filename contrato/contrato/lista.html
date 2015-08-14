@@ -69,7 +69,11 @@
                     <td>{{item.aditivos}}</td>
                     <td>{{item.local}}</td>
                     <td>{{item.garantiaContrapartida}}</td>
-                    <td>{{item.documentos}}</td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="d in item.documento"><a>{{d.nome}}</a></li>
+                        </ul>
+                    </td>
                     <td>{{item.observacao}}</td>
                 </tr>
             </tbody>

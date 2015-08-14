@@ -19,11 +19,11 @@
     // inicio: atividades do Modal
     $scope.modalOk = function () {
         // Retorno da modal
-        $scope.cadastro.lista = [];
-        $scope.cadastro.lista.push({id: 21, nome: 'Fernando'});
-        $scope.cadastro.lista.push({id: 12, nome: 'Frazao'});
-
-        $modalInstance.close($scope.cadastro);
+        var resultado = [];
+        for (var file in $scope.$flow.files) {
+            resultado.push({nome: $scope.$flow.files[file].name});
+        }
+        $modalInstance.close(resultado);
         toastr.info('Operação realizada!', 'Informação');
     };
     $scope.modalCancelar = function () {
@@ -47,7 +47,7 @@
         // processar retorno da modal
         modalInstance.result.then(function (cadastroModificado) {
             // processar o retorno positivo da modal
-            $scope.contratoArquivoNvg.setDados(cadastroModificado.lista);
+            $scope.contratoArquivoNvg.setDados(cadastroModificado);
         }, function () {
             // processar o retorno negativo da modal
         });
@@ -118,6 +118,7 @@
     $scope.abrir = function() {
         // ajustar o menu das acoes especiais
         $scope.contratoArquivoNvg.mudarEstado('ESPECIAL');
+        $scope.contratoArquivoNvg.botao('edicao').visivel = false;
     };
     $scope.agir = function() {};
     $scope.ajudar = function() {};
@@ -219,7 +220,11 @@
         verRegistro();
     };
     $scope.excluir = function() {
-        $scope.contratoArquivoNvg.mudarEstado('EXCLUINDO');
+        $scope.pegarConfirmacao('Confirme a exclusao!').result.then(function () {
+            $scope.exibirAlerta('Ok, Em breve estes arquivos serao apagados');
+        }, function () {
+            // processar o retorno negativo da modal
+        });
     };
     $scope.filtrar = function() {
         $scope.contratoArquivoNvg.mudarEstado('FILTRANDO');
@@ -252,7 +257,13 @@
         // processar retorno da modal
         modalInstance.result.then(function (cadastroModificado) {
             // processar o retorno positivo da modal
-            $scope.contratoArquivoNvg.setDados(cadastroModificado.lista);
+            if (!$scope.cadastro.registro.documento) {
+                $scope.cadastro.registro.documento = [];
+            }
+            for (var i in cadastroModificado) {
+                $scope.cadastro.registro.documento.push(cadastroModificado[i]);
+            }
+            $scope.contratoArquivoNvg.setDados($scope.cadastro.registro.documento);
         }, function () {
             // processar o retorno negativo da modal
         });
