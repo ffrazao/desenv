@@ -294,7 +294,8 @@
                 <!-- Textarea -->
                 <div class="form-group" title="Documentos">
                     <label class="col-md-4 control-label" for="documento">Documentos</label>
-                    <div class="col-md-7">                     
+                    <div class="col-md-7">
+                        <input type="hidden" name="documento" id="documento" ng-model="cadastro.registro.documento.length" required ng-min="1">
                         <ng-include src="'contrato/sub-documento.html'" ng-controller="ContratoDocumentoCtrl"></ng-include>
                         <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.documento.$invalid">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
