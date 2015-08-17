@@ -27,6 +27,10 @@
       {
         "name": "contrato",
         "file": "contrato\\contrato.js"
+      },
+      {
+        "name": "pessoa",
+        "file": "pessoa\\pessoa.js"
       }
     ]
   }

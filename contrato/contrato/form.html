@@ -200,8 +200,18 @@
                     <label class="col-md-4 control-label" for="executor">Executor</label>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input id="executor" name="executor" class="form-control" placeholder="" type="text" required ng-model="cadastro.registro.executor">
-                            <span class="input-group-addon">append</span>
+                            <input id="executor" name="executor" class="form-control" placeholder="" type="text" required ng-model="cadastro.registro.executor.nome" readonly>
+                            <span class="input-group-btn">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a ng-click="modalSelecinarExecutor('lg')">Selecionar</a></li>
+                                        <li><a ng-click="modalVerExecutor('lg')">Visualizar</a></li>
+                                    </ul>
+                                </div>
+                            </span>
                         </div>
                         <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.executor.$invalid">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

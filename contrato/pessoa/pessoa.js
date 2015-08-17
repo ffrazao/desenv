@@ -1,30 +1,30 @@
-angular.module('contrato', ['ui.bootstrap','ui.utils','ui.router','ngAnimate', 'frz.navegador']);
+angular.module('pessoa', ['ui.bootstrap','ui.utils','ui.router','ngAnimate', 'frz.navegador']);
 
-angular.module('contrato').config(['$stateProvider', function($stateProvider) {
+angular.module('pessoa').config(['$stateProvider', function($stateProvider) {
 
-    $stateProvider.state('p.contrato', {
+    $stateProvider.state('p.pessoa', {
         abstract: true,
-        controller: 'ContratoCtrl',
-        templateUrl: 'contrato/contrato.html',
-        url: '/contrato',
+        controller: 'PessoaCtrl',
+        templateUrl: 'pessoa/pessoa.html',
+        url: '/pessoa',
     });
-    $stateProvider.state('p.contrato.filtro', {
-        templateUrl: 'contrato/filtro.html',
+    $stateProvider.state('p.pessoa.filtro', {
+        templateUrl: 'pessoa/filtro.html',
         url: '',
     });
-    $stateProvider.state('p.contrato.lista', {
-        templateUrl: 'contrato/lista.html',
+    $stateProvider.state('p.pessoa.lista', {
+        templateUrl: 'pessoa/lista.html',
         url: '/lista',
     });
-    $stateProvider.state('p.contrato.form', {
-        templateUrl: 'contrato/form.html',
+    $stateProvider.state('p.pessoa.form', {
+        templateUrl: 'pessoa/form.html',
         url: '/form/:id',
     });
     /* Add New States Above */
 
 }]);
 
-angular.module('contrato').controller('ContratoCtrl', 
+angular.module('pessoa').controller('PessoaCtrl', 
     ['$scope', 'toastr', 'FrzNavegadorParams', '$state', '$rootScope', '$modal', '$log', '$modalInstance', 'modalCadastro', 
     function($scope, toastr, FrzNavegadorParams, $state, $rootScope, $modal, $log, $modalInstance, modalCadastro) {
 
@@ -38,7 +38,7 @@ angular.module('contrato').controller('ContratoCtrl',
 
     // inicializacao
     var init = function() {
-        $scope.nomeFormulario = 'Cadastro de Contratos & Convênios';
+        $scope.nomeFormulario = 'Cadastro de Pessoas';
         $scope.frm = {};
         $scope.cadastro = {filtro: {}, lista: [], registro: {}, original: {}};
         $scope.navegador = new FrzNavegadorParams($scope.cadastro.lista);
@@ -64,8 +64,8 @@ angular.module('contrato').controller('ContratoCtrl',
         // abrir a modal
         var modalInstance = $modal.open({
             animation: true,
-            template: '<ng-include src=\"\'contrato/contrato-modal.html\'\"></ng-include>',
-            controller: 'ContratoCtrl',
+            template: '<ng-include src=\"\'pessoa/pessoa-modal.html\'\"></ng-include>',
+            controller: 'PessoaCtrl',
             size: size,
             resolve: {
                 modalCadastro: function () {
@@ -359,52 +359,5 @@ angular.module('contrato').controller('ContratoCtrl',
 
     };
     // fim ações especiais
-
-    $scope.modalSelecinarExecutor = function (size) {
-        // abrir a modal
-        var modalInstance = $modal.open({
-            animation: true,
-            template: '<ng-include src=\"\'pessoa/pessoa-modal.html\'\"></ng-include>',
-            controller: 'PessoaCtrl',
-            size: size,
-            resolve: {
-                modalCadastro: function () {
-                    return angular.copy($scope.cadastro);
-                }
-            }
-        });
-        // processar retorno da modal
-        modalInstance.result.then(function (cadastroModificado) {
-            // processar o retorno positivo da modal
-            $scope.cadastro.registro.executor = cadastroModificado.registro;
-        }, function () {
-            // processar o retorno negativo da modal
-            $log.info('Modal dismissed at: ' + new Date());
-        });
-    };
-
-    $scope.modalVerExecutor = function (size) {
-        // abrir a modal
-        var modalInstance = $modal.open({
-            animation: true,
-            template: '<ng-include src=\"\'pessoa/pessoa-form-modal.html\'\"></ng-include>',
-            controller: 'PessoaCtrl',
-            size: size,
-            resolve: {
-                modalCadastro: function () {
-                    var cadastro = {registro: angular.copy($scope.cadastro.registro.executor)}
-                    return cadastro;
-                }
-            }
-        });
-        // processar retorno da modal
-        modalInstance.result.then(function (cadastroModificado) {
-            // processar o retorno positivo da modal
-            
-        }, function () {
-            // processar o retorno negativo da modal
-            $log.info('Modal dismissed at: ' + new Date());
-        });
-    };
 
 }]);
