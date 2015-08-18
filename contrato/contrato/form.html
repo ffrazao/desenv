@@ -13,7 +13,7 @@
                             <option value="3">COOPERAÇÃO INTERNACIONAL</option>
                             <option value="4">COOPERAÇÃO</option>
                         </select>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.tipoContratoConvenio.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.tipoContratoConvenio.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -24,7 +24,7 @@
                     <label class="col-md-4 control-label" for="numeroProcesso">Processo</label>  
                     <div class="col-md-3">
                         <input id="numeroProcesso" name="numeroProcesso" type="text" class="form-control input-md" required ng-model="cadastro.registro.numeroProcesso" ui-mask="9999.999.999/9999">
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.numeroProcesso.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.numeroProcesso.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -45,7 +45,7 @@
                             <option value="8">TERMO DE COOPERAÇÃO</option>
                             <option value="9">TERMO DE COOPERAÇÃO INTERNACIONAL</option>
                         </select>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.instrumento.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.instrumento.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -56,29 +56,31 @@
                     <label class="col-md-4 control-label" for="numero">Número</label>
                     <div class="col-md-2">
                         <input id="numero" name="numero" type="text" placeholder="" class="form-control input-md" required ng-model="cadastro.registro.numero">
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.numero.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.numero.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
                     </div>
                 </div>
-                <!-- Text input-->
-                <div class="form-group" title="Cadastro Nacional de Pessoa Jurídica">
-                    <label class="col-md-4 control-label" for="cnpj">CNPJ</label> 
-                    <div class="col-md-3">
-                        <input id="cnpj" name="cnpj" type="text" placeholder="" class="form-control input-md" required ng-model="cadastro.registro.cnpj" ui-br-cnpj-mask>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cnpj.$invalid">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            Campo Obrigatório
-                        </div>
-                    </div>
-                </div>
-                <!-- Text input-->
-                <div class="form-group" title="Contraparte">
-                    <label class="col-md-4 control-label" for="contraparte">Contraparte</label>  
+                <!-- Appended Input-->
+                <div class="form-group" title="Contraparte do Contrato">
+                    <label class="col-md-4 control-label" for="contraparte">Contraparte</label>
                     <div class="col-md-4">
-                        <input id="contraparte" name="contraparte" type="text" placeholder="" class="form-control input-md" required ng-model="cadastro.registro.contraparte">
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.contraparte.$invalid">
+                        <div class="input-group">
+                            <input id="contraparte" name="contraparte" class="form-control" placeholder="" type="text" required ng-model="cadastro.registro.contraparte.nome" readonly>
+                            <span class="input-group-btn">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a ng-click="modalSelecinarContraparte('lg')">Selecionar</a></li>
+                                        <li><a ng-click="modalVerContraparte('lg')" ng-show="cadastro.registro.contraparte.nome">Visualizar</a></li>
+                                    </ul>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.contraparte.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -89,7 +91,7 @@
                     <label class="col-md-4 control-label" for="objeto">Objeto</label>
                     <div class="col-md-7">                     
                         <textarea class="form-control" id="objeto" name="objeto" required ng-model="cadastro.registro.objeto">default text</textarea>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.objeto.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.objeto.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -100,7 +102,7 @@
                     <label class="col-md-4 control-label" for="valorContrato">Valor do Contrato</label>  
                     <div class="col-md-2">
                         <input id="valorContrato" name="valorContrato" type="text" placeholder="" class="form-control input-md text-right" required ng-model="cadastro.registro.valorContrato" ui-money-mask="2">
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.valorContrato.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.valorContrato.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -111,7 +113,7 @@
                     <label class="col-md-4 control-label" for="valorPago">Valor Pago</label>  
                     <div class="col-md-2">
                         <input id="valorPago" name="valorPago" type="text" placeholder="" class="form-control input-md text-right" required ng-model="cadastro.registro.valorPago" ui-money-mask="2">
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.valorPago.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.valorPago.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -122,7 +124,7 @@
                     <label class="col-md-4 control-label" for="valorRemanescente">Valor Remanescente</label>  
                     <div class="col-md-2">
                         <input id="valorRemanescente" name="valorRemanescente" type="text" placeholder="" class="form-control input-md text-right" required value="{{cadastro.registro.valorContrato - cadastro.registro.valorPago | currency }}" readonly>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.valorRemanescente.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.valorRemanescente.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -142,7 +144,7 @@
                                 Encerrado
                             </label>
                         </div>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.situacao.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.situacao.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -153,7 +155,7 @@
                     <label class="col-md-4 control-label" for="inicio">Início</label>  
                     <div class="col-md-3">
                         <input id="inicio" name="inicio" type="date" placeholder="" class="form-control input-md" required ng-model="cadastro.registro.inicio" ui-mask="99/99/9999">
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.inicio.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.inicio.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -164,7 +166,7 @@
                     <label class="col-md-4 control-label" for="fim">Fim</label>  
                     <div class="col-md-3">
                         <input id="fim" name="fim" type="date" placeholder="" class="form-control input-md" required ng-model="cadastro.registro.fim" ui-mask="99/99/9999">
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.fim.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.fim.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -175,7 +177,7 @@
                     <label class="col-md-4 control-label" for="diaRestante">Dias Restantes</label>  
                     <div class="col-md-2">
                         <input id="diaRestante" name="diaRestante" type="text" placeholder="" class="form-control input-md text-right" required value="{{cadastro.registro.fim - cadastro.registro.inicio}}" readonly>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.diaRestante.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.diaRestante.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -189,7 +191,7 @@
                             <option value="1">Option one</option>
                             <option value="2">Option two</option>
                         </select>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.ug.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.ug.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -213,7 +215,7 @@
                                 </div>
                             </span>
                         </div>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.executor.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.executor.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -233,7 +235,7 @@
                                 Não
                             </label>
                         </div>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.prorrogavel.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.prorrogavel.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -252,7 +254,7 @@
                             <option value="6">6º ADITIVO</option>
                             <option value="7">7º ADITIVO</option>
                         </select>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.aditivo.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.aditivo.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -275,7 +277,7 @@
                             <option value="10">D1</option>
                             <option value="11">D3</option>
                         </select>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.local.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.local.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -295,7 +297,7 @@
                                 Não
                             </label> 
                         </div>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.garantiaContrapartida.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.garantiaContrapartida.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -307,7 +309,7 @@
                     <div class="col-md-7">
                         <input type="hidden" name="documento" id="documento" ng-model="cadastro.registro.documento.length" required ng-min="1">
                         <ng-include src="'contrato/sub-documento.html'" ng-controller="ContratoDocumentoCtrl"></ng-include>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.documento.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.documento.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -318,7 +320,7 @@
                     <label class="col-md-4 control-label" for="observacao">Observação</label>
                     <div class="col-md-7">                     
                         <textarea class="form-control" id="observacao" name="observacao" required ng-model="cadastro.registro.observacao">default text</textarea>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.observacao.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.observacao.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>

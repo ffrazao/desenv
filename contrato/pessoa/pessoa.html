@@ -1,7 +1,7 @@
 <div class="row">
-    <div class="col-sm-11" sticky offset="50" confine="true">
-        <div class="pull-right" style="z-index: 10001;">
-            <frz-navegador ng-model="navegador" 
+    <div class="col-sm-11">
+        <frz-navegador style="position:fixed; right:10%"
+            ng-model="navegador" 
             exibe-nome-botao = "false"
             exibe-estado-atual = "true"
             on-abrir = "abrir()"
@@ -36,8 +36,7 @@
             on-visualizar = "visualizar()"
             on-voltar = "voltar()"
             on-tem-mais-registros = "temMaisRegistros()">
-            </frz-navegador>
-        </div>
+        </frz-navegador>
     </div>
 </div>
 <div ng-switch="modalEstado">

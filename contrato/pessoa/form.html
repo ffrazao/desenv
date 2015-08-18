@@ -11,7 +11,7 @@
                             <option value="F">Física</option>
                             <option value="J">Jurídica</option>
                         </select>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.tipoPessoa.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.tipoPessoa.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>
@@ -22,9 +22,13 @@
                     <label class="col-md-4 control-label" for="cpf">CPF</label> 
                     <div class="col-md-3">
                         <input id="cpf" name="cpf" type="text" placeholder="" class="form-control input-md" ng-required="cadastro.registro.tipoPessoa === 'F'" ng-model="cadastro.registro.cpf" ui-br-cpf-mask>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cpf.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cpf.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
+                        </div>
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cpf.$error.cpf">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Número inválido!
                         </div>
                     </div>
                 </div>
@@ -33,9 +37,13 @@
                     <label class="col-md-4 control-label" for="cnpj">CNPJ</label> 
                     <div class="col-md-3">
                         <input id="cnpj" name="cnpj" type="text" placeholder="" class="form-control input-md" ng-required="cadastro.registro.tipoPessoa === 'J'" ng-model="cadastro.registro.cnpj" ui-br-cnpj-mask>
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cnpj.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cnpj.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
+                        </div>
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cnpj.$error.cnpj">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            Número inválido!
                         </div>
                     </div>
                 </div>
@@ -44,7 +52,7 @@
                     <label class="col-md-4 control-label" for="nome">Nome</label>  
                     <div class="col-md-4">
                         <input id="nome" name="nome" type="text" placeholder="" class="form-control input-md" required ng-model="cadastro.registro.nome">
-                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.nome.$invalid">
+                        <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.nome.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
                         </div>

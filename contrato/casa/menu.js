@@ -7,11 +7,9 @@
     [
     {
       name: 'Dashboard',
-      link: '#',
     }, 
     {
       name: 'Cadastro',
-      link: '#',
       subtree: [
       {
         name: 'Pessoa',
@@ -24,6 +22,10 @@
       {
         name: 'Propriedade Rural',
         link: 'p.propriedadeRural.filtro',
+      },
+      {
+        name: 'Contratos & Convênios',
+        link: 'p.contrato.filtro',
       },
       ]
     },

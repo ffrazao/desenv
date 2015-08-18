@@ -1,4 +1,4 @@
-angular.module('principal', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngSanitize', 'ngAnimate', 'toastr', 'sticky', 'ui.mask', 'ui.utils.masks', 'frz.arquivo', 'frz.endereco', 'frz.painel.vidro', 'frz.navegador', 'casa', 'contrato', 'pessoa']);
+angular.module('principal', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngSanitize', 'ngAnimate', 'toastr', 'sticky', 'ui.mask', 'ui.utils.masks', 'ui.navbar', 'frz.arquivo', 'frz.endereco', 'frz.painel.vidro', 'frz.navegador', 'casa', 'contrato', 'pessoa']);
 
 // inicio: codigo para habilitar o modal recursivo
 angular.module('principal').factory('$modalInstance', function () {
@@ -60,7 +60,7 @@ angular.module('principal').config(['$stateProvider', '$urlRouterProvider', 'toa
       newestOnTop: true,
       onHidden: null,
       onShown: null,
-      positionClass: 'toast-top-full-width',
+      positionClass: 'toast-bottom-full-width',
       preventDuplicates: false,
       preventOpenDuplicates: true,
       progressBar: true,

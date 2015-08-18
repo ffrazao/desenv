@@ -37,13 +37,13 @@ angular.module('contrato').controller('ContratoCtrl',
     };
 
     // inicializacao
-    var init = function() {
+    var init = function(cadastro) {
         $scope.nomeFormulario = 'Cadastro de Contratos & Convênios';
         $scope.frm = {};
-        $scope.cadastro = {filtro: {}, lista: [], registro: {}, original: {}};
+        $scope.cadastro = cadastro != null ? cadastro : {filtro: {}, lista: [], registro: {}, original: {}};
         $scope.navegador = new FrzNavegadorParams($scope.cadastro.lista);
     };
-    init();
+    init(null);
 
     // inicio: atividades do Modal
     $scope.modalOk = function () {
@@ -92,7 +92,7 @@ angular.module('contrato').controller('ContratoCtrl',
         // recuperar o item
         $scope.modalEstado = 'filtro';
         // atualizar o cadastro
-        $scope.cadastro = angular.copy(modalCadastro);
+        init(modalCadastro);
     }
     // fim: atividades do Modal
 
@@ -288,6 +288,7 @@ angular.module('contrato').controller('ContratoCtrl',
         $scope.navegador.mudarEstado('EDITANDO');
         vaiPara('form');
         verRegistro();
+        $scope.navegador.submitido = false;
     };
     $scope.excluir = function() {
         $scope.navegador.mudarEstado('EXCLUINDO');
@@ -312,6 +313,7 @@ angular.module('contrato').controller('ContratoCtrl',
         $scope.navegador.mudarEstado('INCLUINDO');
         vaiPara('form');
         $scope.cadastro.registro = {};
+        $scope.navegador.submitido = false;
     };
     $scope.informacao = function() {};
     $scope.limpar = function() {
@@ -392,7 +394,54 @@ angular.module('contrato').controller('ContratoCtrl',
             size: size,
             resolve: {
                 modalCadastro: function () {
-                    var cadastro = {registro: angular.copy($scope.cadastro.registro.executor)};
+                    var cadastro = {registro: angular.copy($scope.cadastro.registro.executor), filtro: {}, lista: [], original: {}};
+                    return cadastro;
+                }
+            }
+        });
+        // processar retorno da modal
+        modalInstance.result.then(function (cadastroModificado) {
+            // processar o retorno positivo da modal
+            
+        }, function () {
+            // processar o retorno negativo da modal
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
+    $scope.modalSelecinarContraparte = function (size) {
+        // abrir a modal
+        var modalInstance = $modal.open({
+            animation: true,
+            template: '<ng-include src=\"\'pessoa/pessoa-modal.html\'\"></ng-include>',
+            controller: 'PessoaCtrl',
+            size: size,
+            resolve: {
+                modalCadastro: function () {
+                    return {filtro: {}, lista: [], registro: {}, original: {}};
+                }
+            }
+        });
+        // processar retorno da modal
+        modalInstance.result.then(function (cadastroModificado) {
+            // processar o retorno positivo da modal
+            $scope.cadastro.registro.contraparte = cadastroModificado.registro;
+        }, function () {
+            // processar o retorno negativo da modal
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
+    $scope.modalVerContraparte = function (size) {
+        // abrir a modal
+        var modalInstance = $modal.open({
+            animation: true,
+            template: '<ng-include src=\"\'pessoa/pessoa-form-modal.html\'\"></ng-include>',
+            controller: 'PessoaCtrl',
+            size: size,
+            resolve: {
+                modalCadastro: function () {
+                    var cadastro = {registro: angular.copy($scope.cadastro.registro.contraparte), filtro: {}, lista: [], original: {}};
                     return cadastro;
                 }
             }

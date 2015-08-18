@@ -11,7 +11,7 @@
                     <option value="F">Física</option>
                     <option value="J">Jurídica</option>
                 </select>
-                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.tipoPessoa.$invalid">
+                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.tipoPessoa.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     Campo Obrigatório
                 </div>
@@ -22,7 +22,7 @@
             <label class="col-md-4 control-label" for="cpf">CPF</label> 
             <div class="col-md-3">
                 <input id="cpf" name="cpf" type="text" placeholder="" class="form-control input-md" ng-model="cadastro.filtro.cpf" ui-br-cpf-mask>
-                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cpf.$invalid">
+                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cpf.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     Campo Obrigatório
                 </div>
@@ -33,7 +33,7 @@
             <label class="col-md-4 control-label" for="cnpj">CNPJ</label> 
             <div class="col-md-3">
                 <input id="cnpj" name="cnpj" type="text" placeholder="" class="form-control input-md" ng-model="cadastro.filtro.cnpj" ui-br-cnpj-mask>
-                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cnpj.$invalid">
+                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cnpj.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     Campo Obrigatório
                 </div>
@@ -44,7 +44,7 @@
             <label class="col-md-4 control-label" for="contraparte">Nome</label>  
             <div class="col-md-4">
                 <input id="contraparte" name="contraparte" type="text" placeholder="" class="form-control input-md" ng-model="cadastro.filtro.contraparte">
-                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.contraparte.$invalid">
+                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.contraparte.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     Campo Obrigatório
                 </div>

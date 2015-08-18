@@ -37,13 +37,13 @@ angular.module('pessoa').controller('PessoaCtrl',
     };
 
     // inicializacao
-    var init = function() {
+    var init = function(cadastro) {
         $scope.nomeFormulario = 'Cadastro de Pessoas';
         $scope.frm = {};
-        $scope.cadastro = {filtro: {}, lista: [], registro: {}, original: {}};
+        $scope.cadastro = cadastro != null ? cadastro : {filtro: {}, lista: [], registro: {}, original: {}};
         $scope.navegador = new FrzNavegadorParams($scope.cadastro.lista);
     };
-    init();
+    init(null);
 
     // inicio: atividades do Modal
     $scope.modalOk = function () {
@@ -92,7 +92,7 @@ angular.module('pessoa').controller('PessoaCtrl',
         // recuperar o item
         $scope.modalEstado = 'filtro';
         // atualizar o cadastro
-        $scope.cadastro = angular.copy(modalCadastro);
+        init(modalCadastro);
     }
     // fim: atividades do Modal
 
@@ -288,6 +288,7 @@ angular.module('pessoa').controller('PessoaCtrl',
         $scope.navegador.mudarEstado('EDITANDO');
         vaiPara('form');
         verRegistro();
+        $scope.navegador.submitido = false;
     };
     $scope.excluir = function() {
         $scope.navegador.mudarEstado('EXCLUINDO');
@@ -312,6 +313,7 @@ angular.module('pessoa').controller('PessoaCtrl',
         $scope.navegador.mudarEstado('INCLUINDO');
         vaiPara('form');
         $scope.cadastro.registro = {};
+        $scope.navegador.submitido = false;
     };
     $scope.informacao = function() {};
     $scope.limpar = function() {
