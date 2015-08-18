@@ -369,7 +369,7 @@ angular.module('contrato').controller('ContratoCtrl',
             size: size,
             resolve: {
                 modalCadastro: function () {
-                    return angular.copy($scope.cadastro);
+                    return {filtro: {}, lista: [], registro: {}, original: {}};
                 }
             }
         });
@@ -392,7 +392,7 @@ angular.module('contrato').controller('ContratoCtrl',
             size: size,
             resolve: {
                 modalCadastro: function () {
-                    var cadastro = {registro: angular.copy($scope.cadastro.registro.executor)}
+                    var cadastro = {registro: angular.copy($scope.cadastro.registro.executor)};
                     return cadastro;
                 }
             }
