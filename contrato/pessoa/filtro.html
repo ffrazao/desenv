@@ -3,53 +3,165 @@
   <div class="panel-body">
     <form class="form-horizontal" name="frm.filtro" novalidate>
       <fieldset>
-        <!-- Select Basic -->
-        <div class="form-group" title="Tipo de pessoa ou convênio">
-            <label class="col-md-4 control-label" for="tipoPessoa">Tipo</label>
-            <div class="col-md-3">
-                <select id="tipoPessoa" name="tipoPessoa" class="form-control" ng-model="cadastro.filtro.tipoPessoa">
-                    <option value="F">Física</option>
-                    <option value="J">Jurídica</option>
-                </select>
-                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.tipoPessoa.$error.required">
+        <legend>Dados Pessoais</legend>
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group" title="Tipo de Pessoa">
+            <label class="col-md-4 control-label" for="tipoPessoa">Tipo de Pessoa</label>
+            <div class="col-md-4">
+                <div>
+                    <label class="radio-inline" for="tipoPessoa-0">
+                        <input type="radio" name="tipoPessoa" id="tipoPessoa-0" value="" ng-model="cadastro.filtro.tipoPessoa">
+                        Ambos
+                    </label> 
+                    <label class="radio-inline" for="tipoPessoa-1">
+                        <input type="radio" name="tipoPessoa" id="tipoPessoa-1" value="PF" ng-model="cadastro.filtro.tipoPessoa">
+                        Física
+                    </label> 
+                    <label class="radio-inline" for="tipoPessoa-2">
+                        <input type="radio" name="tipoPessoa" id="tipoPessoa-2" value="PJ" ng-model="cadastro.filtro.tipoPessoa">
+                        Jurídica
+                    </label>
+                </div>
+                <div class="label label-danger" ng-show="navegador.submitido && frm.filtro.tipoPessoa.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     Campo Obrigatório
                 </div>
             </div>
         </div>
         <!-- Text input-->
-        <div class="form-group" title="Cadastro de Pessoa Física" ng-show="cadastro.filtro.tipoPessoa === 'F'">
+        <div class="form-group" title="Nome/Apelido/Sigla">
+            <label class="col-md-4 control-label" for="nome">Nome/Apelido/Sigla</label>  
+            <div class="col-md-4">
+                <input id="nome" name="nome" type="text" placeholder="" class="form-control input-md" ng-model="cadastro.filtro.nome">
+                <div class="label label-danger" ng-show="navegador.submitido && frm.filtro.nome.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    Campo Obrigatório
+                </div>
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group" title="Cadastro de Pessoa Física" ng-hide="cadastro.filtro.tipoPessoa === 'PJ'">
             <label class="col-md-4 control-label" for="cpf">CPF</label> 
             <div class="col-md-3">
                 <input id="cpf" name="cpf" type="text" placeholder="" class="form-control input-md" ng-model="cadastro.filtro.cpf" ui-br-cpf-mask>
-                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cpf.$error.required">
+                <div class="label label-danger" ng-show="navegador.submitido && frm.filtro.cpf.$error.cpf">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    Campo Obrigatório
+                    Número inválido!
                 </div>
             </div>
         </div>
         <!-- Text input-->
-        <div class="form-group" title="Cadastro Nacional de Pessoa Jurídica" ng-show="cadastro.filtro.tipoPessoa === 'J'">
+        <div class="form-group" title="Cadastro Nacional de Pessoa Jurídica" ng-hide="cadastro.filtro.tipoPessoa === 'PF'">
             <label class="col-md-4 control-label" for="cnpj">CNPJ</label> 
             <div class="col-md-3">
                 <input id="cnpj" name="cnpj" type="text" placeholder="" class="form-control input-md" ng-model="cadastro.filtro.cnpj" ui-br-cnpj-mask>
-                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cnpj.$error.required">
+                <div class="label label-danger" ng-show="navegador.submitido && frm.filtro.cnpj.$error.cnpj">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    Número inválido!
+                </div>
+            </div>
+        </div>
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group" title="Gênero da Pessoa" ng-hide="cadastro.filtro.tipoPessoa === 'PJ'">
+            <label class="col-md-4 control-label" for="genero">Gênero da Pessoa</label>
+            <div class="col-md-6">
+                <div>
+                    <label class="radio-inline" for="genero-0">
+                        <input type="radio" name="genero" id="genero-0" value="" ng-model="cadastro.filtro.genero">
+                        Ambos
+                    </label> 
+                    <label class="radio-inline" for="genero-1">
+                        <input type="radio" name="genero" id="genero-1" value="M" ng-model="cadastro.filtro.genero">
+                        Masculino
+                    </label> 
+                    <label class="radio-inline" for="genero-2">
+                        <input type="radio" name="genero" id="genero-2" value="F" ng-model="cadastro.filtro.genero">
+                        Feminino
+                    </label>
+                </div>
+                <div class="label label-danger" ng-show="navegador.submitido && frm.filtro.genero.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     Campo Obrigatório
                 </div>
             </div>
         </div>
-        <!-- Text input-->
-        <div class="form-group" title="Contraparte">
-            <label class="col-md-4 control-label" for="contraparte">Nome</label>  
-            <div class="col-md-4">
-                <input id="contraparte" name="contraparte" type="text" placeholder="" class="form-control input-md" ng-model="cadastro.filtro.contraparte">
-                <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.contraparte.$error.required">
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group" title="Geração da Pessoa" ng-hide="cadastro.filtro.tipoPessoa === 'PJ'">
+            <label class="col-md-4 control-label" for="geracao">Geração da Pessoa</label>
+            <div class="col-md-6">
+                <div>
+                    <label class="radio-inline" for="geracao-0">
+                        <input type="radio" name="geracao" id="geracao-0" value="" ng-model="cadastro.filtro.geracao">
+                        Ambos
+                    </label> 
+                    <label class="radio-inline" for="geracao-1">
+                        <input type="radio" name="geracao" id="geracao-1" value="I" ng-model="cadastro.filtro.geracao">
+                        Idoso
+                    </label> 
+                    <label class="radio-inline" for="geracao-2">
+                        <input type="radio" name="geracao" id="geracao-2" value="A" ng-model="cadastro.filtro.geracao">
+                        Adulto
+                    </label>
+                    <label class="radio-inline" for="geracao-3">
+                        <input type="radio" name="geracao" id="geracao-3" value="J" ng-model="cadastro.filtro.geracao">
+                        Jovem
+                    </label>
+                    <label class="radio-inline" for="geracao-4">
+                        <input type="radio" name="geracao" id="geracao-4" value="C" ng-model="cadastro.filtro.geracao">
+                        Criança
+                    </label>
+                </div>
+                <div class="label label-danger" ng-show="navegador.submitido && frm.filtro.geracao.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     Campo Obrigatório
                 </div>
             </div>
         </div>
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group" title="Situação da Pessoa">
+            <label class="col-md-4 control-label" for="situacao">Situação da Pessoa</label>
+            <div class="col-md-7">
+                <div>
+                    <label class="radio-inline" for="situacao-0">
+                        <input type="radio" name="situacao" id="situacao-0" value="" ng-model="cadastro.filtro.situacao">
+                        Ambos
+                    </label> 
+                    <label class="radio-inline" for="situacao-1">
+                        <input type="radio" name="situacao" id="situacao-1" value="I" ng-model="cadastro.filtro.situacao">
+                        Ativo
+                    </label> 
+                    <label class="radio-inline" for="situacao-2">
+                        <input type="radio" name="situacao" id="situacao-2" value="A" ng-model="cadastro.filtro.situacao">
+                        Inativo falta de uso
+                    </label>
+                    <label class="radio-inline" for="situacao-3">
+                        <input type="radio" name="situacao" id="situacao-3" value="J" ng-model="cadastro.filtro.situacao">
+                        Inativo falecimento
+                    </label>
+                    <label class="radio-inline" for="situacao-4">
+                        <input type="radio" name="situacao" id="situacao-4" value="C" ng-model="cadastro.filtro.situacao">
+                        Inativo outro motivo
+                    </label>
+                </div>
+                <div class="label label-danger" ng-show="navegador.submitido && frm.filtro.situacao.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    Campo Obrigatório
+                </div>
+            </div>
+        </div>
+        <!-- Textarea -->
+        <div class="form-group" title="Grupos Sociais">
+            <label class="col-md-4 control-label" for="grupoSocial">Grupos Sociais</label>
+            <div class="col-md-7">
+                <input type="hidden" name="grupoSocial" id="grupoSocial" ng-model="cadastro.filtro.grupoSocial.length" required ng-min="1">
+                <ng-include src="'pessoa/filtro-sub-grupo-social.html'" ng-controller="SubGrupoSocialCtrl"></ng-include>
+                <div class="label label-danger" ng-show="navegador.submitido && frm.filtro.grupoSocial.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    Campo Obrigatório
+                </div>
+            </div>
+        </div>
+        <legend>Beneficiário</legend>
       </fieldset>
     </form>
   </div>

@@ -265,9 +265,15 @@ angular.module('contrato').controller('ContratoCtrl',
         toastr.info('Operação realizada!', 'Informação');
     };
     $scope.confirmarFiltrar = function() {
+        $scope.navegador.submitido = true;
+        if ($scope.frm.filtro.$invalid) {
+            toastr.error('Verifique os campos marcados', 'Erro');
+            return false;
+        }
         $scope.navegador.mudarEstado('LISTANDO');
         vaiPara('lista');
         $scope.navegador.setDados($scope.cadastro.lista);
+        $scope.navegador.submitido = false;
     };
     $scope.confirmarIncluir = function() {
         if (!$scope.confirmar()) {
