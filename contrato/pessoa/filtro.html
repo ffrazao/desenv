@@ -154,7 +154,7 @@
             <label class="col-md-4 control-label" for="grupoSocial">Grupos Sociais</label>
             <div class="col-md-7">
                 <input type="hidden" name="grupoSocial" id="grupoSocial" ng-model="cadastro.filtro.grupoSocial.length" required ng-min="1">
-                <ng-include src="'pessoa/filtro-sub-grupo-social.html'" ng-controller="SubGrupoSocialCtrl"></ng-include>
+                <ng-include src="'pessoa/filtro-sub-grupo-social.html'" ng-controller="FiltroSubGrupoSocialCtrl"></ng-include>
                 <div class="label label-danger" ng-show="navegador.submitido && frm.filtro.grupoSocial.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     Campo Obrigatório
