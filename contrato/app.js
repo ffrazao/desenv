@@ -108,6 +108,15 @@ angular.module('principal').run(['$rootScope', '$modal',
       });
     };
     $rootScope.pegarConfirmacao = function (mensagem) {
+      $rootScope.modalOk = function (confirmacao) {
+          // Retorno da modal
+          modalInstance.close(confirmacao);
+      };
+      $rootScope.modalCancelar = function () {
+          // Cancelar a modal
+          modalInstance.dismiss('cancel');
+      };
+
       var modalInstance = $modal.open({
         animation: true,
         template: 
@@ -115,15 +124,19 @@ angular.module('principal').run(['$rootScope', '$modal',
         '  <h3 class="modal-title">Confirme!</h3>' +
         '</div>' +
         '<div class="modal-body">' +
-        '<p class=\"bg-info\">' + mensagem + '</p>' +
+        '  <form name="confirmacaoFrm" class="form-horizontal" novalidate>' +
+        '     <fieldset>' +
+        mensagem +
+        '     <fieldset>' +
+        '  </form>' +
         '</div>' +
         '<div class="modal-footer">' +
-        '  <button class="btn btn-primary" ng-click=\"$close(\'ok\')\">OK</button>' +
-        '  <button class="btn btn-warning" ng-click=\"$dismiss(\'cancelar\')\">Cancelar</button>' +
+        '  <button class="btn btn-primary" ng-click=\"modalOk(confirmacao)\" ng-show="confirmacaoFrm.$valid">OK</button>' +
+        '  <button class="btn btn-warning" ng-click=\"modalCancelar()\">Cancelar</button>' +
         '</div>',
         resolve: {},
       });
-      return modalInstance;
+      return modalInstance.result;
     };
     $rootScope.indiceDe = function(arr, item) {
       for (var i = arr.length; i--;) {

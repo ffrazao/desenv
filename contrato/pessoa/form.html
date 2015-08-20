@@ -8,8 +8,8 @@
                     <label class="col-md-4 control-label" for="tipoPessoa">Tipo</label>
                     <div class="col-md-3">
                         <select id="tipoPessoa" name="tipoPessoa" class="form-control" required ng-model="cadastro.registro.tipoPessoa">
-                            <option value="F">Física</option>
-                            <option value="J">Jurídica</option>
+                            <option value="PF">Física</option>
+                            <option value="PJ">Jurídica</option>
                         </select>
                         <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.tipoPessoa.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -18,10 +18,10 @@
                     </div>
                 </div>
                 <!-- Text input-->
-                <div class="form-group" title="Cadastro de Pessoa Física" ng-show="cadastro.registro.tipoPessoa === 'F'">
+                <div class="form-group" title="Cadastro de Pessoa Física" ng-show="cadastro.registro.tipoPessoa === 'PF'">
                     <label class="col-md-4 control-label" for="cpf">CPF</label> 
                     <div class="col-md-3">
-                        <input id="cpf" name="cpf" type="text" placeholder="" class="form-control input-md" ng-required="cadastro.registro.tipoPessoa === 'F'" ng-model="cadastro.registro.cpf" ui-br-cpf-mask>
+                        <input id="cpf" name="cpf" type="text" placeholder="" class="form-control input-md" ng-required="cadastro.registro.tipoPessoa === 'PF'" ng-model="cadastro.registro.cpf" ui-br-cpf-mask>
                         <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cpf.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório
@@ -33,10 +33,10 @@
                     </div>
                 </div>
                 <!-- Text input-->
-                <div class="form-group" title="Cadastro Nacional de Pessoa Jurídica" ng-show="cadastro.registro.tipoPessoa === 'J'">
+                <div class="form-group" title="Cadastro Nacional de Pessoa Jurídica" ng-show="cadastro.registro.tipoPessoa === 'PJ'">
                     <label class="col-md-4 control-label" for="cnpj">CNPJ</label> 
                     <div class="col-md-3">
-                        <input id="cnpj" name="cnpj" type="text" placeholder="" class="form-control input-md" ng-required="cadastro.registro.tipoPessoa === 'J'" ng-model="cadastro.registro.cnpj" ui-br-cnpj-mask>
+                        <input id="cnpj" name="cnpj" type="text" placeholder="" class="form-control input-md" ng-required="cadastro.registro.tipoPessoa === 'PJ'" ng-model="cadastro.registro.cnpj" ui-br-cnpj-mask>
                         <div class="label label-danger" ng-show="navegador.submitido && frm.formulario.cnpj.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             Campo Obrigatório

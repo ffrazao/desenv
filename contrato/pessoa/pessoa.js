@@ -85,7 +85,7 @@ angular.module('pessoa').controller('PessoaCtrl',
     if ($modalInstance === null) {
         // se objeto modal esta vazio abrir de forma normal
         $scope.modalEstado = null;
-        for (var i = 0; i < 0; i++) {
+        for (var i = 0; i < 2000; i++) {
             $scope.navegador.dados.push({id: i, nome: 'nome ' + i});
         }
     } else {
@@ -219,6 +219,8 @@ angular.module('pessoa').controller('PessoaCtrl',
         $scope.navegador.mudarEstado('VISUALIZANDO');
         vaiPara('form');
         $scope.navegador.submitido = false;
+
+        $scope.cadastro.registro.foto = "img/foto.gif";
         return true;
     };
     $scope.confirmarEditar = function() {
@@ -316,10 +318,34 @@ angular.module('pessoa').controller('PessoaCtrl',
         verRegistro();
     };
     $scope.incluir = function() {
-        $scope.navegador.mudarEstado('INCLUINDO');
-        vaiPara('form');
-        $scope.cadastro.registro = {};
-        $scope.navegador.submitido = false;
+        var conf =  '<div class="form-group">' +
+                    '    <label class="col-md-4 control-label" for="cnfTipoPessoa">Incluir que tipo de Pessoa?</label>' +
+                    '    <div class="col-md-8">' +
+                    '        <label class="radio-inline" for="cnfTipoPessoa-0">' +
+                    '            <input type="radio" name="cnfTipoPessoa" id="cnfTipoPessoa-0" value="PJ" ng-model="confirmacao.tipoPessoa" required>' +
+                    '            Pessoa Jurídica' +
+                    '        </label>' +
+                    '        <label class="radio-inline" for="cnfTipoPessoa-1">' +
+                    '            <input type="radio" name="cnfTipoPessoa" id="cnfTipoPessoa-1" value="PF" ng-model="confirmacao.tipoPessoa" required>' +
+                    '            Pessoa Física' +
+                    '        </label>' +
+                    '         <div class="label label-danger" ng-show="confirmacaoFrm.cnfTipoPessoa.$error.required">' +
+                    '            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' +
+                    '             Campo Obrigatório' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</div>';
+        $scope.pegarConfirmacao(conf).then(function (cadastroModificado) {
+            // processar o retorno positivo da modal
+            $scope.cadastro.original = {tipoPessoa: cadastroModificado.tipoPessoa};
+            $scope.cadastro.registro = angular.copy($scope.cadastro.original);
+            $scope.navegador.mudarEstado('INCLUINDO');
+            vaiPara('form');
+            $scope.navegador.submitido = false;
+        }, function () {
+            // processar o retorno negativo da modal
+            //$log.info('Modal dismissed at: ' + new Date());
+        });
     };
     $scope.informacao = function() {};
     $scope.limpar = function() {

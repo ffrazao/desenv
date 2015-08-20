@@ -16,9 +16,11 @@
                     <th width="30">
                         #
                     </th>
+                    <th>Foto</th>
+                    <th>Nome</th>
                     <th>Tipo</th>
                     <th>CPF/CNPJ</th>
-                    <th>Nome</th>
+                    <th>Beneficiário</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,9 +32,11 @@
                     <td>
                         {{$index + 1 + ((navegador.paginaAtual-1) * navegador.tamanhoPagina)}}
                     </td>
+                    <td width="96px"><img ng-src="{{item.foto}}"/></td>
+                    <td>{{item.nome}}</td>
                     <td>{{item.tipoPessoa}}</td>
                     <td>{{item.cpf}}{{item.cnpj}}</td>
-                    <td>{{item.nome}}</td>
+                    <td>{{item.beneficiario}}</td>
                 </tr>
             </tbody>
         </table>
