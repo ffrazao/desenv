@@ -2,8 +2,10 @@ package br.gov.df.emater.aterwebsrv.bo.pessoa;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
+import org.springframework.stereotype.Service;
 
-public class Salvar implements Command {
+@Service
+public class SalvarCmd implements Command {
 
 	@Override
 	public boolean execute(Context context) throws Exception {

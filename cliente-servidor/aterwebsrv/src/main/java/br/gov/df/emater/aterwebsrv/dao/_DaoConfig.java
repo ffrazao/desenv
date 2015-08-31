@@ -10,6 +10,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan(basePackages = "br.gov.df.emater.aterwebsrv.modelo")
 @EnableTransactionManagement
 public class _DaoConfig {
+	
+	public _DaoConfig() {
+		System.out.println("novo _DaoConfig");
+	}
 
 	// @Bean(name = "dataSource")
 	// public DataSource dataSource() {

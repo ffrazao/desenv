@@ -11,14 +11,19 @@ import br.gov.df.emater.aterwebsrv.bo.FacadeBo;
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaRest {
+	
+	public PessoaRest() {
+		System.out.println("novo PessoaRest");
+	}
 
 	@Autowired
-	private FacadeBo servicoFacade;
+	private FacadeBo facadeBo;
 
 	@RequestMapping("/filtro-novo")
 	public Resposta filtroNovo() {
 		Context ctx = new ContextBase();
-		servicoFacade.executar("pessoa-filtro-novo", ctx);
+		//facadeBo.executar("pessoa-filtro-novo", ctx);
+		facadeBo.executar("atividade", "atividadeChd");
 		return new Resposta(ctx.get("resultado"));
 	}
 

@@ -10,11 +10,11 @@ import br.gov.df.emater.aterwebsrv.bo.FacadeBo;
 public class SegurancaRest {
 	
 	@Autowired
-	private FacadeBo servicoFacade;
+	private FacadeBo facadeBo;
 
 	@RequestMapping("/login")
 	public Resposta login() {
-		servicoFacade.executar("testeChd");
+		facadeBo.executar("testeChd");
 		return new Resposta();
 	}
 	

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="pessoa">
+	<command name="pessoa-filtro-novo" className="br.gov.df.emater.aterwebsrv.bo.pessoa.FiltroNovoCmd" />
+	<chain name="cadeia">
+		<command name="testeCmd" className="br.gov.df.emater.aterwebsrv.bo.ReferenciaCmd"/>
+	</chain>
+</catalog>

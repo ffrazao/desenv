@@ -9,17 +9,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.df.emater.aterwebsrv.dao.teste.TesteDao;
 
-public class Teste implements Command {
+@Service
+public class TesteCmd /*implements Command*/ {
+	
+	public TesteCmd() {
+		System.out.println("novo TesteCmd");
+	}
 
 	@Autowired
 	private TesteDao testeDao;
 
 	@Transactional
-	public void salvar(Teste teste) {
+	public void salvar(TesteCmd teste) {
 		// testeDao.save(teste);
 	}
 
@@ -54,7 +60,7 @@ public class Teste implements Command {
 	@Transactional
 	public boolean execute(Context context) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("Ai...");
+		System.out.println("Ai..." + testeDao.count());
 		return false;
 	}
 

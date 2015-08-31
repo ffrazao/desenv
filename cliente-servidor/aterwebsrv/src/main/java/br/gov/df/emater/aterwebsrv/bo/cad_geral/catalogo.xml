@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="cadGeral">
+	<command name="cadGeralCmd" className="br.gov.df.emater.aterwebsrv.bo.teste.TesteCmd" />
+	<chain name="cadGeralChd">
+		<command className="br.gov.df.emater.aterwebsrv.bo.teste.TesteCmd" />
+		<chain>
+			<command className="br.gov.df.emater.aterwebsrv.bo.pessoa.SalvarCmd" />
+			<command className="br.gov.df.emater.aterwebsrv.bo.pessoa.SalvarCmd" />
+			<command className="br.gov.df.emater.aterwebsrv.bo.pessoa.SalvarCmd" />
+		</chain>
+	</chain>
+</catalog>

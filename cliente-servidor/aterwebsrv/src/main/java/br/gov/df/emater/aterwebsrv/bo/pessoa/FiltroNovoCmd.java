@@ -2,11 +2,13 @@ package br.gov.df.emater.aterwebsrv.bo.pessoa;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
+import org.springframework.stereotype.Service;
 
 import br.gov.df.emater.aterwebsrv.modelo.dominio.PessoaTipo;
 import br.gov.df.emater.aterwebsrv.modelo.dto.PessoaCadFiltroDto;
 
-public class FiltroNovo implements Command {
+@Service
+public class FiltroNovoCmd implements Command {
 
 	@SuppressWarnings("unchecked")
 	@Override
