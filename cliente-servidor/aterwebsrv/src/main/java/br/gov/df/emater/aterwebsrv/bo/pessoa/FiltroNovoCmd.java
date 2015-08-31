@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import br.gov.df.emater.aterwebsrv.modelo.dominio.PessoaTipo;
 import br.gov.df.emater.aterwebsrv.modelo.dto.PessoaCadFiltroDto;
 
-@Service
+@Service("PessoaFiltroNovoCmd")
 public class FiltroNovoCmd implements Command {
 
 	@SuppressWarnings("unchecked")

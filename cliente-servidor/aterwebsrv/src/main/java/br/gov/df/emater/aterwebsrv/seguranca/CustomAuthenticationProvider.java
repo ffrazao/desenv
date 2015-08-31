@@ -22,8 +22,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication autenticacao) throws AuthenticationException {
-//		testeDao.count();
-//		return testeBo.autenticaUsuario(autenticacao);
+		// testeDao.count();
+		// return testeBo.autenticaUsuario(autenticacao);
 		return null;
 	}
 

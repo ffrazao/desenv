@@ -13,6 +13,10 @@ public class Resposta {
 		this.resultado = resultado;
 	}
 
+	public Resposta(Exception resultado) {
+		this.resultado = resultado;
+	}
+
 	public Resposta(String mensagem) {
 		this.mensagem = mensagem;
 	}

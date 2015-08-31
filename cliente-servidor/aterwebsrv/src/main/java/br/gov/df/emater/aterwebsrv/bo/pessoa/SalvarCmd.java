@@ -4,7 +4,7 @@ import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("PessoaSalvarCmd")
 public class SalvarCmd implements Command {
 
 	@Override

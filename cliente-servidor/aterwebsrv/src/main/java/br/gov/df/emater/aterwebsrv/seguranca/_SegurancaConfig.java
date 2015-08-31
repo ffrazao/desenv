@@ -34,9 +34,7 @@ public class _SegurancaConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// trocar a linha a seguir
-		http.authorizeRequests().anyRequest().access("permitAll").and().csrf()
-				.csrfTokenRepository(csrfTokenRepository()).and()
-				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
+		http.authorizeRequests().anyRequest().access("permitAll").and().csrf().csrfTokenRepository(csrfTokenRepository()).and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
 	}
 
 	@Override
@@ -45,11 +43,9 @@ public class _SegurancaConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth)
-			throws Exception {
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 	}
 
-	
 	@Bean(name = "customAuthenticationProvider")
 	public CustomAuthenticationProvider setupCustomAuthenticationProvider() {
 		// Customização da autenticação do usuário
